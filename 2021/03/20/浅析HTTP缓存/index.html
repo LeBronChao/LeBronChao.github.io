@@ -1,0 +1,439 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>浅析HTTP缓存 | LeBronChao's Blog</title><meta name="keywords" content="Web开发,学习笔记,HTTP,缓存,计算机网络"><meta name="author" content="LeBronChao-"><meta name="copyright" content="LeBronChao-"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="为什么需要缓存  通过缓存机制，可以在相应场景下复用以前获取的资源。 显著提高网站的性能和响应速度 减少网络流量和等待渲染时间 降低服务器压力  HTTP缓存类型  强缓存 协商缓存  强缓存 对于强缓存，服务器返回的静态资源响应头会设置一个强制缓存的时间，在缓存时间内，如刷新浏览器请求相同资源，在缓存时间未过期的情况下，则直接使用已缓存资源。如缓存资源已过期，执行协商缓存策略。  以下为与强缓存">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅析HTTP缓存">
+<meta property="og:url" content="https://lebronchao.com/2021/03/20/%E6%B5%85%E6%9E%90HTTP%E7%BC%93%E5%AD%98/index.html">
+<meta property="og:site_name" content="LeBronChao&#39;s Blog">
+<meta property="og:description" content="为什么需要缓存  通过缓存机制，可以在相应场景下复用以前获取的资源。 显著提高网站的性能和响应速度 减少网络流量和等待渲染时间 降低服务器压力  HTTP缓存类型  强缓存 协商缓存  强缓存 对于强缓存，服务器返回的静态资源响应头会设置一个强制缓存的时间，在缓存时间内，如刷新浏览器请求相同资源，在缓存时间未过期的情况下，则直接使用已缓存资源。如缓存资源已过期，执行协商缓存策略。  以下为与强缓存">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://bloginfo.lebronchao.com/doc-image/http.jpeg">
+<meta property="article:published_time" content="2021-03-20T03:38:49.000Z">
+<meta property="article:modified_time" content="2021-03-20T03:38:49.000Z">
+<meta property="article:author" content="LeBronChao-">
+<meta property="article:tag" content="Web开发">
+<meta property="article:tag" content="学习笔记">
+<meta property="article:tag" content="HTTP">
+<meta property="article:tag" content="缓存">
+<meta property="article:tag" content="计算机网络">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://bloginfo.lebronchao.com/doc-image/http.jpeg"><link rel="shortcut icon" href="https://bloginfo.lebronchao.com/doc-image/bitbug_favicon%20(1).ico"><link rel="canonical" href="https://lebronchao.com/2021/03/20/%E6%B5%85%E6%9E%90HTTP%E7%BC%93%E5%AD%98/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?0f958a253362f27db5bafcef151a46ab";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: LeBronChao-","link":"链接: ","source":"来源: LeBronChao's Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"top-right"},
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-03-20 11:38:49'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><link rel="stylesheet" href="/css/mycss.css"><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="LeBronChao's Blog" type="application/atom+xml">
+</head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" data-lazy-src="https://bloginfo.lebronchao.com/personal-info/IMG_8050.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">35</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">61</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/photo/"><i class="fa-fw fas fa-video"></i><span> 摄影</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 分类</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/categories/Front-End/"><i class="fa-fw fas fa-laptop"></i><span> Front End</span></a></li><li><a class="site-page" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><i class="fa-fw fas fa-wifi"></i><span> 计算机网络</span></a></li><li><a class="site-page" href="/categories/%E5%BC%80%E5%8F%91%E6%8A%80%E8%83%BD/"><i class="fa-fw fab fa-git-square"></i><span> 开发技能</span></a></li><li><a class="site-page" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"><i class="fa-fw fas fa-database"></i><span> 数据库系统</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/message/"><i class="fa-fw far fa-comment-dots"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user-circle"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://bloginfo.lebronchao.com/doc-image/http.jpeg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">LeBronChao's Blog</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/photo/"><i class="fa-fw fas fa-video"></i><span> 摄影</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 分类</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/categories/Front-End/"><i class="fa-fw fas fa-laptop"></i><span> Front End</span></a></li><li><a class="site-page" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><i class="fa-fw fas fa-wifi"></i><span> 计算机网络</span></a></li><li><a class="site-page" href="/categories/%E5%BC%80%E5%8F%91%E6%8A%80%E8%83%BD/"><i class="fa-fw fab fa-git-square"></i><span> 开发技能</span></a></li><li><a class="site-page" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"><i class="fa-fw fas fa-database"></i><span> 数据库系统</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/message/"><i class="fa-fw far fa-comment-dots"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user-circle"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">浅析HTTP缓存</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-03-20T03:38:49.000Z" title="发表于 2021-03-20 11:38:49">2021-03-20</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-03-20T03:38:49.000Z" title="更新于 2021-03-20 11:38:49">2021-03-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Front-End/">Front End</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.8k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>6分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1>为什么需要缓存</h1>
+<ul>
+<li>通过缓存机制，可以在相应场景下复用以前获取的资源。</li>
+<li>显著提高网站的性能和响应速度</li>
+<li>减少网络流量和等待渲染时间</li>
+<li>降低服务器压力</li>
+</ul>
+<h1>HTTP缓存类型</h1>
+<ul>
+<li>强缓存</li>
+<li>协商缓存</li>
+</ul>
+<h1>强缓存</h1>
+<p>对于强缓存，服务器返回的静态资源响应头会设置一个强制缓存的时间，在缓存时间内，如刷新浏览器请求相同资源，在缓存时间未过期的情况下，则直接使用已缓存资源。如缓存资源已过期，执行协商缓存策略。</p>
+<ul>
+<li>以下为与强缓存相关的HTTP头部字段</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><strong>字段</strong></th>
+<th><strong>用途</strong></th>
+<th>实例</th>
+<th><strong>优先级</strong></th>
+<th><strong>HTTP版本</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Expires</td>
+<td>强缓存的过期日期</td>
+<td>Expires:Thu,06 Aug 2021 14:36:18 GMT</td>
+<td>低</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>Cache-Control</td>
+<td>指定指令实现缓存机制</td>
+<td>Cache-Control:max-age=60</td>
+<td>高</td>
+<td>1.1</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Expires">Expires</h2>
+<ul>
+<li>响应头Expires字段包含强缓存资源的过期时间</li>
+<li>值为0表示资源已过期或非强缓存</li>
+</ul>
+<h2 id="Cache-Control">Cache-Control</h2>
+<p>通用消息头字段，通过指令来实现缓存机制。说明一下容易弄混的两个字段，其他指令参考<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Cache-Control">指令大全</a>。</p>
+<ul>
+<li>no-cache</li>
+</ul>
+<p>在发布缓存副本之前，强制要求缓存把请求提交给原始服务器进行验证(协商缓存验证)。</p>
+<ul>
+<li>no-store</li>
+</ul>
+<p>缓存不应存储有关客户端请求或服务器响应的任何内容，即不使用任何缓存。</p>
+<h2 id="Expires-和-Cache-Control-的区别">Expires 和 Cache-Control 的区别</h2>
+<ul>
+<li>时间区别
+<ul>
+<li>Expires 过期时间为绝对时间，指未来某个时间点缓存过期。</li>
+<li>Cache-Control 为相对时间，相对于当前时间，如 60s 后缓存过期</li>
+</ul>
+</li>
+<li>优先级
+<ul>
+<li>Expires 的优先级低于 Cache-Control 字段</li>
+<li>同时存在 Cache-Control 和 Expires时，以 Cache-Control 指令为准</li>
+</ul>
+</li>
+<li>HTTP 版本
+<ul>
+<li>Expires 是HTTP/1.0 提出的，其浏览器兼容性更好</li>
+<li>Cache-Control 是 HTTP/1.1 提出的，浏览器兼容性不佳，所以 Expires 和 Cache-Control 可以同时存在，在不支持 Cache-Control的浏览器则以Expires为准</li>
+</ul>
+</li>
+</ul>
+<h1>协商缓存</h1>
+<ul>
+<li>协商缓存即和服务器协商是否使用缓存，通过判断后决定重新加载资源 or HTTP StatusCode 304</li>
+<li>以下字段决定是否使用协商缓存，而非强缓存：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><strong>字段</strong></th>
+<th><strong>协商缓存</strong></th>
+<th><strong>优先级</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pragma</td>
+<td>Pragma:no-cache</td>
+<td>高</td>
+</tr>
+<tr>
+<td>Cache-Control</td>
+<td>Cache-Control:no-cache / Cache-Control:max-age=0</td>
+<td>低</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Pragma">Pragma</h2>
+<ul>
+<li>Pragma是一个HTTP1.0中规定的通用首部，如果 Cache-Control不存在的话，它的行为与 Cache-Control: no-cache 一致。强制要求缓存服务器在返回缓存的版本之前将请求提交到源头服务器进行协商验证。</li>
+<li>Pragma的值就只有一个，no-cache，并且它的优先级比Cache-Control高。</li>
+</ul>
+<h2 id="Cache-Control-2">Cache-Control</h2>
+<ul>
+<li>上文介绍过Cache-Control，它的指令既可以用于强缓存又可应用于协商缓存策略中</li>
+<li>其中Cache-Control: no-cache 和 Cache-Control: max-age=0 的作用一样，强制要求发起请求给服务器进行验证 (协商资源验证)。</li>
+</ul>
+<h1>协商策略</h1>
+<p>当出现Pragma字段或者Cache-Control:no-cache时，就需要使用协商策略，常见的两对协商缓存字段如下</p>
+<ul>
+<li>ETag/If-None-Match</li>
+<li>Last-Modified/If-Modfied-Since</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><strong>字段</strong></th>
+<th><strong>对应字段</strong></th>
+<th><strong>值</strong></th>
+<th><strong>描述</strong></th>
+<th><strong>优先级</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Last-Modified</td>
+<td>If-Modified-Since</td>
+<td>GMT时间</td>
+<td>服务端资源的最后修改时间</td>
+<td>低</td>
+</tr>
+<tr>
+<td>If-Modified-Since</td>
+<td>Last-Modified</td>
+<td>GMT时间</td>
+<td>上次请求响应头的Last-Modified，验证是否为服务端资源最后修改的时间，是返回304，否返回200。</td>
+<td>低</td>
+</tr>
+<tr>
+<td>Etag</td>
+<td>If-None-Match</td>
+<td>内容hash/文件信息</td>
+<td>服务器缓存资源的文件信息或文件内容生成的哈希值</td>
+<td>高</td>
+</tr>
+<tr>
+<td>If-None-Match</td>
+<td>Etag</td>
+<td>内容hash/文件信息</td>
+<td>上次请求响应头的ETag，验证服务器资源有没有修改，有返回200，没有返回304。</td>
+<td>高</td>
+</tr>
+</tbody>
+</table>
+<h2 id="优缺点">优缺点</h2>
+<ul>
+<li>如果服务端修改了一段代码，然后又改回去了。
+<ul>
+<li>此时资源文件的修改时间变了</li>
+<li>实际上文件没有发生改变</li>
+<li>这样缓存就失效了，产生了不必要的传输</li>
+</ul>
+</li>
+<li>而ETag可以根据内容生成的hash来比较的，只要资源文件内容不变，就会应用客户端的缓存，减少不必要的传输。</li>
+<li>所以ETag比Last-Modified缓存更精确、高效和节省带宽。</li>
+</ul>
+<h1>ETag</h1>
+<h2 id="什么是ETag？">什么是ETag？</h2>
+<p>Etag是 Entity tag的缩写，可以理解为“被请求资源的摘要标识”，Etag是服务端的一个资源的标识，在 HTTP 响应头中将其传送到客户端，类似这样，ETag:W/“50b1c1d4f775c61:df3”</p>
+<h2 id="ETag格式">ETag格式</h2>
+<ul>
+<li>ETag:W/“xxxxxxxx”</li>
+<li>ETag:“xxxxxxx”</li>
+</ul>
+<h3 id="强类型验证">强类型验证</h3>
+<ul>
+<li>比对资源每个字节都要一样。</li>
+</ul>
+<h3 id="W-前缀代表使用弱类型验证">W/前缀代表使用弱类型验证</h3>
+<ul>
+<li>不需要每个字节都一样，例如页脚的时间or展示的广告不一样，都可以认为是一样的。构建应用于弱验证类型的标签（etag）体系可能会比较复杂，因为这会涉及到对页面上不同的元素的重要性进行排序，但是会对缓存性能优化相当有帮助。</li>
+</ul>
+<h2 id="ETag生成需要满足什么条件？">ETag生成需要满足什么条件？</h2>
+<ol>
+<li>当文件更改时，ETag值必须改变</li>
+<li>尽量便于计算，不会特别耗CPU。
+<ol>
+<li>利用摘要算法生成（MD5, SHA128, SHA256）需慎重考虑，这些为CPU密集型运算。</li>
+</ol>
+</li>
+<li>必须横向扩展，分布式部署时多个服务器节点上生成的ETag值保持一致。</li>
+</ol>
+<h2 id="ETag是怎么生成的（Nginx）">ETag是怎么生成的（Nginx）</h2>
+<p><a target="_blank" rel="noopener" href="https://github.com/nginx/nginx/blob/6c3838f9ed45f5c2aa6a971a0da3cb6ffe45b61e/src/http/ngx_http_core_module.c#L1582">Nginx的源码</a>中ETag由last_modified和content_length拼接而成</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">etag-&gt;value.len = ngx_sprintf(etag-&gt;value.data, <span class="string">&quot;\&quot;%xT-%xO\&quot;&quot;</span>,</span><br><span class="line">                                  r-&gt;headers_out.last_modified_time,</span><br><span class="line">                                  r-&gt;headers_out.content_length_n)</span><br><span class="line">                      - etag-&gt;value.data;                                </span><br></pre></td></tr></table></figure>
+<ul>
+<li>翻译为以下伪代码</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">etag = header.last_modified + <span class="string">&quot;-&quot;</span> + header.content_lenth</span><br></pre></td></tr></table></figure>
+<ul>
+<li>总结：Nginx中ETag由响应头的Last-Modified和Content-Length表示为十六进制组合而成。</li>
+</ul>
+<h3 id="Lodash网站请求检验">Lodash网站请求检验</h3>
+<p><img src= "/img/loading.gif" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/lodash%E8%AF%B7%E6%B1%82-20210325234424565.png" alt="img"></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> LAST_MODIFIED = <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="built_in">parseInt</span>(<span class="string">&#x27;5fc4907d&#x27;</span>, <span class="number">16</span>) * <span class="number">1000</span>).toJSON()</span><br><span class="line"><span class="keyword">const</span> CONTENT_LENGTH = <span class="built_in">parseInt</span>(<span class="string">&#x27;f48&#x27;</span>, <span class="number">16</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(LAST_MODIFIED) <span class="comment">// 2020-11-30T06:26:05.000Z</span></span><br><span class="line"><span class="built_in">console</span>.log(CONTENT_LENGTH) <span class="comment">// 3912</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>输出结果</li>
+</ul>
+<p><img src= "/img/loading.gif" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/%E8%BE%93%E5%87%BA%E7%BB%93%E6%9E%9C-20210325234424619.png" alt="img"></p>
+<ul>
+<li>既然在nginx中ETag由Last-Modified和Content-Length组成，那它便算是一个加强版的Last-Modified了，那加强在什么地方呢？</li>
+<li>Last-Modified只能作用于秒级的改变，而 nginx 中的 ETag 添加了文件大小的附加条件，不仅和修改时间有关，也和内容有关，使之更加精确。</li>
+</ul>
+<h2 id="Last-Modified是怎么生成的">Last-Modified是怎么生成的</h2>
+<p>在linux中</p>
+<ul>
+<li>mtime：modified time指文件内容改变的时间戳</li>
+<li>ctime：change time指文件属性改变的时间戳，属性包括mtime。而在 windows 上，它表示的是creation time</li>
+<li>而HTTP服务选择Last-Modified时一般会选择mtime，表示文件内容修改的时间，来兼容Windows和Linux。</li>
+<li>以下为<a target="_blank" rel="noopener" href="https://github.com/nginx/nginx/blob/4bf4650f2f10f7bbacfe7a33da744f18951d416d/src/http/modules/ngx_http_static_module.c#L217">nginx源码</a></li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">r-&gt;headers_out.status = NGX_HTTP_OK;     </span><br><span class="line">r-&gt;headers_out.content_length_n = of.size;     </span><br><span class="line">r-&gt;headers_out.last_modified_time = of.mtime;</span><br></pre></td></tr></table></figure>
+<h2 id="如果-http-响应头中-ETag-值改变了，是否意味着文件内容一定已经更改？">如果 http 响应头中 ETag 值改变了，是否意味着文件内容一定已经更改？</h2>
+<ul>
+<li>不一定</li>
+<li>文件在一秒内发生了改变而且文件大小不变</li>
+<li>这种情况非常极端，概率很低</li>
+<li>因此在正常情况下可以容忍一个不太完美但是高效的算法**。</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">LeBronChao-</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://lebronchao.com/2021/03/20/%E6%B5%85%E6%9E%90HTTP%E7%BC%93%E5%AD%98/">https://lebronchao.com/2021/03/20/浅析HTTP缓存/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://lebronchao.com" target="_blank">LeBronChao's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Web%E5%BC%80%E5%8F%91/">Web开发</a><a class="post-meta__tags" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a><a class="post-meta__tags" href="/tags/HTTP/">HTTP</a><a class="post-meta__tags" href="/tags/%E7%BC%93%E5%AD%98/">缓存</a><a class="post-meta__tags" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></div><div class="post_share"><div class="social-share" data-image="https://bloginfo.lebronchao.com/doc-image/http.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/03/24/Vue%E8%BF%9B%E9%98%B6-Diff%E7%AE%97%E6%B3%95%E8%AF%A6%E8%A7%A3-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"><img class="prev-cover" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/Vue.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Vue进阶 Diff算法详解 |  学习笔记</div></div></a></div><div class="next-post pull-right"><a href="/2021/03/11/Vue%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/"><img class="next-cover" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/Vue.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Vue的前世今生</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/01/03/计算机网络-第六章-应用层/" title="计算机网络 | 第六章 应用层"><img class="cover" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-01-03</div><div class="title">计算机网络 | 第六章 应用层</div></div></a></div><div><a href="/2020/08/07/Git-版本控制工具-学习笔记/" title="Git 版本控制工具 | 学习笔记"><img class="cover" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/Git.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-08-07</div><div class="title">Git 版本控制工具 | 学习笔记</div></div></a></div><div><a href="/2020/11/28/Less-预处理器-学习笔记/" title="Less 预处理器 | 学习笔记"><img class="cover" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/Less.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-11-28</div><div class="title">Less 预处理器 | 学习笔记</div></div></a></div><div><a href="/2020/10/10/Redux-状态管理-学习笔记/" title="React进阶 状态管理 Redux| 学习笔记"><img class="cover" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/React.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-10</div><div class="title">React进阶 状态管理 Redux| 学习笔记</div></div></a></div><div><a href="/2020/03/06/Vue-基础入门-学习笔记/" title="Vue 基础入门 | 学习笔记"><img class="cover" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/Vue.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-03-06</div><div class="title">Vue 基础入门 | 学习笔记</div></div></a></div><div><a href="/2021/03/11/Vue的前世今生/" title="Vue的前世今生"><img class="cover" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/Vue.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-11</div><div class="title">Vue的前世今生</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" data-lazy-src="https://bloginfo.lebronchao.com/personal-info/IMG_8050.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">LeBronChao-</div><div class="author-info__description">深圳大学物联网工程大三，前端开发工程师一枚。业余摄影师，交流/约拍可私戳。<br/>字节跳动内推码:4FCV6BV<br/>Email：LeBronChao@foxmail.com</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">35</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">61</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/LeBronChao"><i class="fab fa-github"></i><span>Follow My Github</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/LeBronChao" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:lebronchao@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://bloginfo.lebronchao.com/personal-info/IMG_8268-20210326002121490.jpg" target="_blank" title="微信"><i class="fab fa-weixin"></i></a><a class="social-icon" href="tencent://AddContact/?fromId=45&amp;fromSubId=1&amp;subcmd=all&amp;uin=1531229587&amp;website=www.oicqzone.com" target="_blank" title="QQ"><i class="fab fa-qq"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is LeBronChao's Blog.</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">为什么需要缓存</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">HTTP缓存类型</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">强缓存</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Expires"><span class="toc-number">3.1.</span> <span class="toc-text">Expires</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cache-Control"><span class="toc-number">3.2.</span> <span class="toc-text">Cache-Control</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Expires-%E5%92%8C-Cache-Control-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">3.3.</span> <span class="toc-text">Expires 和 Cache-Control 的区别</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">协商缓存</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Pragma"><span class="toc-number">4.1.</span> <span class="toc-text">Pragma</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cache-Control-2"><span class="toc-number">4.2.</span> <span class="toc-text">Cache-Control</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">5.</span> <span class="toc-text">协商策略</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-number">5.1.</span> <span class="toc-text">优缺点</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">6.</span> <span class="toc-text">ETag</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFETag%EF%BC%9F"><span class="toc-number">6.1.</span> <span class="toc-text">什么是ETag？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ETag%E6%A0%BC%E5%BC%8F"><span class="toc-number">6.2.</span> <span class="toc-text">ETag格式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%BA%E7%B1%BB%E5%9E%8B%E9%AA%8C%E8%AF%81"><span class="toc-number">6.2.1.</span> <span class="toc-text">强类型验证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#W-%E5%89%8D%E7%BC%80%E4%BB%A3%E8%A1%A8%E4%BD%BF%E7%94%A8%E5%BC%B1%E7%B1%BB%E5%9E%8B%E9%AA%8C%E8%AF%81"><span class="toc-number">6.2.2.</span> <span class="toc-text">W&#x2F;前缀代表使用弱类型验证</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ETag%E7%94%9F%E6%88%90%E9%9C%80%E8%A6%81%E6%BB%A1%E8%B6%B3%E4%BB%80%E4%B9%88%E6%9D%A1%E4%BB%B6%EF%BC%9F"><span class="toc-number">6.3.</span> <span class="toc-text">ETag生成需要满足什么条件？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ETag%E6%98%AF%E6%80%8E%E4%B9%88%E7%94%9F%E6%88%90%E7%9A%84%EF%BC%88Nginx%EF%BC%89"><span class="toc-number">6.4.</span> <span class="toc-text">ETag是怎么生成的（Nginx）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Lodash%E7%BD%91%E7%AB%99%E8%AF%B7%E6%B1%82%E6%A3%80%E9%AA%8C"><span class="toc-number">6.4.1.</span> <span class="toc-text">Lodash网站请求检验</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Last-Modified%E6%98%AF%E6%80%8E%E4%B9%88%E7%94%9F%E6%88%90%E7%9A%84"><span class="toc-number">6.5.</span> <span class="toc-text">Last-Modified是怎么生成的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E6%9E%9C-http-%E5%93%8D%E5%BA%94%E5%A4%B4%E4%B8%AD-ETag-%E5%80%BC%E6%94%B9%E5%8F%98%E4%BA%86%EF%BC%8C%E6%98%AF%E5%90%A6%E6%84%8F%E5%91%B3%E7%9D%80%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9%E4%B8%80%E5%AE%9A%E5%B7%B2%E7%BB%8F%E6%9B%B4%E6%94%B9%EF%BC%9F"><span class="toc-number">6.6.</span> <span class="toc-text">如果 http 响应头中 ETag 值改变了，是否意味着文件内容一定已经更改？</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/03/24/Vue%E8%BF%9B%E9%98%B6-Diff%E7%AE%97%E6%B3%95%E8%AF%A6%E8%A7%A3-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="Vue进阶 Diff算法详解 |  学习笔记"><img data-lazy-src="https://bloginfo.lebronchao.com/doc-image/Vue.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Vue进阶 Diff算法详解 |  学习笔记"/></a><div class="content"><a class="title" href="/2021/03/24/Vue%E8%BF%9B%E9%98%B6-Diff%E7%AE%97%E6%B3%95%E8%AF%A6%E8%A7%A3-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="Vue进阶 Diff算法详解 |  学习笔记">Vue进阶 Diff算法详解 |  学习笔记</a><time datetime="2021-03-24T15:42:55.000Z" title="发表于 2021-03-24 23:42:55">2021-03-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/03/20/%E6%B5%85%E6%9E%90HTTP%E7%BC%93%E5%AD%98/" title="浅析HTTP缓存"><img data-lazy-src="https://bloginfo.lebronchao.com/doc-image/http.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="浅析HTTP缓存"/></a><div class="content"><a class="title" href="/2021/03/20/%E6%B5%85%E6%9E%90HTTP%E7%BC%93%E5%AD%98/" title="浅析HTTP缓存">浅析HTTP缓存</a><time datetime="2021-03-20T03:38:49.000Z" title="发表于 2021-03-20 11:38:49">2021-03-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/03/11/Vue%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/" title="Vue的前世今生"><img data-lazy-src="https://bloginfo.lebronchao.com/doc-image/Vue.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Vue的前世今生"/></a><div class="content"><a class="title" href="/2021/03/11/Vue%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/" title="Vue的前世今生">Vue的前世今生</a><time datetime="2021-03-11T02:32:23.000Z" title="发表于 2021-03-11 10:32:23">2021-03-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/02/15/%E6%B5%85%E6%9E%90%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1Router/" title="浅析前端路由Router"><img data-lazy-src="https://bloginfo.lebronchao.com/doc-image/React.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="浅析前端路由Router"/></a><div class="content"><a class="title" href="/2021/02/15/%E6%B5%85%E6%9E%90%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1Router/" title="浅析前端路由Router">浅析前端路由Router</a><time datetime="2021-02-15T02:16:34.000Z" title="发表于 2021-02-15 10:16:34">2021-02-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/01/22/TypeScript%E5%85%A5%E9%97%A8-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="TypeScript入门 | 学习笔记"><img data-lazy-src="https://bloginfo.lebronchao.com/doc-image/TypeScript.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="TypeScript入门 | 学习笔记"/></a><div class="content"><a class="title" href="/2021/01/22/TypeScript%E5%85%A5%E9%97%A8-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="TypeScript入门 | 学习笔记">TypeScript入门 | 学习笔记</a><time datetime="2021-01-22T07:42:34.000Z" title="发表于 2021-01-22 15:42:34">2021-01-22</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By LeBronChao-</div><div class="footer_custom_text">@ 2021 LeBronChao- CopyRight | 粤ICP备2021025161号</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    let initData = {
+      el: '#vcomment',
+      appId: 'TKAoSdRXJ5zxwsjdGTP0Hrfh-9Nh9j0Va',
+      appKey: 'lI3CGg5rpWkxsfvsKTRkVszT',
+      placeholder: '留下你的足迹吧，記得留下你的昵称和邮箱....可以快速收到回复',
+      avatar: 'https://bloginfo.lebronchao.com/doc-image/touxiang.jpeg',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-cn',
+      recordIP: true,
+      serverURLs: 'https://tkaosdrx.lc-cn-e1-shared.com',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: true,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+    
+    if (true) {
+      const otherData = {"master":["64951ad612e26b51f6cc37788be7c200","b467dec92be8eb17c36ca900ef5d8dc1"],"friends":["30932c612db8dca9f08b98d6c1818ba2","898f30c9b8971d165a03abe4deba1ac6","741b327a5a0afbafd674ac782ddb0835","8dc27dfae152eb47084d3d0ae48c33d5","49fa154bbe0132bb66cb50c473f7f3ab","1f1338f1eff80cd7184516e788f9cbca"],"metaPlaceholder":{"nick":"昵称(必填)","mail":"邮箱(必填,QQ邮箱可显示头像)","link":"主页(https://)"}}
+      initData = Object.assign(initData, otherData)
+    }
+    
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/gh/HCLonely/Valine@latest/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
