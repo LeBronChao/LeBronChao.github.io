@@ -225,7 +225,7 @@
 <li>oldVnode：旧的虚拟节点</li>
 <li>Vnode：新的虚拟节点</li>
 <li>hydrating：是否要和真实DOM混合</li>
-<li>removeOnly：特殊的flag，用于<transition-group></li>
+<li>removeOnly：特殊的flag，用于 transition-group</li>
 </ol>
 <blockquote>
 <p>处理流程大致分为以下步骤：</p>
@@ -270,7 +270,7 @@
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sameVnode</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    a.key === b.key &amp;&amp; (</span><br><span class="line">      (</span><br><span class="line">        a.tag === b.tag &amp;&amp;</span><br><span class="line">        a.isComment === b.isComment &amp;&amp;</span><br><span class="line">        isDef(a.data) === isDef(b.data) &amp;&amp;</span><br><span class="line">        sameInputType(a, b)</span><br><span class="line">      ) || (</span><br><span class="line">        isTrue(a.isAsyncPlaceholder) &amp;&amp;</span><br><span class="line">        a.asyncFactory === b.asyncFactory &amp;&amp;</span><br><span class="line">        isUndef(b.asyncFactory.error)</span><br><span class="line">      )</span><br><span class="line">    )</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="patchVnode函数">patchVnode函数</h2>
 <blockquote>
-<p>前置条件vnode和oldVnode不是同一个节点</p>
+<p>前置条件vnode和oldVnode是同一个节点</p>
 </blockquote>
 <blockquote>
 <p>执行流程：</p>
@@ -351,7 +351,7 @@
 <li>DIff只做同级比较，使用sameVnode函数比对，文本节点直接替换文本内容。</li>
 <li>子元素列表的Diff，进行头对头、尾对尾、头对尾等系列比较，直到遍历完两个元素的子元素列表。
 <ul>
-<li>或一个链表先遍历完了，直接addVnode / removeVnode。</li>
+<li>或一个列表先遍历完了，直接addVnode / removeVnode。</li>
 </ul>
 </li>
 </ol>
