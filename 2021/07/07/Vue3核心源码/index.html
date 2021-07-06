@@ -1,0 +1,603 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>[建议收藏]你想知道的Vue3核心源码这里都有 | LeBronChao's Blog</title><meta name="keywords" content="Web开发,学习笔记,Front End,Vue,SPA,源码分析"><meta name="author" content="LeBronChao-"><meta name="copyright" content="LeBronChao-"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Effect和Reactive  effect作为Vue响应式原理中的核心，在Computed、Watch、Reactive中都有出现 主要和Reactive(Proxy)、track、trigger等函数配合实现收集依赖，触发依赖更新   Effect  副作用依赖函数   Track  依赖收集   Trigger  依赖触发    Effect  effect可以被理解为一个副作用函数，被当">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[建议收藏]你想知道的Vue3核心源码这里都有">
+<meta property="og:url" content="https://lebronchao.com/2021/07/07/Vue3%E6%A0%B8%E5%BF%83%E6%BA%90%E7%A0%81/index.html">
+<meta property="og:site_name" content="LeBronChao&#39;s Blog">
+<meta property="og:description" content="Effect和Reactive  effect作为Vue响应式原理中的核心，在Computed、Watch、Reactive中都有出现 主要和Reactive(Proxy)、track、trigger等函数配合实现收集依赖，触发依赖更新   Effect  副作用依赖函数   Track  依赖收集   Trigger  依赖触发    Effect  effect可以被理解为一个副作用函数，被当">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://bloginfo.lebronchao.com/doc-image/Vue.jpeg">
+<meta property="article:published_time" content="2021-07-06T17:09:08.000Z">
+<meta property="article:modified_time" content="2021-07-06T17:09:08.000Z">
+<meta property="article:author" content="LeBronChao-">
+<meta property="article:tag" content="Web开发">
+<meta property="article:tag" content="学习笔记">
+<meta property="article:tag" content="Front End">
+<meta property="article:tag" content="Vue">
+<meta property="article:tag" content="SPA">
+<meta property="article:tag" content="源码分析">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://bloginfo.lebronchao.com/doc-image/Vue.jpeg"><link rel="shortcut icon" href="https://bloginfo.lebronchao.com/doc-image/bitbug_favicon%20(1).ico"><link rel="canonical" href="https://lebronchao.com/2021/07/07/Vue3%E6%A0%B8%E5%BF%83%E6%BA%90%E7%A0%81/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?0f958a253362f27db5bafcef151a46ab";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: LeBronChao-","link":"链接: ","source":"来源: LeBronChao's Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"top-right"},
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-07-07 01:09:08'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><link rel="stylesheet" href="/css/mycss.css"><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="LeBronChao's Blog" type="application/atom+xml">
+</head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" data-lazy-src="https://bloginfo.lebronchao.com/personal-info/IMG_8050.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">46</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">70</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/photo/"><i class="fa-fw fas fa-video"></i><span> 摄影</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 分类</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/categories/Front-End/"><i class="fa-fw fas fa-laptop"></i><span> Front End</span></a></li><li><a class="site-page" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><i class="fa-fw fas fa-wifi"></i><span> 计算机网络</span></a></li><li><a class="site-page" href="/categories/%E5%BC%80%E5%8F%91%E6%8A%80%E8%83%BD/"><i class="fa-fw fab fa-git-square"></i><span> 开发技能</span></a></li><li><a class="site-page" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"><i class="fa-fw fas fa-database"></i><span> 数据库系统</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/message/"><i class="fa-fw far fa-comment-dots"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user-circle"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://bloginfo.lebronchao.com/doc-image/Vue.jpeg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">LeBronChao's Blog</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/photo/"><i class="fa-fw fas fa-video"></i><span> 摄影</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 分类</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/categories/Front-End/"><i class="fa-fw fas fa-laptop"></i><span> Front End</span></a></li><li><a class="site-page" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><i class="fa-fw fas fa-wifi"></i><span> 计算机网络</span></a></li><li><a class="site-page" href="/categories/%E5%BC%80%E5%8F%91%E6%8A%80%E8%83%BD/"><i class="fa-fw fab fa-git-square"></i><span> 开发技能</span></a></li><li><a class="site-page" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"><i class="fa-fw fas fa-database"></i><span> 数据库系统</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/message/"><i class="fa-fw far fa-comment-dots"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user-circle"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">[建议收藏]你想知道的Vue3核心源码这里都有</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-07-06T17:09:08.000Z" title="发表于 2021-07-07 01:09:08">2021-07-07</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-07-06T17:09:08.000Z" title="更新于 2021-07-07 01:09:08">2021-07-07</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Front-End/">Front End</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">5.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>24分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1>Effect和Reactive</h1>
+<blockquote>
+<p>effect作为Vue响应式原理中的核心，在Computed、Watch、Reactive中都有出现</p>
+<p>主要和Reactive(Proxy)、track、trigger等函数配合实现收集依赖，触发依赖更新</p>
+</blockquote>
+<ul>
+<li>Effect
+<ul>
+<li>副作用依赖函数</li>
+</ul>
+</li>
+<li>Track
+<ul>
+<li>依赖收集</li>
+</ul>
+</li>
+<li>Trigger
+<ul>
+<li>依赖触发</li>
+</ul>
+</li>
+</ul>
+<h2 id="Effect">Effect</h2>
+<blockquote>
+<p>effect可以被理解为一个副作用函数，被当做依赖收集，在响应式数据更新后被触发。</p>
+<p>Vue的响应式API例如Computed、Watch都有用到effect来实现</p>
+</blockquote>
+<ul>
+<li>先来看看入口函数
+<ul>
+<li>入口函数主要是一些逻辑处理，核心逻辑位于createReactiveEffect</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">effect</span>&lt;<span class="title">T</span> = <span class="title">any</span>&gt;(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">  fn: () =&gt; T,</span></span></span><br><span class="line"><span class="function"><span class="params">  options: ReactiveEffectOptions = EMPTY_OBJ</span></span></span><br><span class="line"><span class="function"><span class="params"></span>): <span class="title">ReactiveEffect</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">  <span class="comment">// 如果已经是effect，则重置</span></span><br><span class="line">  <span class="keyword">if</span> (isEffect(fn)) &#123;</span><br><span class="line">    fn = fn.raw</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 创建effect</span></span><br><span class="line">  <span class="keyword">const</span> effect = createReactiveEffect(fn, options)</span><br><span class="line">  <span class="comment">// 如果不是惰性执行，先执行一次</span></span><br><span class="line">  <span class="keyword">if</span> (!options.lazy) &#123;</span><br><span class="line">    effect()</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> effect</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>createReactiveEffect</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> effectStack: ReactiveEffect[] = []</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createReactiveEffect</span>&lt;<span class="title">T</span> = <span class="title">any</span>&gt;(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">  fn: () =&gt; T,</span></span></span><br><span class="line"><span class="function"><span class="params">  options: ReactiveEffectOptions</span></span></span><br><span class="line"><span class="function"><span class="params"></span>): <span class="title">ReactiveEffect</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> effect = <span class="function"><span class="keyword">function</span> <span class="title">reactiveEffect</span>(<span class="params"></span>): <span class="title">unknown</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 没有激活，说明调用了effect stop函数</span></span><br><span class="line">    <span class="keyword">if</span> (!effect.active) &#123;</span><br><span class="line">      <span class="comment">// 无调度者则直接返回，否则执行fn</span></span><br><span class="line">      <span class="keyword">return</span> options.scheduler ? <span class="literal">undefined</span> : fn()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 判断EffectStack中有没有effect，有则不处理</span></span><br><span class="line">    <span class="keyword">if</span> (!effectStack.includes(effect)) &#123;</span><br><span class="line">      <span class="comment">// 清除effect</span></span><br><span class="line">      cleanup(effect)</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">        * 开始重新收集依赖</span></span><br><span class="line"><span class="comment">        * 压入stack</span></span><br><span class="line"><span class="comment">        * 将effect设置为activeEffect</span></span><br><span class="line"><span class="comment">        * */</span></span><br><span class="line">        enableTracking()</span><br><span class="line">        effectStack.push(effect)</span><br><span class="line">        activeEffect = effect</span><br><span class="line">        <span class="keyword">return</span> fn()</span><br><span class="line">      &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">        * 完成后将effect弹出</span></span><br><span class="line"><span class="comment">        * 重置依赖</span></span><br><span class="line"><span class="comment">        * 重置activeEffect</span></span><br><span class="line"><span class="comment">        * */</span></span><br><span class="line">        effectStack.pop()</span><br><span class="line">        resetTracking()</span><br><span class="line">        activeEffect = effectStack[effectStack.length - <span class="number">1</span>]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">as</span> ReactiveEffect</span><br><span class="line">  effect.id = uid++ <span class="comment">// 自增id，effect唯一标识</span></span><br><span class="line">  effect.allowRecurse = !!options.allowRecurse</span><br><span class="line">  effect._isEffect = <span class="literal">true</span> <span class="comment">// 是否是effect</span></span><br><span class="line">  effect.active = <span class="literal">true</span>  <span class="comment">// 是否激活</span></span><br><span class="line">  effect.raw = fn   <span class="comment">// 挂载原始对象</span></span><br><span class="line">  effect.deps = []  <span class="comment">// 当前effect的dep数组</span></span><br><span class="line">  effect.options = options  <span class="comment">// 传入的options</span></span><br><span class="line">  <span class="keyword">return</span> effect</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 每次effect运行都会重新收集依赖，deps是effect的依赖数组，需要全部清空</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">cleanup</span>(<span class="params">effect: ReactiveEffect</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; deps &#125; = effect</span><br><span class="line">  <span class="keyword">if</span> (deps.length) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; deps.length; i++) &#123;</span><br><span class="line">      deps[i].delete(effect)</span><br><span class="line">    &#125;</span><br><span class="line">    deps.length = <span class="number">0</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Track">Track</h2>
+<blockquote>
+<p>Track这个函数常出现在reactive的getter函数中，用于依赖收集</p>
+<p>源码详解见注释</p>
+</blockquote>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">track</span>(<span class="params">target: <span class="built_in">object</span>, <span class="keyword">type</span>: TrackOpTypes, key: unknown</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// activeEffect为空表示没有依赖</span></span><br><span class="line">  <span class="keyword">if</span> (!shouldTrack || activeEffect === <span class="literal">undefined</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// targetMap依赖管理Map，用于收集依赖</span></span><br><span class="line">  <span class="comment">// 检查targetMap中有没有target，没有则新建</span></span><br><span class="line">  <span class="keyword">let</span> depsMap = targetMap.get(target)</span><br><span class="line">  <span class="keyword">if</span> (!depsMap) &#123;</span><br><span class="line">    targetMap.set(target, (depsMap = <span class="keyword">new</span> <span class="built_in">Map</span>()))</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// dep用来收集依赖函数，当监听的key值发生变化，触发dep中的依赖函数更新</span></span><br><span class="line">  <span class="keyword">let</span> dep = depsMap.get(key)</span><br><span class="line">  <span class="keyword">if</span> (!dep) &#123;</span><br><span class="line">    depsMap.set(key, (dep = <span class="keyword">new</span> <span class="built_in">Set</span>()))</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (!dep.has(activeEffect)) &#123;</span><br><span class="line">    dep.add(activeEffect)</span><br><span class="line">    activeEffect.deps.push(dep)</span><br><span class="line">    <span class="comment">// 开发环境会触发onTrack，仅用于调试</span></span><br><span class="line">    <span class="keyword">if</span> (__DEV__ &amp;&amp; activeEffect.options.onTrack) &#123;</span><br><span class="line">      activeEffect.options.onTrack(&#123;</span><br><span class="line">        effect: activeEffect,</span><br><span class="line">        target,</span><br><span class="line">        <span class="keyword">type</span>,</span><br><span class="line">        key</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Trigger">Trigger</h2>
+<blockquote>
+<p>Trigger常出现在reactive中的setter函数中，用于触发依赖更新</p>
+<p>源码详解见注释</p>
+</blockquote>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">trigger</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">  target: <span class="built_in">object</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="keyword">type</span>: TriggerOpTypes,</span></span></span><br><span class="line"><span class="function"><span class="params">  key?: unknown,</span></span></span><br><span class="line"><span class="function"><span class="params">  newValue?: unknown,</span></span></span><br><span class="line"><span class="function"><span class="params">  oldValue?: unknown,</span></span></span><br><span class="line"><span class="function"><span class="params">  oldTarget?: <span class="built_in">Map</span>&lt;unknown, unknown&gt; | <span class="built_in">Set</span>&lt;unknown&gt;</span></span></span><br><span class="line"><span class="function"><span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 获取依赖Map，如果没有则不需要触发</span></span><br><span class="line">  <span class="keyword">const</span> depsMap = targetMap.get(target)</span><br><span class="line">  <span class="keyword">if</span> (!depsMap) &#123;</span><br><span class="line">    <span class="comment">// never been tracked</span></span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 使用Set保存需要触发的effect，避免重复</span></span><br><span class="line">  <span class="keyword">const</span> effects = <span class="keyword">new</span> <span class="built_in">Set</span>&lt;ReactiveEffect&gt;()</span><br><span class="line">  <span class="comment">// 定义依赖添加函数</span></span><br><span class="line">  <span class="keyword">const</span> add = <span class="function">(<span class="params">effectsToAdd: <span class="built_in">Set</span>&lt;ReactiveEffect&gt; | <span class="literal">undefined</span></span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (effectsToAdd) &#123;</span><br><span class="line">      effectsToAdd.forEach(<span class="function"><span class="params">effect</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (effect !== activeEffect || effect.allowRecurse) &#123;</span><br><span class="line">          effects.add(effect)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 将depsMap中的依赖添加到effects中</span></span><br><span class="line">  <span class="comment">// 只为了理解和原理的话   各个分支不用细看</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">type</span> === TriggerOpTypes.CLEAR) &#123;</span><br><span class="line">    <span class="comment">// collection being cleared</span></span><br><span class="line">    <span class="comment">// trigger all effects for target</span></span><br><span class="line">    depsMap.forEach(add)</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (key === <span class="string">&#x27;length&#x27;</span> &amp;&amp; isArray(target)) &#123;</span><br><span class="line">    depsMap.forEach(<span class="function">(<span class="params">dep, key</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (key === <span class="string">&#x27;length&#x27;</span> || key &gt;= (newValue <span class="keyword">as</span> <span class="built_in">number</span>)) &#123;</span><br><span class="line">        add(dep)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// schedule runs for SET | ADD | DELETE</span></span><br><span class="line">    <span class="keyword">if</span> (key !== <span class="built_in">void</span> <span class="number">0</span>) &#123;</span><br><span class="line">      add(depsMap.get(key))</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// also run for iteration key on ADD | DELETE | Map.SET</span></span><br><span class="line">    <span class="keyword">switch</span> (<span class="keyword">type</span>) &#123;</span><br><span class="line">      <span class="keyword">case</span> TriggerOpTypes.ADD:</span><br><span class="line">        <span class="keyword">if</span> (!isArray(target)) &#123;</span><br><span class="line">          add(depsMap.get(ITERATE_KEY))</span><br><span class="line">          <span class="keyword">if</span> (isMap(target)) &#123;</span><br><span class="line">            add(depsMap.get(MAP_KEY_ITERATE_KEY))</span><br><span class="line">          &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (isIntegerKey(key)) &#123;</span><br><span class="line">          <span class="comment">// new index added to array -&gt; length changes</span></span><br><span class="line">          add(depsMap.get(<span class="string">&#x27;length&#x27;</span>))</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">      <span class="keyword">case</span> TriggerOpTypes.DELETE:</span><br><span class="line">        <span class="keyword">if</span> (!isArray(target)) &#123;</span><br><span class="line">          add(depsMap.get(ITERATE_KEY))</span><br><span class="line">          <span class="keyword">if</span> (isMap(target)) &#123;</span><br><span class="line">            add(depsMap.get(MAP_KEY_ITERATE_KEY))</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">      <span class="keyword">case</span> TriggerOpTypes.SET:</span><br><span class="line">        <span class="keyword">if</span> (isMap(target)) &#123;</span><br><span class="line">          add(depsMap.get(ITERATE_KEY))</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 封装effects执行函数</span></span><br><span class="line">  <span class="keyword">const</span> run = <span class="function">(<span class="params">effect: ReactiveEffect</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (__DEV__ &amp;&amp; effect.options.onTrigger) &#123;</span><br><span class="line">      effect.options.onTrigger(&#123;</span><br><span class="line">        effect,</span><br><span class="line">        target,</span><br><span class="line">        key,</span><br><span class="line">        <span class="keyword">type</span>,</span><br><span class="line">        newValue,</span><br><span class="line">        oldValue,</span><br><span class="line">        oldTarget</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 如果存在scheduler则调用</span></span><br><span class="line">    <span class="keyword">if</span> (effect.options.scheduler) &#123;</span><br><span class="line">      effect.options.scheduler(effect)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      effect()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 触发effects中的所有依赖函数</span></span><br><span class="line">  effects.forEach(run)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Reactive">Reactive</h2>
+<blockquote>
+<p>了解了Track用于依赖收集，Trigger用于依赖触发，那么他们的调用时机是什么时候呢?来看看Reactive的源码就清楚了，源码详解见注释。</p>
+<p>注：源码结构较为复杂（封装），为便于理解原理，以下为简化源码。</p>
+</blockquote>
+<ul>
+<li>总结来说
+<ul>
+<li>在getter时进行依赖收集</li>
+<li>在setter时触发依赖更新</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">reactive</span>(<span class="params">target:<span class="built_in">object</span></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Proxy</span>(target,&#123;</span><br><span class="line">        <span class="function"><span class="title">get</span>(<span class="params">target: Target, key: <span class="built_in">string</span> | symbol, receiver: <span class="built_in">object</span></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">const</span> res = <span class="built_in">Reflect</span>.get(target, key, receiver)</span><br><span class="line">            track(target, TrackOpTypes.GET, key)</span><br><span class="line">            <span class="keyword">return</span> res</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="title">set</span>(<span class="params">target: <span class="built_in">object</span>, key: <span class="built_in">string</span> | symbol, value: unknown, receiver: <span class="built_in">object</span></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">let</span> oldValue = (target <span class="keyword">as</span> <span class="built_in">any</span>)[key]</span><br><span class="line">            <span class="keyword">const</span> result = <span class="built_in">Reflect</span>.set(target, key, value, receiver)</span><br><span class="line">            <span class="comment">// trigger(target, TriggerOpTypes.ADD, key, value)</span></span><br><span class="line">            trigger(target, TriggerOpTypes.SET, key, value, oldValue)</span><br><span class="line">            <span class="keyword">return</span> result</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1>Computed</h1>
+<blockquote>
+<p>Computed是Vue中常用且好用的一个属性，这个属性的值在依赖改变后同步进行改变，在依赖未改变时使用缓存的值。</p>
+</blockquote>
+<ul>
+<li>Vue2
+<ul>
+<li>在Vue2中Computed的实现通过嵌套watcher，实现响应式数据的依赖收集，间接链式触发依赖更新。</li>
+</ul>
+</li>
+<li>Vue3中出现了effect，重新实现了Computed属性
+<ul>
+<li>effect可以被理解为副作用函数，被当做依赖收集，在响应式数据更新后被触发。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>Show me the Code</p>
+</blockquote>
+<ul>
+<li>读完这段computed函数会发现，这里只是做了简要的getter和setter的赋值处理
+<ul>
+<li>computed支持两种写法
+<ul>
+<li>函数</li>
+<li>getter、setter</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">computed</span>&lt;<span class="title">T</span>&gt;(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">  getterOrOptions: ComputedGetter&lt;T&gt; | WritableComputedOptions&lt;T&gt;</span></span></span><br><span class="line"><span class="function"><span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> getter: ComputedGetter&lt;T&gt;</span><br><span class="line">  <span class="keyword">let</span> setter: ComputedSetter&lt;T&gt;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (isFunction(getterOrOptions)) &#123;</span><br><span class="line">    getter = getterOrOptions</span><br><span class="line">    setter = __DEV__</span><br><span class="line">      ? <span class="function">() =&gt;</span> &#123;</span><br><span class="line">          <span class="built_in">console</span>.warn(<span class="string">&#x27;Write operation failed: computed value is readonly&#x27;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">      : NOOP</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    getter = getterOrOptions.get</span><br><span class="line">    setter = getterOrOptions.set</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> ComputedRefImpl(</span><br><span class="line">    getter,</span><br><span class="line">    setter,</span><br><span class="line">    isFunction(getterOrOptions) || !getterOrOptions.set</span><br><span class="line">  ) <span class="keyword">as</span> <span class="built_in">any</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>核心逻辑都在ComputedRefImpl中，我们接着往下看
+<ul>
+<li>通过dirty变量标记数据是否为旧数据</li>
+<li>在响应式数据更新后将dirty赋值为true</li>
+<li>在下一次get时，dirty为true时进行重新计算，并将dirty赋值为false</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ComputedRefImpl</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> _value!: T</span><br><span class="line">  <span class="keyword">private</span> _dirty = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">readonly</span> effect: ReactiveEffect&lt;T&gt;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">readonly</span> __v_isRef = <span class="literal">true</span>;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">readonly</span> [ReactiveFlags.IS_READONLY]: <span class="built_in">boolean</span></span><br><span class="line"></span><br><span class="line">  <span class="title">constructor</span>(<span class="params"></span></span><br><span class="line"><span class="params">    getter: ComputedGetter&lt;T&gt;,</span></span><br><span class="line"><span class="params">    <span class="keyword">private</span> <span class="keyword">readonly</span> _setter: ComputedSetter&lt;T&gt;,</span></span><br><span class="line"><span class="params">    isReadonly: <span class="built_in">boolean</span></span></span><br><span class="line"><span class="params">  </span>) &#123;</span><br><span class="line">    <span class="built_in">this</span>.effect = effect(getter, &#123;</span><br><span class="line">      lazy: <span class="literal">true</span>,</span><br><span class="line">      <span class="comment">// 响应式数据更新后将dirty赋值为true</span></span><br><span class="line">      <span class="comment">// 下次执行getter判断dirty为true即重新计算computed值</span></span><br><span class="line">      scheduler: <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="built_in">this</span>._dirty) &#123;</span><br><span class="line">          <span class="built_in">this</span>._dirty = <span class="literal">true</span></span><br><span class="line">          <span class="comment">// 派发所有引用当前计算属性的副作用函数effect </span></span><br><span class="line">          trigger(toRaw(<span class="built_in">this</span>), TriggerOpTypes.SET, <span class="string">&#x27;value&#x27;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">this</span>[ReactiveFlags.IS_READONLY] = isReadonly</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">get</span> <span class="title">value</span>() &#123;</span><br><span class="line">    <span class="comment">// the computed ref may get wrapped by other proxies e.g. readonly() #3376</span></span><br><span class="line">    <span class="keyword">const</span> self = toRaw(<span class="built_in">this</span>)</span><br><span class="line">    <span class="comment">// 当响应式数据更新后dirty为true</span></span><br><span class="line">    <span class="comment">// 重新计算数据后，将dirty赋值为false</span></span><br><span class="line">    <span class="keyword">if</span> (self._dirty) &#123;</span><br><span class="line">      self._value = <span class="built_in">this</span>.effect()</span><br><span class="line">      self._dirty = <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 依赖收集</span></span><br><span class="line">    track(self, TrackOpTypes.GET, <span class="string">&#x27;value&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 返回计算后的值</span></span><br><span class="line">    <span class="keyword">return</span> self._value</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">set</span> <span class="title">value</span>(<span class="params">newValue: T</span>) &#123;</span><br><span class="line">    <span class="built_in">this</span>._setter(newValue)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1>Watch</h1>
+<blockquote>
+<p>Watch主要用于对某个变量的监听，并做相应的处理</p>
+<p>Vue3中不仅重构了watch，还多了一个WatchEffect API</p>
+</blockquote>
+<ul>
+<li>Watch</li>
+</ul>
+<blockquote>
+<p>用于对某个变量的监听，同时可以通过callBack拿到新值和旧值</p>
+</blockquote>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line">watch(state, <span class="function">(<span class="params">state, prevState</span>)=&gt;</span>&#123;&#125;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>WatchEffect</li>
+</ul>
+<blockquote>
+<p>每次更新都会执行，自动收集使用到的依赖</p>
+</blockquote>
+<blockquote>
+<p>无法获取到新值和旧值，可手动停止监听</p>
+</blockquote>
+<blockquote>
+<p><code>onInvalidate(fn)</code>传入的回调会在 <code>watchEffect</code> 重新运行或者 <code>watchEffect</code> 停止的时候执行</p>
+</blockquote>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> stop = watchEffect(<span class="function">(<span class="params">onInvalidate</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    onInvalidate(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)    </span><br><span class="line"><span class="comment">// 手动停止监听</span></span><br><span class="line">stop()</span><br></pre></td></tr></table></figure>
+<h2 id="watch和watchEffect的不同点">watch和watchEffect的不同点</h2>
+<ul>
+<li>watch惰性执行，watchEffect每次代码加载都会执行</li>
+<li>watch可指定监听变量，watchEffect自动依赖收集</li>
+<li>watch可获取新旧值，watchEffect不行</li>
+<li>watchEffect有onInvalidate功能，watch没有</li>
+<li>watch只可监听ref、reactive等对象，watchEffect只可监听具体属性</li>
+</ul>
+<h2 id="Source-Code">Source Code</h2>
+<blockquote>
+<p>Show me the Code</p>
+</blockquote>
+<ul>
+<li>这里可以看到watch和watchEffet的核心逻辑都封装到了doWatch中</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// watch</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">watch</span>&lt;<span class="title">T</span> = <span class="title">any</span>, <span class="title">Immediate</span> <span class="title">extends</span> <span class="title">Readonly</span>&lt;<span class="title">boolean</span>&gt; = <span class="title">false</span>&gt;(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">  source: T | WatchSource&lt;T&gt;,</span></span></span><br><span class="line"><span class="function"><span class="params">  cb: <span class="built_in">any</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">  options?: WatchOptions&lt;Immediate&gt;</span></span></span><br><span class="line"><span class="function"><span class="params"></span>): <span class="title">WatchStopHandle</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (__DEV__ &amp;&amp; !isFunction(cb)) &#123;</span><br><span class="line">    warn(</span><br><span class="line">      <span class="string">`\`watch(fn, options?)\` signature has been moved to a separate API. `</span> +</span><br><span class="line">        <span class="string">`Use \`watchEffect(fn, options?)\` instead. \`watch\` now only `</span> +</span><br><span class="line">        <span class="string">`supports \`watch(source, cb, options?) signature.`</span></span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> doWatch(source <span class="keyword">as</span> <span class="built_in">any</span>, cb, options)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">watchEffect</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">  effect: WatchEffect,</span></span></span><br><span class="line"><span class="function"><span class="params">  options?: WatchOptionsBase</span></span></span><br><span class="line"><span class="function"><span class="params"></span>): <span class="title">WatchStopHandle</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> doWatch(effect, <span class="literal">null</span>, options)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>doWatch</li>
+</ul>
+<blockquote>
+<p>以下为删减版源码，理解核心原理即可</p>
+<p>详情见注释</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">doWatch</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">  source: WatchSource | WatchSource[] | WatchEffect | object,</span></span></span><br><span class="line"><span class="function"><span class="params">  cb: WatchCallback | <span class="literal">null</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">  &#123; immediate, deep, flush, onTrack, onTrigger &#125;: WatchOptions = EMPTY_OBJ,</span></span></span><br><span class="line"><span class="function"><span class="params">  instance = currentInstance</span></span></span><br><span class="line"><span class="function"><span class="params"></span>): <span class="title">WatchStopHandle</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> getter: <span class="function">() =&gt;</span> any</span><br><span class="line">  <span class="keyword">let</span> forceTrigger = <span class="literal">false</span></span><br><span class="line">  <span class="keyword">let</span> isMultiSource = <span class="literal">false</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 对不同的情况做getter赋值</span></span><br><span class="line">  <span class="keyword">if</span> (isRef(source)) &#123;</span><br><span class="line">    <span class="comment">// ref通过.value获取</span></span><br><span class="line">    getter = <span class="function">() =&gt;</span> (source <span class="keyword">as</span> Ref).value</span><br><span class="line">    forceTrigger = !!(source <span class="keyword">as</span> Ref)._shallow</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (isReactive(source)) &#123;</span><br><span class="line">    <span class="comment">// reactive直接获取</span></span><br><span class="line">    getter = <span class="function">() =&gt;</span> source</span><br><span class="line">    deep = <span class="literal">true</span></span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (isArray(source)) &#123;</span><br><span class="line">    <span class="comment">// 如果是数组，做遍历处理</span></span><br><span class="line">    isMultiSource = <span class="literal">true</span></span><br><span class="line">    forceTrigger = source.some(isReactive)</span><br><span class="line">    getter = <span class="function">() =&gt;</span></span><br><span class="line">      source.map(<span class="function"><span class="params">s</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (isRef(s)) &#123;</span><br><span class="line">          <span class="keyword">return</span> s.value</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (isReactive(s)) &#123;</span><br><span class="line">          <span class="keyword">return</span> traverse(s)</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (isFunction(s)) &#123;</span><br><span class="line">          <span class="keyword">return</span> callWithErrorHandling(s, instance, ErrorCodes.WATCH_GETTER, [</span><br><span class="line">            instance &amp;&amp; (instance.proxy <span class="keyword">as</span> any)</span><br><span class="line">          ])</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          __DEV__ &amp;&amp; warnInvalidSource(s)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (isFunction(source)) &#123;</span><br><span class="line">    <span class="comment">// 如果是函数的情况</span></span><br><span class="line">    <span class="comment">// 有cb则为watch，没有则为watchEffect</span></span><br><span class="line">    <span class="keyword">if</span> (cb) &#123;</span><br><span class="line">      <span class="comment">// getter with cb</span></span><br><span class="line">      getter = <span class="function">() =&gt;</span></span><br><span class="line">        callWithErrorHandling(source, instance, ErrorCodes.WATCH_GETTER, [</span><br><span class="line">          instance &amp;&amp; (instance.proxy <span class="keyword">as</span> any)</span><br><span class="line">        ])</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// no cb -&gt; simple effect</span></span><br><span class="line">      getter = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (instance &amp;&amp; instance.isUnmounted) &#123;</span><br><span class="line">          <span class="keyword">return</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (cleanup) &#123;</span><br><span class="line">          cleanup()</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> callWithAsyncErrorHandling(</span><br><span class="line">          source,</span><br><span class="line">          instance,</span><br><span class="line">          ErrorCodes.WATCH_CALLBACK,</span><br><span class="line">          [onInvalidate]</span><br><span class="line">        )</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 异常情况</span></span><br><span class="line">    getter = NOOP</span><br><span class="line">    <span class="comment">// 抛出异常</span></span><br><span class="line">    __DEV__ &amp;&amp; warnInvalidSource(source)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 深度监听逻辑处理</span></span><br><span class="line">  <span class="keyword">if</span> (cb &amp;&amp; deep) &#123;</span><br><span class="line">    <span class="keyword">const</span> baseGetter = getter</span><br><span class="line">    getter = <span class="function">() =&gt;</span> traverse(baseGetter())</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">let</span> cleanup: <span class="function">() =&gt;</span> <span class="keyword">void</span></span><br><span class="line">  <span class="keyword">let</span> onInvalidate: InvalidateCbRegistrator = <span class="function">(<span class="params">fn: () =&gt; <span class="keyword">void</span></span>) =&gt;</span> &#123;</span><br><span class="line">    cleanup = runner.options.onStop = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      callWithErrorHandling(fn, instance, ErrorCodes.WATCH_CLEANUP)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 记录oldValue，并通过runner获取newValue</span></span><br><span class="line">  <span class="comment">// callback的封装处理为job</span></span><br><span class="line">  <span class="keyword">let</span> oldValue = isMultiSource ? [] : INITIAL_WATCHER_VALUE</span><br><span class="line">  <span class="keyword">const</span> job: SchedulerJob = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (!runner.active) &#123;</span><br><span class="line">      <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (cb) &#123;</span><br><span class="line">      <span class="comment">// watch(source, cb)</span></span><br><span class="line">      <span class="keyword">const</span> newValue = runner()</span><br><span class="line">      <span class="keyword">if</span> (</span><br><span class="line">        deep ||</span><br><span class="line">        forceTrigger ||</span><br><span class="line">        (isMultiSource</span><br><span class="line">          ? (newValue <span class="keyword">as</span> any[]).some(<span class="function">(<span class="params">v, i</span>) =&gt;</span></span><br><span class="line">              hasChanged(v, (oldValue <span class="keyword">as</span> any[])[i])</span><br><span class="line">            )</span><br><span class="line">          : hasChanged(newValue, oldValue)) ||</span><br><span class="line">        (__COMPAT__ &amp;&amp;</span><br><span class="line">          isArray(newValue) &amp;&amp;</span><br><span class="line">          isCompatEnabled(DeprecationTypes.WATCH_ARRAY, instance))</span><br><span class="line">      ) &#123;</span><br><span class="line">        <span class="comment">// cleanup before running cb again</span></span><br><span class="line">        <span class="keyword">if</span> (cleanup) &#123;</span><br><span class="line">          cleanup()</span><br><span class="line">        &#125;</span><br><span class="line">        callWithAsyncErrorHandling(cb, instance, ErrorCodes.WATCH_CALLBACK, [</span><br><span class="line">          newValue,</span><br><span class="line">          <span class="comment">// pass undefined as the old value when it&#x27;s changed for the first time</span></span><br><span class="line">          oldValue === INITIAL_WATCHER_VALUE ? <span class="literal">undefined</span> : oldValue,</span><br><span class="line">          onInvalidate</span><br><span class="line">        ])</span><br><span class="line">        oldValue = newValue</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// watchEffect</span></span><br><span class="line">      runner()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// important: mark the job as a watcher callback so that scheduler knows</span></span><br><span class="line">  <span class="comment">// it is allowed to self-trigger (#1727)</span></span><br><span class="line">  job.allowRecurse = !!cb</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 通过读取配置，处理job的触发时机</span></span><br><span class="line">  <span class="comment">// 并再次将job的执行封装到scheduler中</span></span><br><span class="line">  <span class="keyword">let</span> scheduler: ReactiveEffectOptions[<span class="string">&#x27;scheduler&#x27;</span>]</span><br><span class="line">  <span class="keyword">if</span> (flush === <span class="string">&#x27;sync&#x27;</span>) &#123; <span class="comment">// 同步执行</span></span><br><span class="line">    scheduler = job</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (flush === <span class="string">&#x27;post&#x27;</span>) &#123; <span class="comment">// 更新后执行</span></span><br><span class="line">    scheduler = <span class="function">() =&gt;</span> queuePostRenderEffect(job, instance &amp;&amp; instance.suspense)</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// default: &#x27;pre&#x27;</span></span><br><span class="line">    <span class="comment">// 更新前执行</span></span><br><span class="line">    scheduler = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (!instance || instance.isMounted) &#123;</span><br><span class="line">        queuePreFlushCb(job)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// with &#x27;pre&#x27; option, the first call must happen before</span></span><br><span class="line">        <span class="comment">// the component is mounted so it is called synchronously.</span></span><br><span class="line">        job()</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 使用effect副作用处理依赖收集，在依赖更新后调用scheduler（其中封装了callback的执行）</span></span><br><span class="line">  <span class="keyword">const</span> runner = effect(getter, &#123;</span><br><span class="line">    lazy: <span class="literal">true</span>,</span><br><span class="line">    onTrack,</span><br><span class="line">    onTrigger,</span><br><span class="line">    scheduler</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 收集依赖</span></span><br><span class="line">  recordInstanceBoundEffect(runner, instance)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 读取配置，进行watch初始化</span></span><br><span class="line">  <span class="comment">// 是否有cb</span></span><br><span class="line">  <span class="keyword">if</span> (cb) &#123;</span><br><span class="line">    <span class="comment">// 是否立刻执行</span></span><br><span class="line">    <span class="keyword">if</span> (immediate) &#123;</span><br><span class="line">      job()</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      oldValue = runner()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (flush === <span class="string">&#x27;post&#x27;</span>) &#123;</span><br><span class="line">    <span class="comment">// 是否更新后执行</span></span><br><span class="line">    queuePostRenderEffect(runner, instance &amp;&amp; instance.suspense)</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    runner()</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 返回手动停止函数</span></span><br><span class="line">  <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    stop(runner)</span><br><span class="line">    <span class="keyword">if</span> (instance) &#123;</span><br><span class="line">      remove(instance.effects!, runner)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1>Mixin</h1>
+<blockquote>
+<p>Mixin意为混合，是公共逻辑封装利器。</p>
+<p>原理比较简单，那就是合并。</p>
+</blockquote>
+<ul>
+<li>合并分为对象的合并和生命周期的合并
+<ul>
+<li>对象，mergeOption
+<ul>
+<li>类型Object.assign的合并，会出现覆盖现象</li>
+</ul>
+</li>
+<li>生命周期，mergeHook
+<ul>
+<li>合并会将两个生命周期放入一个队列，依次调用</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>mergeOptions</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mergeOptions</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">  to: <span class="built_in">any</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="keyword">from</span>: <span class="built_in">any</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">  instance?: ComponentInternalInstance | <span class="literal">null</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">  strats = instance &amp;&amp; instance.appContext.config.optionMergeStrategies</span></span></span><br><span class="line"><span class="function"><span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (__COMPAT__ &amp;&amp; isFunction(<span class="keyword">from</span>)) &#123;</span><br><span class="line">    <span class="keyword">from</span> = <span class="keyword">from</span>.options</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> &#123; mixins, <span class="attr">extends</span>: extendsOptions &#125; = <span class="keyword">from</span></span><br><span class="line"></span><br><span class="line">  extendsOptions &amp;&amp; mergeOptions(to, extendsOptions, instance, strats)</span><br><span class="line">  mixins &amp;&amp;</span><br><span class="line">    mixins.forEach(<span class="function">(<span class="params">m: ComponentOptionsMixin</span>) =&gt;</span></span><br><span class="line">      mergeOptions(to, m, instance, strats)</span><br><span class="line">    )</span><br><span class="line">    </span><br><span class="line">   <span class="comment">// 对mixin中的对象进行遍历</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> key <span class="keyword">in</span> <span class="keyword">from</span>) &#123;</span><br><span class="line">    <span class="comment">// 如果存在则进行覆盖处理</span></span><br><span class="line">    <span class="keyword">if</span> (strats &amp;&amp; hasOwn(strats, key)) &#123;</span><br><span class="line">      to[key] = strats[key](to[key], <span class="keyword">from</span>[key], instance &amp;&amp; instance.proxy, key)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 如果不存在则直接赋值</span></span><br><span class="line">      to[key] = <span class="keyword">from</span>[key]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> to</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>mergeHook</li>
+</ul>
+<blockquote>
+<p>简单粗暴放进Set，调用时依次调用</p>
+</blockquote>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mergeHook</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">  to: <span class="built_in">Function</span>[] | <span class="built_in">Function</span> | <span class="literal">undefined</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="keyword">from</span>: <span class="built_in">Function</span> | <span class="built_in">Function</span>[]</span></span></span><br><span class="line"><span class="function"><span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">Array</span>.from(<span class="keyword">new</span> <span class="built_in">Set</span>([...toArray(to), ...toArray(<span class="keyword">from</span>)]))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1>Vuex4</h1>
+<blockquote>
+<p>Vuex是在Vue中常用的状态管理库，在Vue3发布后，这个状态管理库也随之发出了适配Vue3的Vuex4</p>
+</blockquote>
+<h2 id="快速过Vuex3-x原理">快速过Vuex3.x原理</h2>
+<ul>
+<li>
+<p>为什么每个组件都可以通过</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">this</span>.$store</span><br></pre></td></tr></table></figure>
+<p>访问到store数据？</p>
+<ul>
+<li>在beforeCreate时，通过mixin的方式注入了store</li>
+</ul>
+</li>
+<li>
+<p>为什么Vuex中的数据都是响应式的</p>
+<ul>
+<li>创建store的时候调用的是<code>new Vue</code>,创建了一个Vue实例，相当于借用了Vue的响应式。</li>
+</ul>
+</li>
+<li>
+<p>mapXxxx是怎么获取到store中的数据和方法的</p>
+<ul>
+<li>mapXxxx只是一个语法糖，底层实现也是从$store中获取然后返回到computed / methods中。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>总的来看，可以把Vue3.x理解为一个每个组件都注入了的mixin?</p>
+</blockquote>
+<h2 id="Vuex4原理探究">Vuex4原理探究</h2>
+<blockquote>
+<p>去除冗余代码看本质</p>
+</blockquote>
+<h3 id="createStore">createStore</h3>
+<ul>
+<li>从createStore开始看起
+<ul>
+<li>可以发现Vuex4中的state是通过reactive API去创建的响应式数据，Vuex3中是通过new Vue实例</li>
+<li>dispatch、commit的实现基本是封装了一层执行，不用过于关心</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">createStore</span> (<span class="params">options</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Store(options)</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Store</span></span>&#123;</span><br><span class="line">    <span class="title">constructor</span> (<span class="params">options = &#123;&#125;</span>)&#123;</span><br><span class="line">        <span class="comment">// 省略若干代码...</span></span><br><span class="line">        <span class="built_in">this</span>._modules = <span class="keyword">new</span> ModuleCollection(options)</span><br><span class="line">        <span class="keyword">const</span> state = <span class="built_in">this</span>._modules.root.state</span><br><span class="line">        resetStoreState(<span class="built_in">this</span>, state)</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// bind commit and dispatch to self</span></span><br><span class="line">        <span class="keyword">const</span> store = <span class="built_in">this</span></span><br><span class="line">        <span class="keyword">const</span> &#123; dispatch, commit &#125; = <span class="built_in">this</span></span><br><span class="line">        <span class="built_in">this</span>.dispatch = <span class="function"><span class="keyword">function</span> <span class="title">boundDispatch</span> (<span class="params"><span class="keyword">type</span>, payload</span>) </span>&#123;</span><br><span class="line">          <span class="keyword">return</span> dispatch.call(store, <span class="keyword">type</span>, payload)</span><br><span class="line">        &#125;    </span><br><span class="line">        <span class="built_in">this</span>.commit = <span class="function"><span class="keyword">function</span> <span class="title">boundCommit</span> (<span class="params"><span class="keyword">type</span>, payload, options</span>) </span>&#123;</span><br><span class="line">          <span class="keyword">return</span> commit.call(store, <span class="keyword">type</span>, payload, options)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 省略若干代码...</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">resetStoreState</span> (<span class="params">store, state, hot</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 省略若干代码...</span></span><br><span class="line">    store._state = reactive(&#123;</span><br><span class="line">        data: state</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="comment">// 省略若干代码...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="install">install</h3>
+<ul>
+<li>Vuex是以插件的形式在Vue中使用的，在createApp时调用install安装</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">createAppAPI</span>&lt;<span class="title">HostElement</span>&gt;(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">  render: RootRenderFunction,</span></span></span><br><span class="line"><span class="function"><span class="params">  hydrate?: RootHydrateFunction</span></span></span><br><span class="line"><span class="function"><span class="params"></span>): <span class="title">CreateAppFunction</span>&lt;<span class="title">HostElement</span>&gt; </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">createApp</span>(<span class="params">rootComponent, rootProps = <span class="literal">null</span></span>) </span>&#123;</span><br><span class="line">  </span><br><span class="line">    <span class="comment">// 省略部分代码....</span></span><br><span class="line">    <span class="keyword">const</span> app: App = (context.app = &#123;</span><br><span class="line">      _uid: uid++,</span><br><span class="line">      _component: rootComponent <span class="keyword">as</span> ConcreteComponent,</span><br><span class="line">      _props: rootProps,</span><br><span class="line">      _container: <span class="literal">null</span>,</span><br><span class="line">      _context: context,</span><br><span class="line"></span><br><span class="line">      version,</span><br><span class="line">      </span><br><span class="line">      <span class="comment">// 省略部分代码....</span></span><br><span class="line"></span><br><span class="line">      <span class="function"><span class="title">use</span>(<span class="params">plugin: Plugin, ...options: <span class="built_in">any</span>[]</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (installedPlugins.has(plugin)) &#123;</span><br><span class="line">          __DEV__ &amp;&amp; warn(<span class="string">`Plugin has already been applied to target app.`</span>)</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (plugin &amp;&amp; isFunction(plugin.install)) &#123;</span><br><span class="line">          installedPlugins.add(plugin)</span><br><span class="line">          plugin.install(app, ...options)</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (isFunction(plugin)) &#123;</span><br><span class="line">          installedPlugins.add(plugin)</span><br><span class="line">          plugin(app, ...options)</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (__DEV__) &#123;</span><br><span class="line">          warn(</span><br><span class="line">            <span class="string">`A plugin must either be a function or an object with an &quot;install&quot; `</span> +</span><br><span class="line">              <span class="string">`function.`</span></span><br><span class="line">          )</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> app</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="comment">// 省略部分代码 ....</span></span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Store 类的install
+<ul>
+<li>实现通过inject获取</li>
+<li>实现this.$store获取</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>下面接着看provide实现</p>
+</blockquote>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line">install (app, injectKey) &#123;</span><br><span class="line">  <span class="comment">// 实现通过inject获取</span></span><br><span class="line">  app.provide(injectKey || storeKey, <span class="built_in">this</span>)</span><br><span class="line">  <span class="comment">// 实现this.$store获取</span></span><br><span class="line">  app.config.globalProperties.$store = <span class="built_in">this</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="app-provide实现">app.provide实现</h3>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">provide</span>(<span class="params">key, value</span>)</span> &#123;</span><br><span class="line">  <span class="comment">// 已存在则警告</span></span><br><span class="line">  <span class="keyword">if</span> (__DEV__ &amp;&amp; (key <span class="keyword">as</span> <span class="built_in">string</span> | symbol) <span class="keyword">in</span> context.provides) &#123;</span><br><span class="line">    warn(</span><br><span class="line">      <span class="string">`App already provides property with key &quot;<span class="subst">$&#123;<span class="built_in">String</span>(key)&#125;</span>&quot;. `</span> +</span><br><span class="line">        <span class="string">`It will be overwritten with the new value.`</span></span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 将store放入context的provide中</span></span><br><span class="line">  context.provides[key <span class="keyword">as</span> <span class="built_in">string</span>] = value</span><br><span class="line">  <span class="keyword">return</span> app</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// context相关   context为上下文对象</span></span><br><span class="line"><span class="keyword">const</span> context = createAppContext()</span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">createAppContext</span>(<span class="params"></span>): <span class="title">AppContext</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    app: <span class="literal">null</span> <span class="keyword">as</span> <span class="built_in">any</span>,</span><br><span class="line">    config: &#123;</span><br><span class="line">      isNativeTag: NO,</span><br><span class="line">      performance: <span class="literal">false</span>,</span><br><span class="line">      globalProperties: &#123;&#125;,</span><br><span class="line">      optionMergeStrategies: &#123;&#125;,</span><br><span class="line">      errorHandler: <span class="literal">undefined</span>,</span><br><span class="line">      warnHandler: <span class="literal">undefined</span>,</span><br><span class="line">      compilerOptions: &#123;&#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    mixins: [],</span><br><span class="line">    components: &#123;&#125;,</span><br><span class="line">    directives: &#123;&#125;,</span><br><span class="line">    provides: <span class="built_in">Object</span>.create(<span class="literal">null</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Vue-useStore">Vue.useStore</h3>
+<ul>
+<li>在Vue3 Composition API中使用Vuex</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useStore &#125; <span class="keyword">from</span> <span class="string">&#x27;vuex&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span>&#123;</span><br><span class="line">    <span class="function"><span class="title">setup</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">const</span> store = useStore();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>useStore的实现</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">useStore</span> (<span class="params">key = <span class="literal">null</span></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> inject(key !== <span class="literal">null</span> ? key : storeKey)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Vue-inject">Vue.inject</h3>
+<ul>
+<li>通过provide时存入的key取出store</li>
+<li>有父级实例则取父级实例的provides，没有则取根实例的provides</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">inject</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">  key: InjectionKey&lt;<span class="built_in">any</span>&gt; | <span class="built_in">string</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">  defaultValue?: unknown,</span></span></span><br><span class="line"><span class="function"><span class="params">  treatDefaultAsFactory = <span class="literal">false</span></span></span></span><br><span class="line"><span class="function"><span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> instance = currentInstance || currentRenderingInstance</span><br><span class="line">  <span class="keyword">if</span> (instance) &#123;</span><br><span class="line">    <span class="comment">// 有父级实例则取父级实例的provides，没有则取根实例的provides</span></span><br><span class="line">    <span class="keyword">const</span> provides =</span><br><span class="line">      instance.parent == <span class="literal">null</span></span><br><span class="line">        ? instance.vnode.appContext &amp;&amp; instance.vnode.appContext.provides</span><br><span class="line">        : instance.parent.provides</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过provide时存入的key取出store</span></span><br><span class="line">    <span class="keyword">if</span> (provides &amp;&amp; (key <span class="keyword">as</span> <span class="built_in">string</span> | symbol) <span class="keyword">in</span> provides) &#123;</span><br><span class="line">      <span class="keyword">return</span> provides[key <span class="keyword">as</span> <span class="built_in">string</span>]</span><br><span class="line">    <span class="comment">// 省略一部分代码......</span></span><br><span class="line">  &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Vue-provide">Vue.provide</h3>
+<ul>
+<li>Vue的provide API也比较简单，相当于直接通过key/value赋值</li>
+<li>当前实例provides和父级实例provides相同时，通过原型链建立连接</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">provide</span>&lt;<span class="title">T</span>&gt;(<span class="params">key: InjectionKey&lt;T&gt; | <span class="built_in">string</span> | <span class="built_in">number</span>, value: T</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!currentInstance) &#123;</span><br><span class="line">    <span class="keyword">if</span> (__DEV__) &#123;</span><br><span class="line">      warn(<span class="string">`provide() can only be used inside setup().`</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> provides = currentInstance.provides</span><br><span class="line">    <span class="keyword">const</span> parentProvides =</span><br><span class="line">      currentInstance.parent &amp;&amp; currentInstance.parent.provides</span><br><span class="line">    <span class="keyword">if</span> (parentProvides === provides) &#123;</span><br><span class="line">      provides = currentInstance.provides = <span class="built_in">Object</span>.create(parentProvides)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// TS doesn&#x27;t allow symbol as index type</span></span><br><span class="line">    provides[key <span class="keyword">as</span> <span class="built_in">string</span>] = value</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="注入">注入</h3>
+<ul>
+<li>为什么每个组件实例都有Store对象了?
+<ul>
+<li>在创建组件实例的时候注入了provides</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createComponentInstance</span>(<span class="params">vnode, parent, suspense</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">type</span> = vnode.type;</span><br><span class="line">    <span class="keyword">const</span> appContext = (parent ? parent.appContext : vnode.appContext) || emptyAppContext;</span><br><span class="line">    <span class="keyword">const</span> instance = &#123;</span><br><span class="line">        parent,</span><br><span class="line">        appContext,</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        provides: parent ? parent.provides : <span class="built_in">Object</span>.create(appContext.provides),</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="keyword">return</span> instance;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>可从vue中引入provide、inject、getCurrentInstance等API进行库开发 / 高阶用法，这里不过多赘述。</p>
+</blockquote>
+<h1>Diff算法优化</h1>
+<blockquote>
+<p>了解Vue3的Diff算法优化前，可以先了解一下<a target="_blank" rel="noopener" href="https://juejin.cn/post/6944887985531781133">Vue2的Diff算法</a></p>
+<p>本部分注重把算法讲清楚，将不进行逐行源码分析</p>
+</blockquote>
+<ul>
+<li>Vue3中的主要优化点为
+<ul>
+<li>在updateChildren时双端比较 -&gt; 最长递增子序列</li>
+<li>全量Diff -&gt; 静态标记 + 非全量Diff</li>
+<li>静态提升</li>
+</ul>
+</li>
+</ul>
+<h2 id="updateChildren">updateChildren</h2>
+<ul>
+<li>Vue2
+<ul>
+<li>头 - 头比较</li>
+<li>尾 - 尾比较</li>
+<li>头 - 尾比较</li>
+<li>尾 - 头比较</li>
+</ul>
+</li>
+<li>Vue3
+<ul>
+<li>头 - 头比较</li>
+<li>尾 - 尾比较</li>
+<li>基于最长递增子序列进行移动 / 删除 / 新增</li>
+</ul>
+</li>
+</ul>
+<h3 id="举个🌰">举个🌰</h3>
+<ul>
+<li>oldChild [a,b,c,d,e,f,g]</li>
+<li>newChild [a,b,f,c,d,e,h,g]</li>
+</ul>
+<ol>
+<li>首先进行头 - 头比较,比较到不一样的节点时跳出循环
+<ul>
+<li>得到[a,b]</li>
+</ul>
+</li>
+<li>然后进行尾 - 尾比较，比较到不一样的节点时跳出循环
+<ul>
+<li>得到[g]</li>
+</ul>
+</li>
+<li>剩余[f,c,d,e,h]
+<ul>
+<li>通过newIndexToOldIndexMap生成数组[5, 2, 3, 4, -1]</li>
+<li>得出最长递增子序列[2, 3, 4]对应节点为[c, d, e]</li>
+<li>剩余的节点基于[c, d, e]进行移动 / 新增 / 删除</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p><strong>最长递增子序列</strong> 减少Dom元素的移动，达到最少的 dom 操作以减小开销。</p>
+<p>关于最长递增子序列算法可以看看<a target="_blank" rel="noopener" href="https://github.com/labuladong/fucking-algorithm/blob/master/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%B3%BB%E5%88%97/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E8%AE%BE%E8%AE%A1%EF%BC%9A%E6%9C%80%E9%95%BF%E9%80%92%E5%A2%9E%E5%AD%90%E5%BA%8F%E5%88%97.md">最长递增子序列</a></p>
+</blockquote>
+<h2 id="静态标记">静态标记</h2>
+<blockquote>
+<p>Vue2中对vdom进行全量Diff，Vue3中增加了静态标记进行非全量Diff</p>
+<p>对vnode打了像以下枚举内的静态标记</p>
+</blockquote>
+<ul>
+<li>patchFlag</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="built_in">enum</span> PatchFlags&#123;</span><br><span class="line">  TEXT = <span class="number">1</span> ,  <span class="comment">//动态文本节点</span></span><br><span class="line">  CLASS = <span class="number">1</span> &lt;&lt; <span class="number">1</span>, <span class="comment">//2   动态class</span></span><br><span class="line">  STYLE = <span class="number">1</span> &lt;&lt; <span class="number">2</span>, <span class="comment">//4   动态style</span></span><br><span class="line">  PROPS = <span class="number">1</span> &lt;&lt; <span class="number">3</span>, <span class="comment">//8                动态属性，但不包含类名和样式</span></span><br><span class="line">  FULL_PROPS = <span class="number">1</span> &lt;&lt; <span class="number">4</span>, <span class="comment">//16   具有动态key属性，当key改变时，需进行完整的diff比较</span></span><br><span class="line">  HYDRATE_EVENTS = <span class="number">1</span> &lt;&lt; <span class="number">5</span>,<span class="comment">//32  带有监听事件的节点</span></span><br><span class="line">  STABLE_FRAGMENT = <span class="number">1</span> &lt;&lt; <span class="number">6</span>, <span class="comment">//64  一个不会改变子节点顺序的fragment</span></span><br><span class="line">  KEYED_FRAGMENT = <span class="number">1</span> &lt;&lt; <span class="number">7</span>,  <span class="comment">//128 带有key属性的fragment或部分子节点有key</span></span><br><span class="line">  UNKEYEN_FRAGMENT = <span class="number">1</span> &lt;&lt; <span class="number">8</span>,   <span class="comment">//256  子节点没有key的fragment</span></span><br><span class="line">  NEED_PATCH = <span class="number">1</span> &lt;&lt; <span class="number">9</span>,   <span class="comment">//512   一个节点只会进行非props比较</span></span><br><span class="line">  DYNAMIC_SLOTS = <span class="number">1</span> &lt;&lt; <span class="number">10</span>,<span class="comment">//1024   动态slot</span></span><br><span class="line">  HOISTED = -<span class="number">1</span>,   <span class="comment">//静态节点 </span></span><br><span class="line">  <span class="comment">//指示在diff过程中要退出优化模式</span></span><br><span class="line">  BAIL = -<span class="number">2</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="举个🌰-2">举个🌰</h3>
+<ul>
+<li>模板长这样</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>Hello World<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123;msg&#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>生成vdom源码</li>
+</ul>
+<blockquote>
+<p>对msg变量进行了标记</p>
+</blockquote>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createVNode <span class="keyword">as</span> _createVNode, toDisplayString <span class="keyword">as</span> _toDisplayString, openBlock <span class="keyword">as</span> _openBlock, createBlock <span class="keyword">as</span> _createBlock &#125; <span class="keyword">from</span> <span class="string">&quot;vue&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">render</span>(<span class="params">_ctx, _cache, $props, $setup, $data, $options</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (_openBlock(), _createBlock(<span class="string">&quot;div&quot;</span>, <span class="literal">null</span>, [</span><br><span class="line">    _createVNode(<span class="string">&quot;p&quot;</span>, <span class="literal">null</span>, <span class="string">&quot;Hello World&quot;</span>),</span><br><span class="line">    _createVNode(<span class="string">&quot;p&quot;</span>, <span class="literal">null</span>, _toDisplayString(_ctx.msg), <span class="number">1</span> <span class="comment">/* TEXT */</span>)</span><br><span class="line">  ]))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Check the console for the AST</span></span><br></pre></td></tr></table></figure>
+<h3 id="总结">总结</h3>
+<ul>
+<li>对vnode进行标记，将需要动态更新和不需要动态更新的节点进行分类</li>
+<li>静态节点仅需创建一次，渲染直接复用，不参与diff算法流程。</li>
+</ul>
+<h2 id="静态提升">静态提升</h2>
+<ul>
+<li>
+<p>Vue2中无论是元素是否参与更新，每次都会重新创建</p>
+</li>
+<li>
+<p>Vue3中对于不参与更新的元素，只会被创建一次，之后会在每次渲染时候被不停地复用</p>
+</li>
+<li>
+<p>以后每次进行render的时候，就不会重复创建这些静态的内容，而是直接从一开始就创建好的常量中取就行了。</p>
+</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createVNode <span class="keyword">as</span> _createVNode, toDisplayString <span class="keyword">as</span> _toDisplayString, openBlock <span class="keyword">as</span> _openBlock, createBlock <span class="keyword">as</span> _createBlock &#125; <span class="keyword">from</span> <span class="string">&quot;vue&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* 静态提升前</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">render</span>(<span class="params">_ctx, _cache, $props, $setup, $data, $options</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (_openBlock(), _createBlock(<span class="string">&quot;div&quot;</span>, <span class="literal">null</span>, [</span><br><span class="line">    _createVNode(<span class="string">&quot;p&quot;</span>, <span class="literal">null</span>, <span class="string">&quot;Xmo&quot;</span>),</span><br><span class="line">    _createVNode(<span class="string">&quot;p&quot;</span>, <span class="literal">null</span>, <span class="string">&quot;Xmo&quot;</span>),</span><br><span class="line">    _createVNode(<span class="string">&quot;p&quot;</span>, <span class="literal">null</span>, <span class="string">&quot;Xmo&quot;</span>),</span><br><span class="line">    _createVNode(<span class="string">&quot;p&quot;</span>, <span class="literal">null</span>, _toDisplayString(_ctx.msg), <span class="number">1</span> <span class="comment">/* TEXT */</span>)</span><br><span class="line">  ]))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* 静态提升后</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">const</span> _hoisted_1 = <span class="comment">/*#__PURE__*/</span>_createVNode(<span class="string">&quot;p&quot;</span>, <span class="literal">null</span>, <span class="string">&quot;Xmo&quot;</span>, -<span class="number">1</span> <span class="comment">/* HOISTED */</span>)</span><br><span class="line"><span class="keyword">const</span> _hoisted_2 = <span class="comment">/*#__PURE__*/</span>_createVNode(<span class="string">&quot;p&quot;</span>, <span class="literal">null</span>, <span class="string">&quot;Xmo&quot;</span>, -<span class="number">1</span> <span class="comment">/* HOISTED */</span>)</span><br><span class="line"><span class="keyword">const</span> _hoisted_3 = <span class="comment">/*#__PURE__*/</span>_createVNode(<span class="string">&quot;p&quot;</span>, <span class="literal">null</span>, <span class="string">&quot;Xmo&quot;</span>, -<span class="number">1</span> <span class="comment">/* HOISTED */</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">render</span>(<span class="params">_ctx, _cache, $props, $setup, $data, $options</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (_openBlock(), _createBlock(<span class="string">&quot;div&quot;</span>, <span class="literal">null</span>, [</span><br><span class="line">    _hoisted_1,</span><br><span class="line">    _hoisted_2,</span><br><span class="line">    _hoisted_3,</span><br><span class="line">    _createVNode(<span class="string">&quot;p&quot;</span>, <span class="literal">null</span>, _toDisplayString(_ctx.msg), <span class="number">1</span> <span class="comment">/* TEXT */</span>)</span><br><span class="line">  ]))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Check the console for the AST</span></span><br></pre></td></tr></table></figure>
+<h1>cacheHandlers 事件侦听器缓存</h1>
+<ul>
+<li>
+<p>默认情况下onClick会被视为动态绑定，所以每次都会去追踪它的变化</p>
+</li>
+<li>
+<p>但是因为是同一个函数，所以没有追踪变化，直接缓存起来复用即可。</p>
+</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 模板</span></span><br><span class="line">&lt;div&gt;</span><br><span class="line">  &lt;button <span class="meta">@click</span>=<span class="string">&quot;onClick&quot;</span>&gt;btn&lt;/button&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用缓存前</span></span><br><span class="line"><span class="comment">// 这里我们还没有开启事件监听缓存，熟悉的静态标记 8 /* PROPS */ 出现了，</span></span><br><span class="line"><span class="comment">// 它将标签的 Props （属性） 标记动态属性。</span></span><br><span class="line"><span class="comment">// 如果我们存在属性不会改变，不希望这个属性被标记为动态，那么就需要 cacheHandler 的出场了。</span></span><br><span class="line"><span class="keyword">import</span> &#123; createVNode <span class="keyword">as</span> _createVNode, openBlock <span class="keyword">as</span> _openBlock, createBlock <span class="keyword">as</span> _createBlock &#125; <span class="keyword">from</span> <span class="string">&quot;vue&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">render</span>(<span class="params">_ctx, _cache, $props, $setup, $data, $options</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (_openBlock(), _createBlock(<span class="string">&quot;div&quot;</span>, <span class="literal">null</span>, [</span><br><span class="line">    _createVNode(<span class="string">&quot;button&quot;</span>, &#123; <span class="attr">onClick</span>: _ctx.onClick &#125;, <span class="string">&quot;btn&quot;</span>, <span class="number">8</span> <span class="comment">/* PROPS */</span>, [<span class="string">&quot;onClick&quot;</span>])</span><br><span class="line">  ]))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Check the console for the AST</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用缓存后</span></span><br><span class="line"><span class="keyword">import</span> &#123; createVNode <span class="keyword">as</span> _createVNode, openBlock <span class="keyword">as</span> _openBlock, createBlock <span class="keyword">as</span> _createBlock &#125; <span class="keyword">from</span> <span class="string">&quot;vue&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">render</span>(<span class="params">_ctx, _cache, $props, $setup, $data, $options</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (_openBlock(), _createBlock(<span class="string">&quot;div&quot;</span>, <span class="literal">null</span>, [</span><br><span class="line">    _createVNode(<span class="string">&quot;button&quot;</span>, &#123;</span><br><span class="line">      onClick: _cache[<span class="number">1</span>] || (_cache[<span class="number">1</span>] = <span class="function">(<span class="params">...args</span>) =&gt;</span> (_ctx.onClick(...args)))</span><br><span class="line">    &#125;, <span class="string">&quot;btn&quot;</span>)</span><br><span class="line">  ]))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Check the console for the AST</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>它的意思很明显，onClick 方法被存入 cache。</p>
+<p>在使用的时候，如果能在缓存中找到这个方法，那么它将直接被使用。</p>
+<p>如果找不到，那么将这个方法注入缓存。</p>
+<p>总之，就是把方法给缓存了。</p>
+</blockquote>
+<p>掘金：<a target="_blank" rel="noopener" href="https://juejin.cn/user/3913917127467805">前端LeBron</a></p>
+<p>知乎：<a target="_blank" rel="noopener" href="https://www.zhihu.com/people/lebronchao">前端LeBron</a></p>
+<p>持续分享技术博文，关注微信公众号👇🏻</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/v2-be6b9cd0588dddc0e39428cacf11f6a3_720w.png" alt="img"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">LeBronChao-</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://lebronchao.com/2021/07/07/Vue3%E6%A0%B8%E5%BF%83%E6%BA%90%E7%A0%81/">https://lebronchao.com/2021/07/07/Vue3核心源码/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://lebronchao.com" target="_blank">LeBronChao's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Web%E5%BC%80%E5%8F%91/">Web开发</a><a class="post-meta__tags" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a><a class="post-meta__tags" href="/tags/Front-End/">Front End</a><a class="post-meta__tags" href="/tags/Vue/">Vue</a><a class="post-meta__tags" href="/tags/SPA/">SPA</a><a class="post-meta__tags" href="/tags/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a></div><div class="post_share"><div class="social-share" data-image="https://bloginfo.lebronchao.com/doc-image/Vue.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2021/06/22/JavaScipt-GC/"><img class="next-cover" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/JavaScript.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">[深入浅出]JavaScript GC 垃圾回收机制</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/03/06/Vue-基础入门-学习笔记/" title="Vue 基础入门 | 学习笔记"><img class="cover" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/Vue.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-03-06</div><div class="title">Vue 基础入门 | 学习笔记</div></div></a></div><div><a href="/2021/03/11/Vue的前世今生/" title="Vue的前世今生"><img class="cover" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/Vue.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-11</div><div class="title">Vue的前世今生</div></div></a></div><div><a href="/2020/07/26/Vue进阶-状态管理-Vuex/" title="Vue进阶 状态管理 Vuex"><img class="cover" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/Vue.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-07-26</div><div class="title">Vue进阶 状态管理 Vuex</div></div></a></div><div><a href="/2020/04/05/React-基础入门-学习笔记/" title="React 基础入门 | 学习笔记"><img class="cover" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/React.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-04-05</div><div class="title">React 基础入门 | 学习笔记</div></div></a></div><div><a href="/2021/03/24/Vue进阶-Diff算法详解-学习笔记/" title="Vue进阶 Diff算法详解 |  学习笔记"><img class="cover" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/Vue.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-24</div><div class="title">Vue进阶 Diff算法详解 |  学习笔记</div></div></a></div><div><a href="/2020/10/21/React进阶-React-Hooks-学习笔记/" title="React进阶 React Hooks | 学习笔记"><img class="cover" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/React.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-21</div><div class="title">React进阶 React Hooks | 学习笔记</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" data-lazy-src="https://bloginfo.lebronchao.com/personal-info/IMG_8050.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">LeBronChao-</div><div class="author-info__description">深圳大学物联网工程大三，前端开发工程师一枚。业余摄影师，交流/约拍可私戳。<br/>字节跳动内推码:4FCV6BV<br/>Email：LeBronChao@foxmail.com</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">46</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">70</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/LeBronChao"><i class="fab fa-github"></i><span>Follow My Github</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/LeBronChao" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:lebronchao@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://bloginfo.lebronchao.com/personal-info/IMG_8268-20210326002121490.jpg" target="_blank" title="微信"><i class="fab fa-weixin"></i></a><a class="social-icon" href="tencent://AddContact/?fromId=45&amp;fromSubId=1&amp;subcmd=all&amp;uin=1531229587&amp;website=www.oicqzone.com" target="_blank" title="QQ"><i class="fab fa-qq"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">掘金：<a target="_blank" rel="noopener" href="https://juejin.cn/user/3913917127467805">前端LeBron</a><br/>知乎：<a target="_blank" rel="noopener" href="https://www.zhihu.com/people/lebronchao">前端LeBron</a><br/>持续分享技术博文，关注wx公众号👇🏻<br/><img src="https://bloginfo.lebronchao.com/doc-image/v2-be6b9cd0588dddc0e39428cacf11f6a3_720w.png" /></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">Effect和Reactive</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Effect"><span class="toc-number">1.1.</span> <span class="toc-text">Effect</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Track"><span class="toc-number">1.2.</span> <span class="toc-text">Track</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Trigger"><span class="toc-number">1.3.</span> <span class="toc-text">Trigger</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reactive"><span class="toc-number">1.4.</span> <span class="toc-text">Reactive</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">Computed</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">Watch</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#watch%E5%92%8CwatchEffect%E7%9A%84%E4%B8%8D%E5%90%8C%E7%82%B9"><span class="toc-number">3.1.</span> <span class="toc-text">watch和watchEffect的不同点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Source-Code"><span class="toc-number">3.2.</span> <span class="toc-text">Source Code</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">Mixin</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">5.</span> <span class="toc-text">Vuex4</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BF%AB%E9%80%9F%E8%BF%87Vuex3-x%E5%8E%9F%E7%90%86"><span class="toc-number">5.1.</span> <span class="toc-text">快速过Vuex3.x原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vuex4%E5%8E%9F%E7%90%86%E6%8E%A2%E7%A9%B6"><span class="toc-number">5.2.</span> <span class="toc-text">Vuex4原理探究</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#createStore"><span class="toc-number">5.2.1.</span> <span class="toc-text">createStore</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#install"><span class="toc-number">5.2.2.</span> <span class="toc-text">install</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#app-provide%E5%AE%9E%E7%8E%B0"><span class="toc-number">5.2.3.</span> <span class="toc-text">app.provide实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vue-useStore"><span class="toc-number">5.2.4.</span> <span class="toc-text">Vue.useStore</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vue-inject"><span class="toc-number">5.2.5.</span> <span class="toc-text">Vue.inject</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vue-provide"><span class="toc-number">5.2.6.</span> <span class="toc-text">Vue.provide</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E5%85%A5"><span class="toc-number">5.2.7.</span> <span class="toc-text">注入</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">6.</span> <span class="toc-text">Diff算法优化</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#updateChildren"><span class="toc-number">6.1.</span> <span class="toc-text">updateChildren</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BE%E4%B8%AA%F0%9F%8C%B0"><span class="toc-number">6.1.1.</span> <span class="toc-text">举个🌰</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E6%A0%87%E8%AE%B0"><span class="toc-number">6.2.</span> <span class="toc-text">静态标记</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BE%E4%B8%AA%F0%9F%8C%B0-2"><span class="toc-number">6.2.1.</span> <span class="toc-text">举个🌰</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">6.2.2.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E6%8F%90%E5%8D%87"><span class="toc-number">6.3.</span> <span class="toc-text">静态提升</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">7.</span> <span class="toc-text">cacheHandlers 事件侦听器缓存</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/07/07/Vue3%E6%A0%B8%E5%BF%83%E6%BA%90%E7%A0%81/" title="[建议收藏]你想知道的Vue3核心源码这里都有"><img data-lazy-src="https://bloginfo.lebronchao.com/doc-image/Vue.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="[建议收藏]你想知道的Vue3核心源码这里都有"/></a><div class="content"><a class="title" href="/2021/07/07/Vue3%E6%A0%B8%E5%BF%83%E6%BA%90%E7%A0%81/" title="[建议收藏]你想知道的Vue3核心源码这里都有">[建议收藏]你想知道的Vue3核心源码这里都有</a><time datetime="2021-07-06T17:09:08.000Z" title="发表于 2021-07-07 01:09:08">2021-07-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/22/JavaScipt-GC/" title="[深入浅出]JavaScript GC 垃圾回收机制"><img data-lazy-src="https://bloginfo.lebronchao.com/doc-image/JavaScript.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="[深入浅出]JavaScript GC 垃圾回收机制"/></a><div class="content"><a class="title" href="/2021/06/22/JavaScipt-GC/" title="[深入浅出]JavaScript GC 垃圾回收机制">[深入浅出]JavaScript GC 垃圾回收机制</a><time datetime="2021-06-22T15:32:35.000Z" title="发表于 2021-06-22 23:32:35">2021-06-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/07/Webpack%E4%BD%93%E7%A7%AF%E5%8E%8B%E7%BC%A9/" title="[打包优化]Webpack体积压缩"><img data-lazy-src="https://bloginfo.lebronchao.com/doc-image/(null).png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="[打包优化]Webpack体积压缩"/></a><div class="content"><a class="title" href="/2021/06/07/Webpack%E4%BD%93%E7%A7%AF%E5%8E%8B%E7%BC%A9/" title="[打包优化]Webpack体积压缩">[打包优化]Webpack体积压缩</a><time datetime="2021-06-07T15:57:14.000Z" title="发表于 2021-06-07 23:57:14">2021-06-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/07/Webpack%E6%89%93%E5%8C%85%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7/" title="[分享]Webpack打包分析工具"><img data-lazy-src="https://bloginfo.lebronchao.com/doc-image/(null).png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="[分享]Webpack打包分析工具"/></a><div class="content"><a class="title" href="/2021/06/07/Webpack%E6%89%93%E5%8C%85%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7/" title="[分享]Webpack打包分析工具">[分享]Webpack打包分析工具</a><time datetime="2021-06-07T15:54:31.000Z" title="发表于 2021-06-07 23:54:31">2021-06-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/07/WebpackDLL/" title="[打包优化]Webpack DLL"><img data-lazy-src="https://bloginfo.lebronchao.com/doc-image/(null).png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="[打包优化]Webpack DLL"/></a><div class="content"><a class="title" href="/2021/06/07/WebpackDLL/" title="[打包优化]Webpack DLL">[打包优化]Webpack DLL</a><time datetime="2021-06-07T15:53:03.000Z" title="发表于 2021-06-07 23:53:03">2021-06-07</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By LeBronChao-</div><div class="footer_custom_text">@ 2021 LeBronChao- CopyRight | 粤ICP备2021025161号</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    let initData = {
+      el: '#vcomment',
+      appId: 'TKAoSdRXJ5zxwsjdGTP0Hrfh-9Nh9j0Va',
+      appKey: 'lI3CGg5rpWkxsfvsKTRkVszT',
+      placeholder: '留下你的足迹吧，記得留下你的昵称和邮箱....可以快速收到回复',
+      avatar: 'https://bloginfo.lebronchao.com/doc-image/touxiang.jpeg',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-cn',
+      recordIP: true,
+      serverURLs: 'https://tkaosdrx.lc-cn-e1-shared.com',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: true,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+    
+    if (true) {
+      const otherData = {"master":["64951ad612e26b51f6cc37788be7c200","b467dec92be8eb17c36ca900ef5d8dc1"],"friends":["30932c612db8dca9f08b98d6c1818ba2","898f30c9b8971d165a03abe4deba1ac6","741b327a5a0afbafd674ac782ddb0835","8dc27dfae152eb47084d3d0ae48c33d5","49fa154bbe0132bb66cb50c473f7f3ab","1f1338f1eff80cd7184516e788f9cbca","316d73187eea974f9f29c9fe4dc84a63","d4964055fcfa2b76c06d8cb038b0954e"],"metaPlaceholder":{"nick":"昵称(必填)","mail":"邮箱(必填,QQ邮箱可显示头像)","link":"主页(https://)"}}
+      initData = Object.assign(initData, otherData)
+    }
+    
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/gh/HCLonely/Valine@latest/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
