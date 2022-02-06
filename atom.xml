@@ -6,7 +6,7 @@
   <link href="https://lebronchao.com/atom.xml" rel="self"/>
   
   <link href="https://lebronchao.com/"/>
-  <updated>2021-12-22T15:50:51.000Z</updated>
+  <updated>2022-02-06T16:16:47.000Z</updated>
   <id>https://lebronchao.com/</id>
   
   <author>
@@ -15,6 +15,40 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>摄影 | 南山夜景</title>
+    <link href="https://lebronchao.com/2022/02/07/%E6%91%84%E5%BD%B1-%E5%8D%97%E5%B1%B1%E5%A4%9C%E6%99%AF/"/>
+    <id>https://lebronchao.com/2022/02/07/%E6%91%84%E5%BD%B1-%E5%8D%97%E5%B1%B1%E5%A4%9C%E6%99%AF/</id>
+    <published>2022-02-06T16:16:47.000Z</published>
+    <updated>2022-02-06T16:16:47.000Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>机身： SONY A7M2<br>镜头： SONY 24-70 GM<br>出镜： 无<br>地点： 深圳大南山公园</p></blockquote><div class="justified-gallery"><p><img src= "/img/loading.gif" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/DSC00174.JPG" alt="DSC00174"></p><p><img src= "/img/loading.gif" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/DSC00175.JPG" alt="DSC00175"></p><p><img src= "/img/loading.gif" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/DSC00229.JPG" alt="DSC00229"></p><p><img src= "/img/loading.gif" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/DSC00230.JPG" alt="DSC00230"></p><p><img src= "/img/loading.gif" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/DSC00167.JPG" alt="DSC00167"></p>          </div>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;机身： SONY A7M2&lt;br&gt;
+镜头： SONY 24-70 GM&lt;br&gt;
+出镜： 无&lt;br&gt;
+地点： 深圳大南山公园&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&quot;justified-gallery&quot;&gt;&lt;p&gt;&lt;img src= </summary>
+      
+    
+    
+    
+    <category term="摄影" scheme="https://lebronchao.com/categories/%E6%91%84%E5%BD%B1/"/>
+    
+    
+    <category term="摄影" scheme="https://lebronchao.com/tags/%E6%91%84%E5%BD%B1/"/>
+    
+    <category term="风光" scheme="https://lebronchao.com/tags/%E9%A3%8E%E5%85%89/"/>
+    
+    <category term="城市夜景" scheme="https://lebronchao.com/tags/%E5%9F%8E%E5%B8%82%E5%A4%9C%E6%99%AF/"/>
+    
+  </entry>
   
   <entry>
     <title>NodeJS加解密之Crypto</title>
@@ -688,45 +722,6 @@
     <category term="Diff 算法" scheme="https://lebronchao.com/tags/Diff-%E7%AE%97%E6%B3%95/"/>
     
     <category term="虚拟DOM" scheme="https://lebronchao.com/tags/%E8%99%9A%E6%8B%9FDOM/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>浅析HTTP缓存</title>
-    <link href="https://lebronchao.com/2021/03/20/%E6%B5%85%E6%9E%90HTTP%E7%BC%93%E5%AD%98/"/>
-    <id>https://lebronchao.com/2021/03/20/%E6%B5%85%E6%9E%90HTTP%E7%BC%93%E5%AD%98/</id>
-    <published>2021-03-20T03:38:49.000Z</published>
-    <updated>2021-03-20T03:38:49.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1>为什么需要缓存</h1><ul><li>通过缓存机制，可以在相应场景下复用以前获取的资源。</li><li>显著提高网站的性能和响应速度</li><li>减少网络流量和等待渲染时间</li><li>降低服务器压力</li></ul><h1>HTTP缓存类型</h1><ul><li>强缓存</li><li>协商缓存</li></ul><h1>强缓存</h1><p>对于强缓存，服务器返回的静态资源响应头会设置一个强制缓存的时间，在缓存时间内，如刷新浏览器请求相同资源，在缓存时间未过期的情况下，则直接使用已缓存资源。如缓存资源已过期，执行协商缓存策略。</p><ul><li>以下为与强缓存相关的HTTP头部字段</li></ul><table><thead><tr><th><strong>字段</strong></th><th><strong>用途</strong></th><th>实例</th><th><strong>优先级</strong></th><th><strong>HTTP版本</strong></th></tr></thead><tbody><tr><td>Expires</td><td>强缓存的过期日期</td><td>Expires:Thu,06 Aug 2021 14:36:18 GMT</td><td>低</td><td>1.0</td></tr><tr><td>Cache-Control</td><td>指定指令实现缓存机制</td><td>Cache-Control:max-age=60</td><td>高</td><td>1.1</td></tr></tbody></table><h2 id="Expires">Expires</h2><ul><li>响应头Expires字段包含强缓存资源的过期时间</li><li>值为0表示资源已过期或非强缓存</li></ul><h2 id="Cache-Control">Cache-Control</h2><p>通用消息头字段，通过指令来实现缓存机制。说明一下容易弄混的两个字段，其他指令参考<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Cache-Control">指令大全</a>。</p><ul><li>no-cache</li></ul><p>在发布缓存副本之前，强制要求缓存把请求提交给原始服务器进行验证(协商缓存验证)。</p><ul><li>no-store</li></ul><p>缓存不应存储有关客户端请求或服务器响应的任何内容，即不使用任何缓存。</p><h2 id="Expires-和-Cache-Control-的区别">Expires 和 Cache-Control 的区别</h2><ul><li>时间区别<ul><li>Expires 过期时间为绝对时间，指未来某个时间点缓存过期。</li><li>Cache-Control 为相对时间，相对于当前时间，如 60s 后缓存过期</li></ul></li><li>优先级<ul><li>Expires 的优先级低于 Cache-Control 字段</li><li>同时存在 Cache-Control 和 Expires时，以 Cache-Control 指令为准</li></ul></li><li>HTTP 版本<ul><li>Expires 是HTTP/1.0 提出的，其浏览器兼容性更好</li><li>Cache-Control 是 HTTP/1.1 提出的，浏览器兼容性不佳，所以 Expires 和 Cache-Control 可以同时存在，在不支持 Cache-Control的浏览器则以Expires为准</li></ul></li></ul><h1>协商缓存</h1><ul><li>协商缓存即和服务器协商是否使用缓存，通过判断后决定重新加载资源 or HTTP StatusCode 304</li><li>以下字段决定是否使用协商缓存，而非强缓存：</li></ul><table><thead><tr><th><strong>字段</strong></th><th><strong>协商缓存</strong></th><th><strong>优先级</strong></th></tr></thead><tbody><tr><td>Pragma</td><td>Pragma:no-cache</td><td>高</td></tr><tr><td>Cache-Control</td><td>Cache-Control:no-cache / Cache-Control:max-age=0</td><td>低</td></tr></tbody></table><h2 id="Pragma">Pragma</h2><ul><li>Pragma是一个HTTP1.0中规定的通用首部，如果 Cache-Control不存在的话，它的行为与 Cache-Control: no-cache 一致。强制要求缓存服务器在返回缓存的版本之前将请求提交到源头服务器进行协商验证。</li><li>Pragma的值就只有一个，no-cache，并且它的优先级比Cache-Control高。</li></ul><h2 id="Cache-Control-2">Cache-Control</h2><ul><li>上文介绍过Cache-Control，它的指令既可以用于强缓存又可应用于协商缓存策略中</li><li>其中Cache-Control: no-cache 和 Cache-Control: max-age=0 的作用一样，强制要求发起请求给服务器进行验证 (协商资源验证)。</li></ul><h1>协商策略</h1><p>当出现Pragma字段或者Cache-Control:no-cache时，就需要使用协商策略，常见的两对协商缓存字段如下</p><ul><li>ETag/If-None-Match</li><li>Last-Modified/If-Modfied-Since</li></ul><table><thead><tr><th><strong>字段</strong></th><th><strong>对应字段</strong></th><th><strong>值</strong></th><th><strong>描述</strong></th><th><strong>优先级</strong></th></tr></thead><tbody><tr><td>Last-Modified</td><td>If-Modified-Since</td><td>GMT时间</td><td>服务端资源的最后修改时间</td><td>低</td></tr><tr><td>If-Modified-Since</td><td>Last-Modified</td><td>GMT时间</td><td>上次请求响应头的Last-Modified，验证是否为服务端资源最后修改的时间，是返回304，否返回200。</td><td>低</td></tr><tr><td>Etag</td><td>If-None-Match</td><td>内容hash/文件信息</td><td>服务器缓存资源的文件信息或文件内容生成的哈希值</td><td>高</td></tr><tr><td>If-None-Match</td><td>Etag</td><td>内容hash/文件信息</td><td>上次请求响应头的ETag，验证服务器资源有没有修改，有返回200，没有返回304。</td><td>高</td></tr></tbody></table><h2 id="优缺点">优缺点</h2><ul><li>如果服务端修改了一段代码，然后又改回去了。<ul><li>此时资源文件的修改时间变了</li><li>实际上文件没有发生改变</li><li>这样缓存就失效了，产生了不必要的传输</li></ul></li><li>而ETag可以根据内容生成的hash来比较的，只要资源文件内容不变，就会应用客户端的缓存，减少不必要的传输。</li><li>所以ETag比Last-Modified缓存更精确、高效和节省带宽。</li></ul><h1>ETag</h1><h2 id="什么是ETag？">什么是ETag？</h2><p>Etag是 Entity tag的缩写，可以理解为“被请求资源的摘要标识”，Etag是服务端的一个资源的标识，在 HTTP 响应头中将其传送到客户端，类似这样，ETag:W/“50b1c1d4f775c61:df3”</p><h2 id="ETag格式">ETag格式</h2><ul><li>ETag:W/“xxxxxxxx”</li><li>ETag:“xxxxxxx”</li></ul><h3 id="强类型验证">强类型验证</h3><ul><li>比对资源每个字节都要一样。</li></ul><h3 id="W-前缀代表使用弱类型验证">W/前缀代表使用弱类型验证</h3><ul><li>不需要每个字节都一样，例如页脚的时间or展示的广告不一样，都可以认为是一样的。构建应用于弱验证类型的标签（etag）体系可能会比较复杂，因为这会涉及到对页面上不同的元素的重要性进行排序，但是会对缓存性能优化相当有帮助。</li></ul><h2 id="ETag生成需要满足什么条件？">ETag生成需要满足什么条件？</h2><ol><li>当文件更改时，ETag值必须改变</li><li>尽量便于计算，不会特别耗CPU。<ol><li>利用摘要算法生成（MD5, SHA128, SHA256）需慎重考虑，这些为CPU密集型运算。</li></ol></li><li>必须横向扩展，分布式部署时多个服务器节点上生成的ETag值保持一致。</li></ol><h2 id="ETag是怎么生成的（Nginx）">ETag是怎么生成的（Nginx）</h2><p><a href="https://github.com/nginx/nginx/blob/6c3838f9ed45f5c2aa6a971a0da3cb6ffe45b61e/src/http/ngx_http_core_module.c#L1582">Nginx的源码</a>中ETag由last_modified和content_length拼接而成</p><figure class="highlight c"><table><tr><td class="code"><pre><span class="line">etag-&gt;value.len = ngx_sprintf(etag-&gt;value.data, <span class="string">&quot;\&quot;%xT-%xO\&quot;&quot;</span>,</span><br><span class="line">                                  r-&gt;headers_out.last_modified_time,</span><br><span class="line">                                  r-&gt;headers_out.content_length_n)</span><br><span class="line">                      - etag-&gt;value.data;                                </span><br></pre></td></tr></table></figure><ul><li>翻译为以下伪代码</li></ul><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">etag = header.last_modified + <span class="string">&quot;-&quot;</span> + header.content_lenth</span><br></pre></td></tr></table></figure><ul><li>总结：Nginx中ETag由响应头的Last-Modified和Content-Length表示为十六进制组合而成。</li></ul><h3 id="Lodash网站请求检验">Lodash网站请求检验</h3><p><img src= "/img/loading.gif" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/lodash%E8%AF%B7%E6%B1%82-20210325234424565.png" alt="img"></p><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> LAST_MODIFIED = <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="built_in">parseInt</span>(<span class="string">&#x27;5fc4907d&#x27;</span>, <span class="number">16</span>) * <span class="number">1000</span>).toJSON()</span><br><span class="line"><span class="keyword">const</span> CONTENT_LENGTH = <span class="built_in">parseInt</span>(<span class="string">&#x27;f48&#x27;</span>, <span class="number">16</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(LAST_MODIFIED) <span class="comment">// 2020-11-30T06:26:05.000Z</span></span><br><span class="line"><span class="built_in">console</span>.log(CONTENT_LENGTH) <span class="comment">// 3912</span></span><br></pre></td></tr></table></figure><ul><li>输出结果</li></ul><p><img src= "/img/loading.gif" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/%E8%BE%93%E5%87%BA%E7%BB%93%E6%9E%9C-20210325234424619.png" alt="img"></p><ul><li>既然在nginx中ETag由Last-Modified和Content-Length组成，那它便算是一个加强版的Last-Modified了，那加强在什么地方呢？</li><li>Last-Modified只能作用于秒级的改变，而 nginx 中的 ETag 添加了文件大小的附加条件，不仅和修改时间有关，也和内容有关，使之更加精确。</li></ul><h2 id="Last-Modified是怎么生成的">Last-Modified是怎么生成的</h2><p>在linux中</p><ul><li>mtime：modified time指文件内容改变的时间戳</li><li>ctime：change time指文件属性改变的时间戳，属性包括mtime。而在 windows 上，它表示的是creation time</li><li>而HTTP服务选择Last-Modified时一般会选择mtime，表示文件内容修改的时间，来兼容Windows和Linux。</li><li>以下为<a href="https://github.com/nginx/nginx/blob/4bf4650f2f10f7bbacfe7a33da744f18951d416d/src/http/modules/ngx_http_static_module.c#L217">nginx源码</a></li></ul><figure class="highlight c"><table><tr><td class="code"><pre><span class="line">r-&gt;headers_out.status = NGX_HTTP_OK;     </span><br><span class="line">r-&gt;headers_out.content_length_n = of.size;     </span><br><span class="line">r-&gt;headers_out.last_modified_time = of.mtime;</span><br></pre></td></tr></table></figure><h2 id="如果-http-响应头中-ETag-值改变了，是否意味着文件内容一定已经更改？">如果 http 响应头中 ETag 值改变了，是否意味着文件内容一定已经更改？</h2><ul><li>不一定</li><li>文件在一秒内发生了改变而且文件大小不变</li><li>这种情况非常极端，概率很低</li><li>因此在正常情况下可以容忍一个不太完美但是高效的算法。</li></ul><p>掘金：<a href="https://juejin.cn/user/3913917127467805">前端LeBron</a></p><p>知乎：<a href="https://www.zhihu.com/people/lebronchao">前端LeBron</a></p><p>持续分享技术博文，关注微信公众号👇🏻</p><p><img src= "/img/loading.gif" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/v2-be6b9cd0588dddc0e39428cacf11f6a3_720w.png" alt="img"></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1&gt;为什么需要缓存&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;通过缓存机制，可以在相应场景下复用以前获取的资源。&lt;/li&gt;
-&lt;li&gt;显著提高网站的性能和响应速度&lt;/li&gt;
-&lt;li&gt;减少网络流量和等待渲染时间&lt;/li&gt;
-&lt;li&gt;降低服务器压力&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1&gt;HTTP缓存类型&lt;</summary>
-      
-    
-    
-    
-    <category term="Front End" scheme="https://lebronchao.com/categories/Front-End/"/>
-    
-    
-    <category term="Web开发" scheme="https://lebronchao.com/tags/Web%E5%BC%80%E5%8F%91/"/>
-    
-    <category term="学习笔记" scheme="https://lebronchao.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    <category term="HTTP" scheme="https://lebronchao.com/tags/HTTP/"/>
-    
-    <category term="缓存" scheme="https://lebronchao.com/tags/%E7%BC%93%E5%AD%98/"/>
-    
-    <category term="计算机网络" scheme="https://lebronchao.com/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
     
   </entry>
   
