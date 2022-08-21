@@ -1,0 +1,316 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>JavaScript 设计模式 —— 策略模式 | LeBronChao's Blog</title><meta name="keywords" content="Web开发,Front End,JavaScript,设计模式"><meta name="author" content="LeBronChao-"><meta name="copyright" content="LeBronChao-"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="很快，迎来了 JavaScript 设计模式系列的第二篇 —— 策略模式 …   什么是策略模式  策略模式定义： 定义一系列算法，把它们一个个封装起来，并且使它们可以相互替换  策略模式一般由两部分组成：   封装不同策略的策略组（使得代码复用性、可扩展、可维护性提高，避免大量 CV 代码的情况）   Context（委托算法，执行策略）   什么时候使用策略模式 ？  策略模式广泛应用于程序">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript 设计模式 —— 策略模式">
+<meta property="og:url" content="https://lebronchao.com/2022/08/21/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/index.html">
+<meta property="og:site_name" content="LeBronChao&#39;s Blog">
+<meta property="og:description" content="很快，迎来了 JavaScript 设计模式系列的第二篇 —— 策略模式 …   什么是策略模式  策略模式定义： 定义一系列算法，把它们一个个封装起来，并且使它们可以相互替换  策略模式一般由两部分组成：   封装不同策略的策略组（使得代码复用性、可扩展、可维护性提高，避免大量 CV 代码的情况）   Context（委托算法，执行策略）   什么时候使用策略模式 ？  策略模式广泛应用于程序">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://bloginfo.lebronchao.com/doc-image/f3248dbebc9f40769a83e9d148f3a880~tplv-k3u1fbpfcp-zoom-crop-mark:3024:3024:3024:1702.awebp">
+<meta property="article:published_time" content="2022-08-21T13:11:23.000Z">
+<meta property="article:modified_time" content="2022-08-21T13:11:23.000Z">
+<meta property="article:author" content="LeBronChao-">
+<meta property="article:tag" content="Web开发">
+<meta property="article:tag" content="Front End">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="设计模式">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://bloginfo.lebronchao.com/doc-image/f3248dbebc9f40769a83e9d148f3a880~tplv-k3u1fbpfcp-zoom-crop-mark:3024:3024:3024:1702.awebp"><link rel="shortcut icon" href="https://bloginfo.lebronchao.com/doc-image/bitbug_favicon%20(1).ico"><link rel="canonical" href="https://lebronchao.com/2022/08/21/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?0f958a253362f27db5bafcef151a46ab";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: LeBronChao-","link":"链接: ","source":"来源: LeBronChao's Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"top-right"},
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-08-21 21:11:23'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><link rel="stylesheet" href="/css/mycss.css"><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="LeBronChao's Blog" type="application/atom+xml">
+</head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" data-lazy-src="https://bloginfo.lebronchao.com/personal-info/IMG_8050.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">57</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">84</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/photo/"><i class="fa-fw fas fa-video"></i><span> 摄影</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 分类</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/categories/Front-End/"><i class="fa-fw fas fa-laptop"></i><span> Front End</span></a></li><li><a class="site-page" href="/categories/Back-End/"><i class="fa-fw fas fa-database"></i><span> Back End</span></a></li><li><a class="site-page" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><i class="fa-fw fas fa-wifi"></i><span> 计算机网络</span></a></li><li><a class="site-page" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><i class="fa-fw fa fa-cubes"></i><span> 设计模式</span></a></li><li><a class="site-page" href="/categories/%E5%BC%80%E5%8F%91%E6%8A%80%E8%83%BD/"><i class="fa-fw fab fa-git-square"></i><span> 开发技能</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/message/"><i class="fa-fw far fa-comment-dots"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user-circle"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://bloginfo.lebronchao.com/doc-image/f3248dbebc9f40769a83e9d148f3a880~tplv-k3u1fbpfcp-zoom-crop-mark:3024:3024:3024:1702.awebp')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">LeBronChao's Blog</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/photo/"><i class="fa-fw fas fa-video"></i><span> 摄影</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 分类</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/categories/Front-End/"><i class="fa-fw fas fa-laptop"></i><span> Front End</span></a></li><li><a class="site-page" href="/categories/Back-End/"><i class="fa-fw fas fa-database"></i><span> Back End</span></a></li><li><a class="site-page" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><i class="fa-fw fas fa-wifi"></i><span> 计算机网络</span></a></li><li><a class="site-page" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><i class="fa-fw fa fa-cubes"></i><span> 设计模式</span></a></li><li><a class="site-page" href="/categories/%E5%BC%80%E5%8F%91%E6%8A%80%E8%83%BD/"><i class="fa-fw fab fa-git-square"></i><span> 开发技能</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/message/"><i class="fa-fw far fa-comment-dots"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user-circle"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">JavaScript 设计模式 —— 策略模式</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-08-21T13:11:23.000Z" title="发表于 2022-08-21 21:11:23">2022-08-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-08-21T13:11:23.000Z" title="更新于 2022-08-21 21:11:23">2022-08-21</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>6分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
+<p>很快，迎来了 JavaScript 设计模式系列的第二篇 —— 策略模式 …</p>
+</blockquote>
+<p><img src= "/img/loading.gif" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/eeef21c8afaf4d89857f31ba2644ad36~tplv-k3u1fbpfcp-zoom-1.image" alt=""></p>
+<h1>什么是策略模式</h1>
+<blockquote>
+<p>策略模式定义：</p>
+<p>定义一系列算法，把它们一个个封装起来，并且使它们可以相互替换</p>
+</blockquote>
+<p>策略模式一般由两部分组成：</p>
+<ol>
+<li>
+<p>封装不同策略的策略组（使得代码复用性、可扩展、可维护性提高，避免大量 CV 代码的情况）</p>
+</li>
+<li>
+<p>Context（委托算法，执行策略）</p>
+</li>
+</ol>
+<h1>什么时候使用策略模式 ？</h1>
+<blockquote>
+<p>策略模式广泛应用于程序研发中，当出现需要根据不同的前置条件执行不同的算法得到结果时，使用策略模式可以让你的代码更加优雅</p>
+</blockquote>
+<p>怎么？不信？ 那就上点代码让你感受一下 💩 山的力量！</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/5cab40c1005d40c6a578a60fb43e836a~tplv-k3u1fbpfcp-zoom-1.image" alt=""></p>
+<blockquote>
+<p>假设一个函数负责 Consul （服务发现）和 LB （负载均衡）</p>
+<p>这里 Consul 函数就是 Context，各种 LB 算法就是策略组</p>
+<p>传入服务唯一标识和负载均衡算法</p>
+<p>返回服务器实例 IP 地址</p>
+<p>如想了解 LB 相关知识，可以看看这篇文章 <a target="_blank" rel="noopener" href="https://juejin.cn/post/6987196608161005581">[深入浅出 LB]手把手带你实现一个负载均衡器</a></p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">consul</span>(<span class="params">serviceId, algorithm</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (algorithm === <span class="string">&#x27;random&#x27;</span>) &#123;</span><br><span class="line">    <span class="comment">// random flow</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;xxx.xxx.xxx.xxx&#x27;</span>;</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (algorithm === <span class="string">&#x27;weightedRoundRobin&#x27;</span>) &#123;</span><br><span class="line">    <span class="comment">// weightedRoundRobin flow</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;xxx.xxx.xxx.xxx&#x27;</span>;</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (algorithm === <span class="string">&#x27;ipHash&#x27;</span>) &#123;</span><br><span class="line">    <span class="comment">// ipHash flow</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;xxx.xxx.xxx.xxx&#x27;</span>;</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (algorithm === <span class="string">&#x27;urlHash&#x27;</span>) &#123;</span><br><span class="line">    <span class="comment">// urlHash flow</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;xxx.xxx.xxx.xxx&#x27;</span>;</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (algorithm === <span class="string">&#x27;leastConnection&#x27;</span>) &#123;</span><br><span class="line">    <span class="comment">// leastConnection flow</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;xxx.xxx.xxx.xxx&#x27;</span>;</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (algorithm === <span class="string">&#x27;fair&#x27;</span>) &#123;</span><br><span class="line">    <span class="comment">// fair flow</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;xxx.xxx.xxx.xxx&#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以发现，这段代码存在着一些明显的问题</p>
+<ol>
+<li>
+<p>Consul 函数过于庞大，不符合单一职责原则，难维护</p>
+</li>
+<li>
+<p>堆砌了过多的 IF-ELSE 语句，代码看起来比较冗余</p>
+</li>
+<li>
+<p>负载均衡算法复用性较差，如果其他地方需要用到…（你不会直接 CV 吧 🤓</p>
+</li>
+</ol>
+<p><img src= "/img/loading.gif" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/6167b9b2dc57444cbbbbd660b86ae406~tplv-k3u1fbpfcp-zoom-1.image" alt=""></p>
+<blockquote>
+<p>针对以上问题，我们可以利用策略模式加以优化</p>
+</blockquote>
+<ol>
+<li>
+<p>首先将各 LB 算法封装成独立的函数，提高复用性</p>
+</li>
+<li>
+<p>建立算法名称 -&gt; 算法执行函数映射，干掉冗余的 IF-ELSE（简直就是 IF-ELSE 的救世主</p>
+</li>
+<li>
+<p>简化 Consul 函数，具体算法对于 Consul 来说是“隐形”的，单一职责</p>
+</li>
+<li>
+<p>可拓展性提高，如需拓展更多算法，仅需引入算法和添加 Map 中的配置</p>
+</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">random</span>(<span class="params">serviceId</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// random flow</span></span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="keyword">return</span> <span class="string">&#x27;xxx.xxx.xxx.xxx&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">weightedRoundRobin</span>(<span class="params">serviceId</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// weightedRoundRobin flow</span></span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="keyword">return</span> <span class="string">&#x27;xxx.xxx.xxx.xxx&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ipHash</span>(<span class="params">serviceId</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// IPHash flow</span></span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="keyword">return</span> <span class="string">&#x27;xxx.xxx.xxx.xxx&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">urlHash</span>(<span class="params">serviceId</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// URL Hash flow</span></span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="keyword">return</span> <span class="string">&#x27;xxx.xxx.xxx.xxx&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">leastConnection</span>(<span class="params">serviceId</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// leaseConnection flow</span></span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="keyword">return</span> <span class="string">&#x27;xxx.xxx.xxx.xxx&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fair</span>(<span class="params">serviceId</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// fair flow</span></span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="keyword">return</span> <span class="string">&#x27;xxx.xxx.xxx.xxx&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> ALGORITHM = &#123;</span><br><span class="line">  RANDOM: <span class="string">&#x27;random&#x27;</span>,</span><br><span class="line">  WEIGHTED_ROUND_ROBIN: <span class="string">&#x27;weightedRoundRobin&#x27;</span>,</span><br><span class="line">  IP_HASH: <span class="string">&#x27;ipHash&#x27;</span>,</span><br><span class="line">  URL_HASH: <span class="string">&#x27;urlHash&#x27;</span>,</span><br><span class="line">  LEAST_CONNECTION: <span class="string">&#x27;leastConnection&#x27;</span>,</span><br><span class="line">  FAIR: <span class="string">&#x27;fair&#x27;</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> ALGORITHM_MAP = &#123;</span><br><span class="line">  [ALGORITHM.RANDOM]: random,</span><br><span class="line">  [ALGORITHM.WEIGHTED_ROUND_ROBIN]: weightedRoundRobin,</span><br><span class="line">  [ALGORITHM.IP_HASH]: ipHash,</span><br><span class="line">  [ALGORITHM.URL_HASH]: urlHash,</span><br><span class="line">  [ALGORITHM.LEAST_CONNECTION]: leastConnection,</span><br><span class="line">  [ALGORITHM.FAIR]: fair,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">consul</span>(<span class="params">serviceId, algorithm</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> ALGORITHM_MAP[algorithm](serviceId);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1>策略模式应用场景之表单校验</h1>
+<h2 id="粗糙的表单校验">粗糙的表单校验</h2>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 粗糙的表单校验</span></span><br><span class="line"><span class="keyword">let</span> loginFrom = <span class="built_in">document</span>.getElementId(<span class="string">&#x27;loginFrom&#x27;</span>);</span><br><span class="line">loginFrom.onsubmit = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> username = <span class="built_in">document</span>.getElementId(<span class="string">&#x27;username&#x27;</span>);</span><br><span class="line">  <span class="keyword">const</span> pwd = <span class="built_in">document</span>.getElementId(<span class="string">&#x27;pwd&#x27;</span>);</span><br><span class="line">  <span class="keyword">const</span> mobile = <span class="built_in">document</span>.getElementId(<span class="string">&#x27;mobile&#x27;</span>);</span><br><span class="line">  <span class="keyword">if</span> (username === <span class="string">&#x27;&#x27;</span>) &#123;</span><br><span class="line">    alert(<span class="string">&#x27;用户名不可为空&#x27;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (pwd.length &lt; <span class="number">6</span>) &#123;</span><br><span class="line">    alert(<span class="string">&#x27;密码长度不能少于6位&#x27;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (</span><br><span class="line">    !<span class="regexp">/^1(3\d|4[5-9]|5[0-35-9]|6[2567]|7[0-8]|8\d|9[0-35-9])\d&#123;8&#125;$/</span>.test(mobile)</span><br><span class="line">  ) &#123;</span><br><span class="line">    alert(<span class="string">&#x27;手机号码格式不正确&#x27;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="使用策略模式优化后的表单校验">使用策略模式优化后的表单校验</h2>
+<blockquote>
+<p>Context：validate</p>
+<p>策略组：strategy</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 使用策略模式优化</span></span><br><span class="line"><span class="keyword">const</span> strategy = &#123;</span><br><span class="line">  isEmpty: <span class="function"><span class="keyword">function</span> (<span class="params">&#123; value &#125;, errMsg</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (value === <span class="string">&#x27;&#x27;</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> errMsg;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  isMobile: <span class="function"><span class="keyword">function</span> (<span class="params">&#123; value &#125;, errMsg</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (</span><br><span class="line">      !<span class="regexp">/^1(3\d|4[5-9]|5[0-35-9]|6[2567]|7[0-8]|8\d|9[0-35-9])\d&#123;8&#125;$/</span>.test(value)</span><br><span class="line">    ) &#123;</span><br><span class="line">      <span class="keyword">return</span> errMsg;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  isLongerThanMinLength: <span class="function"><span class="keyword">function</span> (<span class="params">&#123; value, len &#125;, errMsg</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (value.length &lt; len) &#123;</span><br><span class="line">      <span class="keyword">return</span> errMsg;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Validator</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.validateItems = [];</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="title">add</span>(<span class="params">params, strategyKey, errMsg</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.validateItems.push(&#123; params, strategyKey, errMsg &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="title">start</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> item <span class="keyword">of</span> <span class="built_in">this</span>.validateItems) &#123;</span><br><span class="line">      <span class="keyword">const</span> &#123; params, strategyKey, errMsg &#125; = item;</span><br><span class="line">      <span class="keyword">const</span> msg = strategy[strategyKey](params, errMsg);</span><br><span class="line">      <span class="keyword">if</span> (msg) &#123;</span><br><span class="line">        <span class="keyword">return</span> msg;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">validate</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> username = <span class="built_in">document</span>.getElementId(<span class="string">&#x27;username&#x27;</span>);</span><br><span class="line">  <span class="keyword">const</span> pwd = <span class="built_in">document</span>.getElementId(<span class="string">&#x27;pwd&#x27;</span>);</span><br><span class="line">  <span class="keyword">const</span> mobile = <span class="built_in">document</span>.getElementId(<span class="string">&#x27;mobile&#x27;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> validator = <span class="keyword">new</span> Validator();</span><br><span class="line">  validator.add(&#123; <span class="attr">value</span>: username &#125;, <span class="string">&#x27;isEmpty&#x27;</span>, <span class="string">&#x27;用户名不可为空&#x27;</span>);</span><br><span class="line">  validator.add(</span><br><span class="line">    &#123; <span class="attr">value</span>: pwd, <span class="attr">len</span>: <span class="number">6</span> &#125;,</span><br><span class="line">    <span class="string">&#x27;isLongerThanMinLength&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;密码长度不能少于6位&#x27;</span></span><br><span class="line">  );</span><br><span class="line">  validator.add(&#123; <span class="attr">value</span>: mobile &#125;, <span class="string">&#x27;isMobile&#x27;</span>, <span class="string">&#x27;手机号码格式不正确&#x27;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> errMsg = validator.start();</span><br><span class="line">  <span class="keyword">if</span> (errMsg) &#123;</span><br><span class="line">    alert(errMsg);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    alert(<span class="string">&#x27;校验通过&#x27;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">validate();</span><br></pre></td></tr></table></figure>
+<h1>策略模式和多态的区别</h1>
+<ul>
+<li>
+<p>策略模式定义了算法组，分别封装，它们之间可以相互替换，此模式的变化独立于使用算法的客户</p>
+</li>
+<li>
+<p>多态常用继承、方法重写、父类引用指向子类对象等方法实现</p>
+</li>
+</ul>
+<blockquote>
+<p>策略模式强调的是做同一件事的不同且不重复的方法</p>
+<p>多态是一种语言机制，有的不支持多态的语言也一样要实现策略模式</p>
+<p>策略处于程序设计层次，多态处于语言语法层次</p>
+</blockquote>
+<h1>总结</h1>
+<h2 id="策略模式的优点">策略模式的优点</h2>
+<ul>
+<li>
+<p>策略模式利用组合、委托和多态等技术和思想，可以有效避免多重且冗余的 IF-ELSE</p>
+</li>
+<li>
+<p>策略模式提供了对开放——封闭原则的完美支持，将算法封装在独立的策略中。可以在不修改原代码的情况下，灵活增加新算法。提高了它们的复用性、和可拓展性，也更容易切换和理解。</p>
+</li>
+<li>
+<p>策略模式中的算法也可以复用在工程的其他地方，避免大量重复的 CV 工作</p>
+</li>
+<li>
+<p>在策略模式中利用组合和委托来让 Context 拥有执行算法的能力，这也是继承的一种更轻便的替代方案</p>
+</li>
+</ul>
+<h2 id="策略模式的缺点">策略模式的缺点</h2>
+<ul>
+<li>
+<p>策略模式会在程序中增加许多策略函数、类、对象，但实际上比把它们堆砌在 Context 中要更好</p>
+</li>
+<li>
+<p>使用策略模式必须了解所有的策略，必须了解它们的细节比较它们之间的不同点，才能选择一个合适的策略。此时需要向用户暴露它的所有实现，违反最少知识原则。</p>
+</li>
+</ul>
+<p><img src= "/img/loading.gif" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/a16be28e58b54115b4bc17ebc45b7cd0~tplv-k3u1fbpfcp-zoom-1.image" alt=""></p>
+<p>掘金：<a target="_blank" rel="noopener" href="https://juejin.cn/user/3913917127467805">前端 LeBron</a></p>
+<p>知乎：<a target="_blank" rel="noopener" href="https://www.zhihu.com/people/lebronchao">前端 LeBron</a></p>
+<p>持续分享技术博文，关注微信公众号 👇🏻</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/v2-be6b9cd0588dddc0e39428cacf11f6a3_720w.png" alt="img"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">LeBronChao-</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://lebronchao.com/2022/08/21/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/">https://lebronchao.com/2022/08/21/JavaScript设计模式-策略模式/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://lebronchao.com" target="_blank">LeBronChao's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Web%E5%BC%80%E5%8F%91/">Web开发</a><a class="post-meta__tags" href="/tags/Front-End/">Front End</a><a class="post-meta__tags" href="/tags/JavaScript/">JavaScript</a><a class="post-meta__tags" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></div><div class="post_share"><div class="social-share" data-image="https://bloginfo.lebronchao.com/doc-image/f3248dbebc9f40769a83e9d148f3a880~tplv-k3u1fbpfcp-zoom-crop-mark:3024:3024:3024:1702.awebp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2022/08/21/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/"><img class="next-cover" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/63460f4ae2fe44c7beb9201528f684b7~tplv-k3u1fbpfcp-zoom-crop-mark:3024:3024:3024:1702.awebp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">JavaScript 设计模式 —— 单例模式</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/08/21/JavaScript设计模式-单例模式/" title="JavaScript 设计模式 —— 单例模式"><img class="cover" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/63460f4ae2fe44c7beb9201528f684b7~tplv-k3u1fbpfcp-zoom-crop-mark:3024:3024:3024:1702.awebp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-21</div><div class="title">JavaScript 设计模式 —— 单例模式</div></div></a></div><div><a href="/2021/06/22/JavaScipt-GC/" title="[深入浅出]JavaScript GC 垃圾回收机制"><img class="cover" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/JavaScript.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-06-22</div><div class="title">[深入浅出]JavaScript GC 垃圾回收机制</div></div></a></div><div><a href="/2020/10/10/Redux-状态管理-学习笔记/" title="React进阶 状态管理 Redux| 学习笔记"><img class="cover" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/React.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-10</div><div class="title">React进阶 状态管理 Redux| 学习笔记</div></div></a></div><div><a href="/2020/03/06/Vue-基础入门-学习笔记/" title="Vue 基础入门 | 学习笔记"><img class="cover" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/Vue.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-03-06</div><div class="title">Vue 基础入门 | 学习笔记</div></div></a></div><div><a href="/2021/03/11/Vue的前世今生/" title="Vue的前世今生"><img class="cover" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/Vue.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-11</div><div class="title">Vue的前世今生</div></div></a></div><div><a href="/2020/07/26/Vue进阶-状态管理-Vuex/" title="Vue进阶 状态管理 Vuex"><img class="cover" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/Vue.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-07-26</div><div class="title">Vue进阶 状态管理 Vuex</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" data-lazy-src="https://bloginfo.lebronchao.com/personal-info/IMG_8050.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">LeBronChao-</div><div class="author-info__description">深圳大学(SZTU) 22届 物联网工程<br/>前端开发工程师一枚<br/>业余摄影师，交流/约拍可私戳。<br/>字节跳动内推码:4FCV6BV<br/>Email：LeBronChao@foxmail.com</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">57</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">84</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/LeBronChao"><i class="fab fa-github"></i><span>Follow My Github</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/LeBronChao" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:lebronchao@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://bloginfo.lebronchao.com/personal-info/IMG_8268-20210326002121490.jpg" target="_blank" title="微信"><i class="fab fa-weixin"></i></a><a class="social-icon" href="tencent://AddContact/?fromId=45&amp;fromSubId=1&amp;subcmd=all&amp;uin=1531229587&amp;website=www.oicqzone.com" target="_blank" title="QQ"><i class="fab fa-qq"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">掘金：<a target="_blank" rel="noopener" href="https://juejin.cn/user/3913917127467805">前端LeBron</a><br/>知乎：<a target="_blank" rel="noopener" href="https://www.zhihu.com/people/lebronchao">前端LeBron</a><br/>持续分享技术博文，关注wx公众号👇🏻<br/><img src="https://bloginfo.lebronchao.com/doc-image/v2-be6b9cd0588dddc0e39428cacf11f6a3_720w.png" /></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">什么是策略模式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">什么时候使用策略模式 ？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">策略模式应用场景之表单校验</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B2%97%E7%B3%99%E7%9A%84%E8%A1%A8%E5%8D%95%E6%A0%A1%E9%AA%8C"><span class="toc-number">3.1.</span> <span class="toc-text">粗糙的表单校验</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F%E4%BC%98%E5%8C%96%E5%90%8E%E7%9A%84%E8%A1%A8%E5%8D%95%E6%A0%A1%E9%AA%8C"><span class="toc-number">3.2.</span> <span class="toc-text">使用策略模式优化后的表单校验</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">策略模式和多态的区别</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F%E7%9A%84%E4%BC%98%E7%82%B9"><span class="toc-number">5.1.</span> <span class="toc-text">策略模式的优点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="toc-number">5.2.</span> <span class="toc-text">策略模式的缺点</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/08/21/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/" title="JavaScript 设计模式 —— 策略模式"><img data-lazy-src="https://bloginfo.lebronchao.com/doc-image/f3248dbebc9f40769a83e9d148f3a880~tplv-k3u1fbpfcp-zoom-crop-mark:3024:3024:3024:1702.awebp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JavaScript 设计模式 —— 策略模式"/></a><div class="content"><a class="title" href="/2022/08/21/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/" title="JavaScript 设计模式 —— 策略模式">JavaScript 设计模式 —— 策略模式</a><time datetime="2022-08-21T13:11:23.000Z" title="发表于 2022-08-21 21:11:23">2022-08-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/08/21/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" title="JavaScript 设计模式 —— 单例模式"><img data-lazy-src="https://bloginfo.lebronchao.com/doc-image/63460f4ae2fe44c7beb9201528f684b7~tplv-k3u1fbpfcp-zoom-crop-mark:3024:3024:3024:1702.awebp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JavaScript 设计模式 —— 单例模式"/></a><div class="content"><a class="title" href="/2022/08/21/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" title="JavaScript 设计模式 —— 单例模式">JavaScript 设计模式 —— 单例模式</a><time datetime="2022-08-21T13:11:14.000Z" title="发表于 2022-08-21 21:11:14">2022-08-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/02/20/%E6%91%84%E5%BD%B1-%E6%A2%A7%E6%A1%90%E5%B1%B1/" title="摄影 | 梧桐山"><img data-lazy-src="https://bloginfo.lebronchao.com/doc-image/DSC00287.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="摄影 | 梧桐山"/></a><div class="content"><a class="title" href="/2022/02/20/%E6%91%84%E5%BD%B1-%E6%A2%A7%E6%A1%90%E5%B1%B1/" title="摄影 | 梧桐山">摄影 | 梧桐山</a><time datetime="2022-02-19T16:24:49.000Z" title="发表于 2022-02-20 00:24:49">2022-02-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/02/07/%E6%91%84%E5%BD%B1-%E5%8D%97%E5%B1%B1%E5%A4%9C%E6%99%AF/" title="摄影 | 南山夜景"><img data-lazy-src="https://bloginfo.lebronchao.com/doc-image/DSC00174.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="摄影 | 南山夜景"/></a><div class="content"><a class="title" href="/2022/02/07/%E6%91%84%E5%BD%B1-%E5%8D%97%E5%B1%B1%E5%A4%9C%E6%99%AF/" title="摄影 | 南山夜景">摄影 | 南山夜景</a><time datetime="2022-02-06T16:16:47.000Z" title="发表于 2022-02-07 00:16:47">2022-02-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/12/22/NodeJS%E5%8A%A0%E8%A7%A3%E5%AF%86%E4%B9%8BCrypto/" title="NodeJS加解密之Crypto"><img data-lazy-src="https://bloginfo.lebronchao.com/doc-image/node.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="NodeJS加解密之Crypto"/></a><div class="content"><a class="title" href="/2021/12/22/NodeJS%E5%8A%A0%E8%A7%A3%E5%AF%86%E4%B9%8BCrypto/" title="NodeJS加解密之Crypto">NodeJS加解密之Crypto</a><time datetime="2021-12-22T15:50:51.000Z" title="发表于 2021-12-22 23:50:51">2021-12-22</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By LeBronChao-</div><div class="footer_custom_text">@ 2022 LeBronChao- CopyRight | <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备2021025161号</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    let initData = {
+      el: '#vcomment',
+      appId: 'TKAoSdRXJ5zxwsjdGTP0Hrfh-9Nh9j0Va',
+      appKey: 'lI3CGg5rpWkxsfvsKTRkVszT',
+      placeholder: '留下你的足迹吧，記得留下你的昵称和邮箱....可以快速收到回复',
+      avatar: 'https://bloginfo.lebronchao.com/doc-image/touxiang.jpeg',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-cn',
+      recordIP: true,
+      serverURLs: 'https://tkaosdrx.lc-cn-e1-shared.com',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: true,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+    
+    if (true) {
+      const otherData = {"master":["64951ad612e26b51f6cc37788be7c200","b467dec92be8eb17c36ca900ef5d8dc1"],"friends":["30932c612db8dca9f08b98d6c1818ba2","898f30c9b8971d165a03abe4deba1ac6","741b327a5a0afbafd674ac782ddb0835","8dc27dfae152eb47084d3d0ae48c33d5","49fa154bbe0132bb66cb50c473f7f3ab","1f1338f1eff80cd7184516e788f9cbca","316d73187eea974f9f29c9fe4dc84a63","d4964055fcfa2b76c06d8cb038b0954e"],"metaPlaceholder":{"nick":"昵称(必填)","mail":"邮箱(必填,QQ邮箱可显示头像)","link":"主页(https://)"}}
+      initData = Object.assign(initData, otherData)
+    }
+    
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/gh/HCLonely/Valine@latest/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
