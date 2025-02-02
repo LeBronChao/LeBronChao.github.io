@@ -1,11 +1,11 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>初识Webpack | LeBronChao's Blog</title><meta name="keywords" content="Web开发,Webpack,打包构建,前端,性能优化"><meta name="author" content="LeBronChao-"><meta name="copyright" content="LeBronChao-"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="写作不易，未经作者允许禁止以任何形式转载！ 如果觉得文章不错，欢迎关注、点赞和分享！  Webpack初体验 用Webpack解决什么问题  模块化 高级特性、开发效率、安全性  ES6+、Typescript、sacc、less   监听文件变化并反映到浏览器上，提高开发效率 开发完成后的打包，压缩、合并、tree-shaking等以及其他相关的优化  Webpack是什么   Webpck是">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>初识Webpack | LeBronChao's Blog</title><meta name="keywords" content="Web开发,Webpack,打包构建,前端,性能优化"><meta name="author" content="LeBronChao-"><meta name="copyright" content="LeBronChao-"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="写作不易，未经作者允许禁止以任何形式转载！ 如果觉得文章不错，欢迎关注、点赞和分享！  Webpack 初体验 用 Webpack 解决什么问题  模块化 高级特性、开发效率、安全性  ES6+、Typescript、sacc、less   监听文件变化并反映到浏览器上，提高开发效率 开发完成后的打包，压缩、合并、tree-shaking 等以及其他相关的优化  Webpack 是什么   We">
 <meta property="og:type" content="article">
 <meta property="og:title" content="初识Webpack">
 <meta property="og:url" content="https://lebronchao.com/2021/05/12/%E5%88%9D%E8%AF%86Webpack/index.html">
 <meta property="og:site_name" content="LeBronChao&#39;s Blog">
-<meta property="og:description" content="写作不易，未经作者允许禁止以任何形式转载！ 如果觉得文章不错，欢迎关注、点赞和分享！  Webpack初体验 用Webpack解决什么问题  模块化 高级特性、开发效率、安全性  ES6+、Typescript、sacc、less   监听文件变化并反映到浏览器上，提高开发效率 开发完成后的打包，压缩、合并、tree-shaking等以及其他相关的优化  Webpack是什么   Webpck是">
+<meta property="og:description" content="写作不易，未经作者允许禁止以任何形式转载！ 如果觉得文章不错，欢迎关注、点赞和分享！  Webpack 初体验 用 Webpack 解决什么问题  模块化 高级特性、开发效率、安全性  ES6+、Typescript、sacc、less   监听文件变化并反映到浏览器上，提高开发效率 开发完成后的打包，压缩、合并、tree-shaking 等以及其他相关的优化  Webpack 是什么   We">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://bloginfo.lebronchao.com/doc-image/(null).png">
+<meta property="og:image" content="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/doc-image/(null).png">
 <meta property="article:published_time" content="2021-05-11T16:53:03.000Z">
 <meta property="article:modified_time" content="2021-05-11T16:53:03.000Z">
 <meta property="article:author" content="LeBronChao-">
@@ -15,7 +15,7 @@
 <meta property="article:tag" content="前端">
 <meta property="article:tag" content="性能优化">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://bloginfo.lebronchao.com/doc-image/(null).png"><link rel="shortcut icon" href="https://bloginfo.lebronchao.com/doc-image/bitbug_favicon%20(1).ico"><link rel="canonical" href="https://lebronchao.com/2021/05/12/%E5%88%9D%E8%AF%86Webpack/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+<meta name="twitter:image" content="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/doc-image/(null).png"><link rel="shortcut icon" href="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/doc-image/bitbug_favicon%20(1).ico"><link rel="canonical" href="https://lebronchao.com/2021/05/12/%E5%88%9D%E8%AF%86Webpack/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
 (function() {
   var hm = document.createElement("script");
   hm.src = "https://hm.baidu.com/hm.js?0f958a253362f27db5bafcef151a46ab";
@@ -156,12 +156,12 @@
       document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
     }
     })(window)</script><link rel="stylesheet" href="/css/mycss.css"><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="LeBronChao's Blog" type="application/atom+xml">
-</head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" data-lazy-src="https://bloginfo.lebronchao.com/personal-info/IMG_8050.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">88</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/photo/"><i class="fa-fw fas fa-video"></i><span> 摄影</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 分类</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/categories/Front-End/"><i class="fa-fw fas fa-laptop"></i><span> Front End</span></a></li><li><a class="site-page" href="/categories/Back-End/"><i class="fa-fw fas fa-database"></i><span> Back End</span></a></li><li><a class="site-page" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><i class="fa-fw fas fa-wifi"></i><span> 计算机网络</span></a></li><li><a class="site-page" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><i class="fa-fw fa fa-cubes"></i><span> 设计模式</span></a></li><li><a class="site-page" href="/categories/%E5%BC%80%E5%8F%91%E6%8A%80%E8%83%BD/"><i class="fa-fw fab fa-git-square"></i><span> 开发技能</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/message/"><i class="fa-fw far fa-comment-dots"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user-circle"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://bloginfo.lebronchao.com/doc-image/(null).png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">LeBronChao's Blog</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/photo/"><i class="fa-fw fas fa-video"></i><span> 摄影</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 分类</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/categories/Front-End/"><i class="fa-fw fas fa-laptop"></i><span> Front End</span></a></li><li><a class="site-page" href="/categories/Back-End/"><i class="fa-fw fas fa-database"></i><span> Back End</span></a></li><li><a class="site-page" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><i class="fa-fw fas fa-wifi"></i><span> 计算机网络</span></a></li><li><a class="site-page" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><i class="fa-fw fa fa-cubes"></i><span> 设计模式</span></a></li><li><a class="site-page" href="/categories/%E5%BC%80%E5%8F%91%E6%8A%80%E8%83%BD/"><i class="fa-fw fab fa-git-square"></i><span> 开发技能</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/message/"><i class="fa-fw far fa-comment-dots"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user-circle"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">初识Webpack</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-05-11T16:53:03.000Z" title="发表于 2021-05-12 00:53:03">2021-05-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-05-11T16:53:03.000Z" title="更新于 2021-05-12 00:53:03">2021-05-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Front-End/">Front End</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>7分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
+</head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" data-lazy-src="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/personal-info/IMG_8050.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">88</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/photo/"><i class="fa-fw fas fa-video"></i><span> 摄影</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 分类</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/categories/Front-End/"><i class="fa-fw fas fa-laptop"></i><span> Front End</span></a></li><li><a class="site-page" href="/categories/Back-End/"><i class="fa-fw fas fa-database"></i><span> Back End</span></a></li><li><a class="site-page" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><i class="fa-fw fas fa-wifi"></i><span> 计算机网络</span></a></li><li><a class="site-page" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><i class="fa-fw fa fa-cubes"></i><span> 设计模式</span></a></li><li><a class="site-page" href="/categories/%E5%BC%80%E5%8F%91%E6%8A%80%E8%83%BD/"><i class="fa-fw fab fa-git-square"></i><span> 开发技能</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/message/"><i class="fa-fw far fa-comment-dots"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user-circle"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/doc-image/(null).png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">LeBronChao's Blog</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/photo/"><i class="fa-fw fas fa-video"></i><span> 摄影</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 分类</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/categories/Front-End/"><i class="fa-fw fas fa-laptop"></i><span> Front End</span></a></li><li><a class="site-page" href="/categories/Back-End/"><i class="fa-fw fas fa-database"></i><span> Back End</span></a></li><li><a class="site-page" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><i class="fa-fw fas fa-wifi"></i><span> 计算机网络</span></a></li><li><a class="site-page" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><i class="fa-fw fa fa-cubes"></i><span> 设计模式</span></a></li><li><a class="site-page" href="/categories/%E5%BC%80%E5%8F%91%E6%8A%80%E8%83%BD/"><i class="fa-fw fab fa-git-square"></i><span> 开发技能</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/message/"><i class="fa-fw far fa-comment-dots"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user-circle"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">初识Webpack</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-05-11T16:53:03.000Z" title="发表于 2021-05-12 00:53:03">2021-05-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-05-11T16:53:03.000Z" title="更新于 2021-05-12 00:53:03">2021-05-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Front-End/">Front End</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>8分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
 <p>写作不易，未经作者允许禁止以任何形式转载！</p>
 <p>如果觉得文章不错，欢迎关注、点赞和分享！</p>
 </blockquote>
-<h1>Webpack初体验</h1>
-<h2 id="用Webpack解决什么问题">用Webpack解决什么问题</h2>
+<h1>Webpack 初体验</h1>
+<h2 id="用-Webpack-解决什么问题">用 Webpack 解决什么问题</h2>
 <ol>
 <li>模块化</li>
 <li>高级特性、开发效率、安全性
@@ -170,64 +170,64 @@
 </ul>
 </li>
 <li>监听文件变化并反映到浏览器上，提高开发效率</li>
-<li>开发完成后的打包，压缩、合并、tree-shaking等以及其他相关的优化</li>
+<li>开发完成后的打包，压缩、合并、tree-shaking 等以及其他相关的优化</li>
 </ol>
-<h2 id="Webpack是什么">Webpack是什么</h2>
+<h2 id="Webpack-是什么">Webpack 是什么</h2>
 <ul>
 <li>
-<p>Webpck是一个静态的模块化打包工具，为现代的JS应用程序</p>
+<p>Webpck 是一个静态的模块化打包工具，为现代的 JS 应用程序</p>
 </li>
 <li>
 <p>我们来对上面的解释进行拆解：</p>
 <ul>
-<li>打包bundler：webpack可以将帮助我们进行打包，所以它是一个打包工具。</li>
-<li>静态的static：这样表述的原因是我们最终可以将代码打包成最终的静态资源（部署到静态服务器）</li>
-<li>模块化module：webpack默认支持各种模块化开发，ES Module、CommonJS、AMD等</li>
-<li>现代的modern：现代前端开发面临各种各样的问题，才催生了webpack的出现和发展</li>
+<li>打包 bundler：webpack 可以将帮助我们进行打包，所以它是一个打包工具。</li>
+<li>静态的 static：这样表述的原因是我们最终可以将代码打包成最终的静态资源（部署到静态服务器）</li>
+<li>模块化 module：webpack 默认支持各种模块化开发，ES Module、CommonJS、AMD 等</li>
+<li>现代的 modern：现代前端开发面临各种各样的问题，才催生了 webpack 的出现和发展</li>
 </ul>
 </li>
 </ul>
-<h2 id="Webpack和Vite">Webpack和Vite</h2>
+<h2 id="Webpack-和-Vite">Webpack 和 Vite</h2>
 <blockquote>
-<p>Webpack会被Vite取代吗？</p>
+<p>Webpack 会被 Vite 取代吗？</p>
 </blockquote>
 <ol>
-<li>vite推出后确实引起了很多的反响，也有很多人看好vite的发展</li>
-<li>但是目前vite取代webpack还有很长的路要走
+<li>vite 推出后确实引起了很多的反响，也有很多人看好 vite 的发展</li>
+<li>但是目前 vite 取代 webpack 还有很长的路要走
 <ul>
-<li>目前vue项目支持使用vite，也支持使用webpack</li>
-<li>vite最终打包的过程，依然需要借助于rollup完成</li>
+<li>目前 vue 项目支持使用 vite，也支持使用 webpack</li>
+<li>vite 最终打包的过程，依然需要借助于 rollup 完成</li>
 </ul>
 </li>
-<li>vite核心思想并不是首创
+<li>vite 核心思想并不是首创
 <ul>
-<li>事实上，vite的思想和之前的snowpack是重合的，而且相对目前来说snowpack会更加成熟</li>
-<li>当然，后续发展来看vite可能会超越snowpack</li>
+<li>事实上，vite 的思想和之前的 snowpack 是重合的，而且相对目前来说 snowpack 会更加成熟</li>
+<li>当然，后续发展来看 vite 可能会超越 snowpack</li>
 </ul>
 </li>
-<li>webpack的更新迭代
+<li>webpack 的更新迭代
 <ul>
-<li>webpack在发展工程中，也会不断改进自己，借鉴其他工具的一些优势和思想</li>
+<li>webpack 在发展工程中，也会不断改进自己，借鉴其他工具的一些优势和思想</li>
 <li>在这么多年的发展中，无论是自身的优势还是生态都是非常强大的。</li>
 </ul>
 </li>
 </ol>
 <blockquote>
-<p>关于Vite的思考</p>
+<p>关于 Vite 的思考</p>
 </blockquote>
 <ol>
 <li>
 <p>学习任何的东西，重要的是学习核心思想</p>
 <ul>
-<li>学习了JS学TS不是从0开始</li>
-<li>学习了Vue，学React也不是从0开始</li>
+<li>学习了 JS 学 TS 不是从 0 开始</li>
+<li>学习了 Vue，学 React 也不是从 0 开始</li>
 </ul>
 </li>
 <li>
 <p>任何工具的出现，都是更好地服务于我们开发</p>
 <ul>
 <li>
-<p>无论是vite的出现，还是以后新的工具出现，不要有任何排斥的思想；</p>
+<p>无论是 vite 的出现，还是以后新的工具出现，不要有任何排斥的思想；</p>
 </li>
 <li>
 <p>我们要深刻地明白，工具都是为了更好地给我们提供服务</p>
@@ -238,33 +238,33 @@
 </ul>
 </li>
 </ol>
-<h1>Webpack默认打包</h1>
+<h1>Webpack 默认打包</h1>
 <ul>
 <li>
-<p>我们可以通过webpack进行打包，之后运行打包之后的代码</p>
+<p>我们可以通过 webpack 进行打包，之后运行打包之后的代码</p>
 <ul>
 <li>
-<p>在目录下直接执行webpack命令</p>
+<p>在目录下直接执行 webpack 命令</p>
 <p><code>webpack</code></p>
 </li>
 <li>
-<p>直接在终端执行webpack可能本机安装版本和项目版本不同，所以在package.json中定义命令例如：“build”:“webpack”，这样就会根据package.json中的webpack版本进行打包（前提是已install）。</p>
+<p>直接在终端执行 webpack 可能本机安装版本和项目版本不同，所以在 package.json 中定义命令例如：“build”:“webpack”，这样就会根据 package.json 中的 webpack 版本进行打包（前提是已 install）。</p>
 </li>
 </ul>
 </li>
 <li>
-<p>生成一个dist文件夹，里面存放一个main.js文件，就是打包之后的文件</p>
+<p>生成一个 dist 文件夹，里面存放一个 main.js 文件，就是打包之后的文件</p>
 <ul>
 <li>这个文件中的代码被压缩和丑化了</li>
-<li>暂时不关心他是如何做到的，后续我讲webpack实现模块化原理时会再次讲到。</li>
-<li>另外发现代码中依然存在ES6的语法，比如箭头函数、const等，这是因为默认情况下webpack并不清楚我们打包后的文件是否需要转成ES5之前的语法，后续我们需要通过babel来进行转换和设置；</li>
+<li>暂时不关心他是如何做到的，后续我讲 webpack 实现模块化原理时会再次讲到。</li>
+<li>另外发现代码中依然存在 ES6 的语法，比如箭头函数、const 等，这是因为默认情况下 webpack 并不清楚我们打包后的文件是否需要转成 ES5 之前的语法，后续我们需要通过 babel 来进行转换和设置；</li>
 </ul>
 </li>
 <li>
-<p>发现可以正常进行打包的，但是有一个问题，webpack是如何确地入口的？</p>
+<p>发现可以正常进行打包的，但是有一个问题，webpack 是如何确地入口的？</p>
 <ul>
-<li>事实上，我们运行webpack时，webpack会查找到当前目录下的src/index.js作为入口</li>
-<li>所以，如果当前项目中没有src/index.js，那么会报错</li>
+<li>事实上，我们运行 webpack 时，webpack 会查找到当前目录下的 src/index.js 作为入口</li>
+<li>所以，如果当前项目中没有 src/index.js，那么会报错</li>
 </ul>
 </li>
 <li>
@@ -272,50 +272,50 @@
 <p><code>npx webpack --entry ./src/main.js --output-path ./build</code></p>
 </li>
 </ul>
-<h1>Webpack配置文件</h1>
+<h1>Webpack 配置文件</h1>
 <ul>
 <li>
-<p>通常情况下，webpack需要打包的项目是非常复杂的，并且我们需要一系列的配置来满足要求，默认配置必然是不可以的。</p>
+<p>通常情况下，webpack 需要打包的项目是非常复杂的，并且我们需要一系列的配置来满足要求，默认配置必然是不可以的。</p>
 </li>
 <li>
-<p>我们可以在根目录下创建一个webpack.config.js文件，来作为webpack的配置文件,例如</p>
+<p>我们可以在根目录下创建一个 webpack.config.js 文件，来作为 webpack 的配置文件,例如</p>
 </li>
 </ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&quot;path&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  entry: <span class="string">&quot;./src/main.js&quot;</span>,</span><br><span class="line">  output: &#123;</span><br><span class="line">    filename: <span class="string">&quot;bundle.js&quot;</span>,</span><br><span class="line">    path: path.resolve(__dirname, <span class="string">&quot;build&quot;</span>),</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  entry: <span class="string">&#x27;./src/main.js&#x27;</span>,</span><br><span class="line">  output: &#123;</span><br><span class="line">    filename: <span class="string">&#x27;bundle.js&#x27;</span>,</span><br><span class="line">    path: path.resolve(__dirname, <span class="string">&#x27;build&#x27;</span>),</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <ul>
 <li>
-<p>继续执行webpack命令，依然可以正常打包</p>
+<p>继续执行 webpack 命令，依然可以正常打包</p>
 </li>
 <li>
-<p>也可以不使用webpack.config.js作为文件名，使用命令定义路径和文件名即可，例如</p>
+<p>也可以不使用 webpack.config.js 作为文件名，使用命令定义路径和文件名即可，例如</p>
 </li>
 <li>
 <p><code>webpack --config  ./wk.congfig.js</code></p>
 </li>
 </ul>
-<h1>Webpack依赖图</h1>
-<p><img src= "/img/loading.gif" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/(null).png" alt="img"></p>
+<h1>Webpack 依赖图</h1>
+<p><img src= "/img/loading.gif" data-lazy-src="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/doc-image/(null).png" alt="img"></p>
 <blockquote>
-<p>webpack到底是如何对我们的项目进行打包的呢？</p>
+<p>webpack 到底是如何对我们的项目进行打包的呢？</p>
 </blockquote>
 <ul>
 <li>
-<p>事实上webpack在处理应用程序的时候，它会根据命令或者配置文件找到入门文件；</p>
+<p>事实上 webpack 在处理应用程序的时候，它会根据命令或者配置文件找到入门文件；</p>
 </li>
 <li>
-<p>从入口开始，会生成一个依赖关系图，这个依赖关系图会包含应用程序中所需的所有模块（比如js文件、css文件、字体等）</p>
+<p>从入口开始，会生成一个依赖关系图，这个依赖关系图会包含应用程序中所需的所有模块（比如 js 文件、css 文件、字体等）</p>
 </li>
 <li>
-<p>然后遍历图结构，打包一个个模块（根据文件的不同使用不同的loader解析）</p>
+<p>然后遍历图结构，打包一个个模块（根据文件的不同使用不同的 loader 解析）</p>
 </li>
 </ul>
-<h1>Mode配置</h1>
+<h1>Mode 配置</h1>
 <ul>
 <li>
-<p>Mode配置选项，可以告知webpack使用响应模式的内置优化:</p>
+<p>Mode 配置选项，可以告知 webpack 使用响应模式的内置优化:</p>
 </li>
 <li>
-<p>默认值是production(什么都不设置的情况下);</p>
+<p>默认值是 production(什么都不设置的情况下);</p>
 </li>
 <li>
 <p>可选值有:‘none’ | ‘development’ | ‘production’;</p>
@@ -334,11 +334,11 @@
 <tbody>
 <tr>
 <td><code>developtment</code></td>
-<td>会将<code>DefinePlugin</code>中<code>process.env.NODE_ENV</code>的值设置为``developtment`，为模块和chunk启用有效的名</td>
+<td>会将<code>DefinePlugin</code>中<code>process.env.NODE_ENV</code>的值设置为``developtment`，为模块和 chunk 启用有效的名</td>
 </tr>
 <tr>
 <td><code>production</code></td>
-<td>会将``DefinePlugin<code>中</code>process.env.NODE_ENV<code>的值设置为</code>production<code>。为模块和chunk启用确定性的混淆名称，</code>FlagDependencyUsagePlugin<code>，</code>FlagInlcudeedChunkPlugin<code>，</code>ModuleConcatenationPlugin<code>，</code>NoEmitOnErrorsPlugin<code>和</code>TerserPlugin`</td>
+<td>会将``DefinePlugin<code>中</code>process.env.NODE_ENV<code>的值设置为</code>production<code>。为模块和 chunk 启用确定性的混淆名称，</code>FlagDependencyUsagePlugin<code>，</code>FlagInlcudeedChunkPlugin<code>，</code>ModuleConcatenationPlugin<code>，</code>NoEmitOnErrorsPlugin<code>和</code>TerserPlugin`</td>
 </tr>
 <tr>
 <td><code>none</code></td>
@@ -347,13 +347,13 @@
 </tbody>
 </table>
 <blockquote>
-<p>Mode配置代表配置了更多</p>
+<p>Mode 配置代表配置了更多</p>
 </blockquote>
 <ul>
 <li>绿色选项 = 所有红色选项</li>
 </ul>
-<p><img src= "/img/loading.gif" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/(null)-20210502174148481.(null)" alt="img"></p>
-<h1>Webpack核心流程</h1>
+<p><img src= "/img/loading.gif" data-lazy-src="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/doc-image/(null)-20210502174148481.(null)" alt="img"></p>
+<h1>Webpack 核心流程</h1>
 <blockquote>
 <p>引用于[<a target="_blank" rel="noopener" href="https://juejin.cn/post/6949040393165996040">万字总结] 一文吃透 Webpack 核心原理</a></p>
 </blockquote>
@@ -410,31 +410,31 @@
 <p><code>Loader</code>：资源内容转换器，其实就是实现从内容 A 转换 B 的转换器</p>
 </li>
 <li>
-<p><code>Plugin</code>：webpack构建过程中，会在特定的时机广播对应的事件，插件监听这些事件，在特定时间点介入编译过程</p>
+<p><code>Plugin</code>：webpack 构建过程中，会在特定的时机广播对应的事件，插件监听这些事件，在特定时间点介入编译过程</p>
 </li>
 </ul>
 <p>webpack 编译过程都是围绕着这些关键对象展开的，更详细完整的信息，可以参考 <a target="_blank" rel="noopener" href="https://juejin.cn/post/6948763207397965855">Webpack 知识图谱</a> 。</p>
-<h1>Webpack和Gulp</h1>
+<h1>Webpack 和 Gulp</h1>
 <ul>
 <li>
-<p>gulp的核心理念是task runner</p>
+<p>gulp 的核心理念是 task runner</p>
 <ul>
 <li>可以定义自己的一系列任务，等待任务被执行;</li>
-<li>基于文件Stream的构建流; p我们可以使用gulp的插件体系来完成某些任务;</li>
+<li>基于文件 Stream 的构建流; p 我们可以使用 gulp 的插件体系来完成某些任务;</li>
 </ul>
 </li>
 <li>
-<p>webpack的核心理念是module bundler pwebpack是一个模块化的打包工具;</p>
+<p>webpack 的核心理念是 module bundler pwebpack 是一个模块化的打包工具;</p>
 <ul>
-<li>可以使用各种各样的loader来加载不同的模块;</li>
-<li>可以使用各种各样的插件在webpack打包的生命周期完成其他的任务;</li>
+<li>可以使用各种各样的 loader 来加载不同的模块;</li>
+<li>可以使用各种各样的插件在 webpack 打包的生命周期完成其他的任务;</li>
 </ul>
 </li>
 <li>
-<p>gulp相对于webpack的优缺点:</p>
+<p>gulp 相对于 webpack 的优缺点:</p>
 <ul>
-<li>gulp相对于webpack思想更加的简单、易用，更适合编写一些自动化的任务;</li>
-<li>但是目前对于大型项目（Vue、React、Angular）并不会使用gulp来构建，比如默认gulp是不支持模块化的。</li>
+<li>gulp 相对于 webpack 思想更加的简单、易用，更适合编写一些自动化的任务;</li>
+<li>但是目前对于大型项目（Vue、React、Angular）并不会使用 gulp 来构建，比如默认 gulp 是不支持模块化的。</li>
 </ul>
 </li>
 </ul>
@@ -447,18 +447,18 @@
 <li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6960472347329429511">分享几个 Webpack 实用分析工具</a></li>
 <li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6948763207397965855">分享一份 Webpack 知识图谱</a></li>
 </ol>
-<p>掘金：<a target="_blank" rel="noopener" href="https://juejin.cn/user/3913917127467805">前端LeBron</a></p>
-<p>知乎：<a target="_blank" rel="noopener" href="https://www.zhihu.com/people/lebronchao">前端LeBron</a></p>
-<p>持续分享技术博文，关注微信公众号👇🏻</p>
-<p><img src= "/img/loading.gif" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/v2-be6b9cd0588dddc0e39428cacf11f6a3_720w.png" alt="img"></p>
-</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">LeBronChao-</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://lebronchao.com/2021/05/12/%E5%88%9D%E8%AF%86Webpack/">https://lebronchao.com/2021/05/12/初识Webpack/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://lebronchao.com" target="_blank">LeBronChao's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Web%E5%BC%80%E5%8F%91/">Web开发</a><a class="post-meta__tags" href="/tags/Webpack/">Webpack</a><a class="post-meta__tags" href="/tags/%E6%89%93%E5%8C%85%E6%9E%84%E5%BB%BA/">打包构建</a><a class="post-meta__tags" href="/tags/%E5%89%8D%E7%AB%AF/">前端</a><a class="post-meta__tags" href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">性能优化</a></div><div class="post_share"><div class="social-share" data-image="https://bloginfo.lebronchao.com/doc-image/(null).png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/05/18/Webpack%20Loader%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/"><img class="prev-cover" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/(null).png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Webpack Loader知识分享</div></div></a></div><div class="next-post pull-right"><a href="/2021/04/06/%E6%91%84%E5%BD%B1-%E6%B9%BE%E5%8C%BA%E4%B9%8B%E5%85%89/"><img class="next-cover" data-lazy-src="https://bloginfo.lebronchao.com/photo/DSC00150.JPG" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">摄影 | 湾区之光</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/05/18/Webpack Loader知识分享/" title="Webpack Loader知识分享"><img class="cover" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/(null).png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-18</div><div class="title">Webpack Loader知识分享</div></div></a></div><div><a href="/2021/05/22/Webpack-Plugin知识分享/" title="Webpack_Plugin知识分享"><img class="cover" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/(null).png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-22</div><div class="title">Webpack_Plugin知识分享</div></div></a></div><div><a href="/2021/05/25/Webpack模块化原理和SourceMap/" title="Webpack模块化原理和SourceMap"><img class="cover" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/(null).png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-25</div><div class="title">Webpack模块化原理和SourceMap</div></div></a></div><div><a href="/2021/06/07/Webpack打包分析工具/" title="[分享]Webpack打包分析工具"><img class="cover" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/(null).png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-06-07</div><div class="title">[分享]Webpack打包分析工具</div></div></a></div><div><a href="/2021/06/07/Webpack体积压缩/" title="[打包优化]Webpack体积压缩"><img class="cover" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/(null).png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-06-07</div><div class="title">[打包优化]Webpack体积压缩</div></div></a></div><div><a href="/2021/06/07/WebpackDLL/" title="[打包优化]Webpack DLL"><img class="cover" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/(null).png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-06-07</div><div class="title">[打包优化]Webpack DLL</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" data-lazy-src="https://bloginfo.lebronchao.com/personal-info/IMG_8050.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">LeBronChao-</div><div class="author-info__description">深圳大学(SZTU) 22届 物联网工程<br/>前端开发工程师一枚<br/>业余摄影师，交流/约拍可私戳。<br/>字节跳动内推码:4FCV6BV<br/>Email：LeBronChao@foxmail.com</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">88</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/LeBronChao"><i class="fab fa-github"></i><span>Follow My Github</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/LeBronChao" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:lebronchao@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://bloginfo.lebronchao.com/personal-info/IMG_8268-20210326002121490.jpg" target="_blank" title="微信"><i class="fab fa-weixin"></i></a><a class="social-icon" href="tencent://AddContact/?fromId=45&amp;fromSubId=1&amp;subcmd=all&amp;uin=1531229587&amp;website=www.oicqzone.com" target="_blank" title="QQ"><i class="fab fa-qq"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">掘金：<a target="_blank" rel="noopener" href="https://juejin.cn/user/3913917127467805">前端LeBron</a><br/>知乎：<a target="_blank" rel="noopener" href="https://www.zhihu.com/people/lebronchao">前端LeBron</a><br/>持续分享技术博文，关注wx公众号👇🏻<br/><img src="https://bloginfo.lebronchao.com/doc-image/v2-be6b9cd0588dddc0e39428cacf11f6a3_720w.png" /></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">Webpack初体验</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8Webpack%E8%A7%A3%E5%86%B3%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98"><span class="toc-number">1.1.</span> <span class="toc-text">用Webpack解决什么问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Webpack%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">1.2.</span> <span class="toc-text">Webpack是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Webpack%E5%92%8CVite"><span class="toc-number">1.3.</span> <span class="toc-text">Webpack和Vite</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">Webpack默认打包</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">Webpack配置文件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">Webpack依赖图</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">5.</span> <span class="toc-text">Mode配置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">6.</span> <span class="toc-text">Webpack核心流程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">7.</span> <span class="toc-text">Webpack和Gulp</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">8.</span> <span class="toc-text">优质文章推荐：</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/10/12/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E6%A8%A1%E5%BC%8F/" title="JavaScript设计模式-发布订阅模式"><img data-lazy-src="https://bloginfo.lebronchao.com/doc-image/image-20221011174858741.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JavaScript设计模式-发布订阅模式"/></a><div class="content"><a class="title" href="/2022/10/12/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E6%A8%A1%E5%BC%8F/" title="JavaScript设计模式-发布订阅模式">JavaScript设计模式-发布订阅模式</a><time datetime="2022-10-12T15:59:18.000Z" title="发表于 2022-10-12 23:59:18">2022-10-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/10/10/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" title="JavaScript设计模式-代理模式"><img data-lazy-src="https://bloginfo.lebronchao.com/doc-image/banner-20220908163707243.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JavaScript设计模式-代理模式"/></a><div class="content"><a class="title" href="/2022/10/10/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" title="JavaScript设计模式-代理模式">JavaScript设计模式-代理模式</a><time datetime="2022-10-09T16:24:29.000Z" title="发表于 2022-10-10 00:24:29">2022-10-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/08/21/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/" title="JavaScript 设计模式 —— 策略模式"><img data-lazy-src="https://bloginfo.lebronchao.com/doc-image/f3248dbebc9f40769a83e9d148f3a880~tplv-k3u1fbpfcp-zoom-crop-mark:3024:3024:3024:1702.awebp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JavaScript 设计模式 —— 策略模式"/></a><div class="content"><a class="title" href="/2022/08/21/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/" title="JavaScript 设计模式 —— 策略模式">JavaScript 设计模式 —— 策略模式</a><time datetime="2022-08-21T13:11:23.000Z" title="发表于 2022-08-21 21:11:23">2022-08-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/08/21/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" title="JavaScript 设计模式 —— 单例模式"><img data-lazy-src="https://bloginfo.lebronchao.com/doc-image/63460f4ae2fe44c7beb9201528f684b7~tplv-k3u1fbpfcp-zoom-crop-mark:3024:3024:3024:1702.awebp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JavaScript 设计模式 —— 单例模式"/></a><div class="content"><a class="title" href="/2022/08/21/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" title="JavaScript 设计模式 —— 单例模式">JavaScript 设计模式 —— 单例模式</a><time datetime="2022-08-21T13:11:14.000Z" title="发表于 2022-08-21 21:11:14">2022-08-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/02/20/%E6%91%84%E5%BD%B1-%E6%A2%A7%E6%A1%90%E5%B1%B1/" title="摄影 | 梧桐山"><img data-lazy-src="https://bloginfo.lebronchao.com/doc-image/DSC00287.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="摄影 | 梧桐山"/></a><div class="content"><a class="title" href="/2022/02/20/%E6%91%84%E5%BD%B1-%E6%A2%A7%E6%A1%90%E5%B1%B1/" title="摄影 | 梧桐山">摄影 | 梧桐山</a><time datetime="2022-02-19T16:24:49.000Z" title="发表于 2022-02-20 00:24:49">2022-02-20</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By LeBronChao-</div><div class="footer_custom_text">@ 2022 LeBronChao- CopyRight | <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备2021025161号</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+<p>掘金：<a target="_blank" rel="noopener" href="https://juejin.cn/user/3913917127467805">前端 LeBron</a></p>
+<p>知乎：<a target="_blank" rel="noopener" href="https://www.zhihu.com/people/lebronchao">前端 LeBron</a></p>
+<p>持续分享技术博文，关注微信公众号 👇🏻</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/doc-image/v2-be6b9cd0588dddc0e39428cacf11f6a3_720w.png" alt="img"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">LeBronChao-</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://lebronchao.com/2021/05/12/%E5%88%9D%E8%AF%86Webpack/">https://lebronchao.com/2021/05/12/初识Webpack/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://lebronchao.com" target="_blank">LeBronChao's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Web%E5%BC%80%E5%8F%91/">Web开发</a><a class="post-meta__tags" href="/tags/Webpack/">Webpack</a><a class="post-meta__tags" href="/tags/%E6%89%93%E5%8C%85%E6%9E%84%E5%BB%BA/">打包构建</a><a class="post-meta__tags" href="/tags/%E5%89%8D%E7%AB%AF/">前端</a><a class="post-meta__tags" href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">性能优化</a></div><div class="post_share"><div class="social-share" data-image="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/doc-image/(null).png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/05/18/Webpack%20Loader%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/"><img class="prev-cover" data-lazy-src="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/doc-image/(null).png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Webpack Loader知识分享</div></div></a></div><div class="next-post pull-right"><a href="/2021/04/06/%E6%91%84%E5%BD%B1-%E6%B9%BE%E5%8C%BA%E4%B9%8B%E5%85%89/"><img class="next-cover" data-lazy-src="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/photo/DSC00150.JPG" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">摄影 | 湾区之光</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/05/18/Webpack Loader知识分享/" title="Webpack Loader知识分享"><img class="cover" data-lazy-src="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/doc-image/(null).png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-18</div><div class="title">Webpack Loader知识分享</div></div></a></div><div><a href="/2021/05/22/Webpack-Plugin知识分享/" title="Webpack_Plugin知识分享"><img class="cover" data-lazy-src="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/doc-image/(null).png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-22</div><div class="title">Webpack_Plugin知识分享</div></div></a></div><div><a href="/2021/05/25/Webpack模块化原理和SourceMap/" title="Webpack模块化原理和SourceMap"><img class="cover" data-lazy-src="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/doc-image/(null).png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-25</div><div class="title">Webpack模块化原理和SourceMap</div></div></a></div><div><a href="/2021/06/07/Webpack打包分析工具/" title="[分享]Webpack打包分析工具"><img class="cover" data-lazy-src="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/doc-image/(null).png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-06-07</div><div class="title">[分享]Webpack打包分析工具</div></div></a></div><div><a href="/2021/06/07/Webpack体积压缩/" title="[打包优化]Webpack体积压缩"><img class="cover" data-lazy-src="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/doc-image/(null).png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-06-07</div><div class="title">[打包优化]Webpack体积压缩</div></div></a></div><div><a href="/2021/06/07/WebpackDLL/" title="[打包优化]Webpack DLL"><img class="cover" data-lazy-src="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/doc-image/(null).png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-06-07</div><div class="title">[打包优化]Webpack DLL</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" data-lazy-src="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/personal-info/IMG_8050.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">LeBronChao-</div><div class="author-info__description">深圳大学(SZTU) 22届 物联网工程<br/>前端开发工程师一枚<br/>业余摄影师，交流/约拍可私戳。<br/>字节跳动内推码:4FCV6BV<br/>Email：LeBronChao@foxmail.com</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">88</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/LeBronChao"><i class="fab fa-github"></i><span>Follow My Github</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/LeBronChao" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:lebronchao@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/personal-info/IMG_8268-20210326002121490.jpg" target="_blank" title="微信"><i class="fab fa-weixin"></i></a><a class="social-icon" href="tencent://AddContact/?fromId=45&amp;fromSubId=1&amp;subcmd=all&amp;uin=1531229587&amp;website=www.oicqzone.com" target="_blank" title="QQ"><i class="fab fa-qq"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">掘金：<a target="_blank" rel="noopener" href="https://juejin.cn/user/3913917127467805">前端LeBron</a><br/>知乎：<a target="_blank" rel="noopener" href="https://www.zhihu.com/people/lebronchao">前端LeBron</a><br/>持续分享技术博文，关注wx公众号👇🏻<br/><img src="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/doc-image/v2-be6b9cd0588dddc0e39428cacf11f6a3_720w.png" /></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">Webpack 初体验</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8-Webpack-%E8%A7%A3%E5%86%B3%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98"><span class="toc-number">1.1.</span> <span class="toc-text">用 Webpack 解决什么问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Webpack-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">1.2.</span> <span class="toc-text">Webpack 是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Webpack-%E5%92%8C-Vite"><span class="toc-number">1.3.</span> <span class="toc-text">Webpack 和 Vite</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">Webpack 默认打包</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">Webpack 配置文件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">Webpack 依赖图</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">5.</span> <span class="toc-text">Mode 配置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">6.</span> <span class="toc-text">Webpack 核心流程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">7.</span> <span class="toc-text">Webpack 和 Gulp</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">8.</span> <span class="toc-text">优质文章推荐：</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/10/12/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E6%A8%A1%E5%BC%8F/" title="JavaScript设计模式-发布订阅模式"><img data-lazy-src="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/doc-image/image-20221011174858741.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JavaScript设计模式-发布订阅模式"/></a><div class="content"><a class="title" href="/2022/10/12/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E6%A8%A1%E5%BC%8F/" title="JavaScript设计模式-发布订阅模式">JavaScript设计模式-发布订阅模式</a><time datetime="2022-10-12T15:59:18.000Z" title="发表于 2022-10-12 23:59:18">2022-10-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/10/10/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" title="JavaScript设计模式-代理模式"><img data-lazy-src="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/doc-image/banner-20220908163707243.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JavaScript设计模式-代理模式"/></a><div class="content"><a class="title" href="/2022/10/10/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" title="JavaScript设计模式-代理模式">JavaScript设计模式-代理模式</a><time datetime="2022-10-09T16:24:29.000Z" title="发表于 2022-10-10 00:24:29">2022-10-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/08/21/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/" title="JavaScript 设计模式 —— 策略模式"><img data-lazy-src="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/doc-image/f3248dbebc9f40769a83e9d148f3a880~tplv-k3u1fbpfcp-zoom-crop-mark:3024:3024:3024:1702.awebp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JavaScript 设计模式 —— 策略模式"/></a><div class="content"><a class="title" href="/2022/08/21/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/" title="JavaScript 设计模式 —— 策略模式">JavaScript 设计模式 —— 策略模式</a><time datetime="2022-08-21T13:11:23.000Z" title="发表于 2022-08-21 21:11:23">2022-08-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/08/21/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" title="JavaScript 设计模式 —— 单例模式"><img data-lazy-src="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/doc-image/63460f4ae2fe44c7beb9201528f684b7~tplv-k3u1fbpfcp-zoom-crop-mark:3024:3024:3024:1702.awebp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JavaScript 设计模式 —— 单例模式"/></a><div class="content"><a class="title" href="/2022/08/21/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" title="JavaScript 设计模式 —— 单例模式">JavaScript 设计模式 —— 单例模式</a><time datetime="2022-08-21T13:11:14.000Z" title="发表于 2022-08-21 21:11:14">2022-08-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/02/20/%E6%91%84%E5%BD%B1-%E6%A2%A7%E6%A1%90%E5%B1%B1/" title="摄影 | 梧桐山"><img data-lazy-src="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/doc-image/DSC00287.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="摄影 | 梧桐山"/></a><div class="content"><a class="title" href="/2022/02/20/%E6%91%84%E5%BD%B1-%E6%A2%A7%E6%A1%90%E5%B1%B1/" title="摄影 | 梧桐山">摄影 | 梧桐山</a><time datetime="2022-02-19T16:24:49.000Z" title="发表于 2022-02-20 00:24:49">2022-02-20</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By LeBronChao-</div><div class="footer_custom_text">@ 2022 LeBronChao- CopyRight | <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备2021025161号</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
   function initValine () {
     let initData = {
       el: '#vcomment',
       appId: 'TKAoSdRXJ5zxwsjdGTP0Hrfh-9Nh9j0Va',
       appKey: 'lI3CGg5rpWkxsfvsKTRkVszT',
       placeholder: '留下你的足迹吧，記得留下你的昵称和邮箱....可以快速收到回复',
-      avatar: 'https://bloginfo.lebronchao.com/doc-image/touxiang.jpeg',
+      avatar: 'https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/doc-image/touxiang.jpeg',
       meta: 'nick,mail,link'.split(','),
       pageSize: '10',
       lang: 'zh-cn',

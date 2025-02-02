@@ -1,11 +1,11 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>数据库系统 | 第八章 数据库编程 | LeBronChao's Blog</title><meta name="keywords" content="学习笔记,数据库,SQL,后端"><meta name="author" content="LeBronChao-"><meta name="copyright" content="LeBronChao-"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="嵌入式SQL  SQL语言提供了两种不同的使用方式  交互式 嵌入式   为什么要引入嵌入式SQL  SQL语言是非过程性语言 事务处理应用需要高级语言   这两种方式细节上有差别，在程序设计的环境下，SQL语句要做某些必要的扩充  嵌入式SQL的处理过程   主语言 嵌入式SQL是将SQL语句嵌入程序设计语言中，被嵌入的程序设计语言，如C、C++、Java，称为宿主语言，简称主语言。   处理过">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>数据库系统 | 第八章 数据库编程 | LeBronChao's Blog</title><meta name="keywords" content="学习笔记,数据库,SQL,后端"><meta name="author" content="LeBronChao-"><meta name="copyright" content="LeBronChao-"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="嵌入式 SQL  SQL 语言提供了两种不同的使用方式  交互式 嵌入式   为什么要引入嵌入式 SQL  SQL 语言是非过程性语言 事务处理应用需要高级语言   这两种方式细节上有差别，在程序设计的环境下，SQL 语句要做某些必要的扩充  嵌入式 SQL 的处理过程   主语言 嵌入式 SQL 是将 SQL 语句嵌入程序设计语言中，被嵌入的程序设计语言，如 C、C++、Java，称为宿主语言，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据库系统 | 第八章 数据库编程">
 <meta property="og:url" content="https://lebronchao.com/2021/01/21/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F-%E7%AC%AC%E5%85%AB%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BC%96%E7%A8%8B/index.html">
 <meta property="og:site_name" content="LeBronChao&#39;s Blog">
-<meta property="og:description" content="嵌入式SQL  SQL语言提供了两种不同的使用方式  交互式 嵌入式   为什么要引入嵌入式SQL  SQL语言是非过程性语言 事务处理应用需要高级语言   这两种方式细节上有差别，在程序设计的环境下，SQL语句要做某些必要的扩充  嵌入式SQL的处理过程   主语言 嵌入式SQL是将SQL语句嵌入程序设计语言中，被嵌入的程序设计语言，如C、C++、Java，称为宿主语言，简称主语言。   处理过">
+<meta property="og:description" content="嵌入式 SQL  SQL 语言提供了两种不同的使用方式  交互式 嵌入式   为什么要引入嵌入式 SQL  SQL 语言是非过程性语言 事务处理应用需要高级语言   这两种方式细节上有差别，在程序设计的环境下，SQL 语句要做某些必要的扩充  嵌入式 SQL 的处理过程   主语言 嵌入式 SQL 是将 SQL 语句嵌入程序设计语言中，被嵌入的程序设计语言，如 C、C++、Java，称为宿主语言，">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://bloginfo.lebronchao.com/doc-image/MySql.jpeg">
+<meta property="og:image" content="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/doc-image/MySql.jpeg">
 <meta property="article:published_time" content="2021-01-21T02:31:24.000Z">
 <meta property="article:modified_time" content="2021-01-21T06:54:24.000Z">
 <meta property="article:author" content="LeBronChao-">
@@ -14,7 +14,7 @@
 <meta property="article:tag" content="SQL">
 <meta property="article:tag" content="后端">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://bloginfo.lebronchao.com/doc-image/MySql.jpeg"><link rel="shortcut icon" href="https://bloginfo.lebronchao.com/doc-image/bitbug_favicon%20(1).ico"><link rel="canonical" href="https://lebronchao.com/2021/01/21/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F-%E7%AC%AC%E5%85%AB%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BC%96%E7%A8%8B/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+<meta name="twitter:image" content="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/doc-image/MySql.jpeg"><link rel="shortcut icon" href="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/doc-image/bitbug_favicon%20(1).ico"><link rel="canonical" href="https://lebronchao.com/2021/01/21/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F-%E7%AC%AC%E5%85%AB%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BC%96%E7%A8%8B/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
 (function() {
   var hm = document.createElement("script");
   hm.src = "https://hm.baidu.com/hm.js?0f958a253362f27db5bafcef151a46ab";
@@ -155,56 +155,56 @@
       document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
     }
     })(window)</script><link rel="stylesheet" href="/css/mycss.css"><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="LeBronChao's Blog" type="application/atom+xml">
-</head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" data-lazy-src="https://bloginfo.lebronchao.com/personal-info/IMG_8050.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">88</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/photo/"><i class="fa-fw fas fa-video"></i><span> 摄影</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 分类</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/categories/Front-End/"><i class="fa-fw fas fa-laptop"></i><span> Front End</span></a></li><li><a class="site-page" href="/categories/Back-End/"><i class="fa-fw fas fa-database"></i><span> Back End</span></a></li><li><a class="site-page" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><i class="fa-fw fas fa-wifi"></i><span> 计算机网络</span></a></li><li><a class="site-page" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><i class="fa-fw fa fa-cubes"></i><span> 设计模式</span></a></li><li><a class="site-page" href="/categories/%E5%BC%80%E5%8F%91%E6%8A%80%E8%83%BD/"><i class="fa-fw fab fa-git-square"></i><span> 开发技能</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/message/"><i class="fa-fw far fa-comment-dots"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user-circle"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://bloginfo.lebronchao.com/doc-image/MySql.jpeg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">LeBronChao's Blog</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/photo/"><i class="fa-fw fas fa-video"></i><span> 摄影</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 分类</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/categories/Front-End/"><i class="fa-fw fas fa-laptop"></i><span> Front End</span></a></li><li><a class="site-page" href="/categories/Back-End/"><i class="fa-fw fas fa-database"></i><span> Back End</span></a></li><li><a class="site-page" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><i class="fa-fw fas fa-wifi"></i><span> 计算机网络</span></a></li><li><a class="site-page" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><i class="fa-fw fa fa-cubes"></i><span> 设计模式</span></a></li><li><a class="site-page" href="/categories/%E5%BC%80%E5%8F%91%E6%8A%80%E8%83%BD/"><i class="fa-fw fab fa-git-square"></i><span> 开发技能</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/message/"><i class="fa-fw far fa-comment-dots"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user-circle"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">数据库系统 | 第八章 数据库编程</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-01-21T02:31:24.000Z" title="发表于 2021-01-21 10:31:24">2021-01-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-01-21T06:54:24.000Z" title="更新于 2021-01-21 14:54:24">2021-01-21</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Back-End/">Back End</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">5.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>16分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="嵌入式SQL">嵌入式SQL</h2>
+</head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" data-lazy-src="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/personal-info/IMG_8050.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">88</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/photo/"><i class="fa-fw fas fa-video"></i><span> 摄影</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 分类</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/categories/Front-End/"><i class="fa-fw fas fa-laptop"></i><span> Front End</span></a></li><li><a class="site-page" href="/categories/Back-End/"><i class="fa-fw fas fa-database"></i><span> Back End</span></a></li><li><a class="site-page" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><i class="fa-fw fas fa-wifi"></i><span> 计算机网络</span></a></li><li><a class="site-page" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><i class="fa-fw fa fa-cubes"></i><span> 设计模式</span></a></li><li><a class="site-page" href="/categories/%E5%BC%80%E5%8F%91%E6%8A%80%E8%83%BD/"><i class="fa-fw fab fa-git-square"></i><span> 开发技能</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/message/"><i class="fa-fw far fa-comment-dots"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user-circle"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/doc-image/MySql.jpeg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">LeBronChao's Blog</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/photo/"><i class="fa-fw fas fa-video"></i><span> 摄影</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 分类</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/categories/Front-End/"><i class="fa-fw fas fa-laptop"></i><span> Front End</span></a></li><li><a class="site-page" href="/categories/Back-End/"><i class="fa-fw fas fa-database"></i><span> Back End</span></a></li><li><a class="site-page" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><i class="fa-fw fas fa-wifi"></i><span> 计算机网络</span></a></li><li><a class="site-page" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><i class="fa-fw fa fa-cubes"></i><span> 设计模式</span></a></li><li><a class="site-page" href="/categories/%E5%BC%80%E5%8F%91%E6%8A%80%E8%83%BD/"><i class="fa-fw fab fa-git-square"></i><span> 开发技能</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/message/"><i class="fa-fw far fa-comment-dots"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user-circle"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">数据库系统 | 第八章 数据库编程</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-01-21T02:31:24.000Z" title="发表于 2021-01-21 10:31:24">2021-01-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-01-21T06:54:24.000Z" title="更新于 2021-01-21 14:54:24">2021-01-21</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Back-End/">Back End</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">5.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>16分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="嵌入式-SQL">嵌入式 SQL</h2>
 <ul>
-<li>SQL语言提供了两种不同的使用方式
+<li>SQL 语言提供了两种不同的使用方式
 <ul>
 <li>交互式</li>
 <li>嵌入式</li>
 </ul>
 </li>
-<li>为什么要引入嵌入式SQL
+<li>为什么要引入嵌入式 SQL
 <ul>
-<li>SQL语言是非过程性语言</li>
+<li>SQL 语言是非过程性语言</li>
 <li>事务处理应用需要高级语言</li>
 </ul>
 </li>
-<li>这两种方式细节上有差别，在程序设计的环境下，SQL语句要做某些必要的扩充</li>
+<li>这两种方式细节上有差别，在程序设计的环境下，SQL 语句要做某些必要的扩充</li>
 </ul>
-<h3 id="嵌入式SQL的处理过程">嵌入式SQL的处理过程</h3>
+<h3 id="嵌入式-SQL-的处理过程">嵌入式 SQL 的处理过程</h3>
 <ul>
 <li>
 <p>主语言<br>
-嵌入式SQL是将SQL语句嵌入程序设计语言中，被嵌入的程序设计语言，如C、C++、Java，称为宿主语言，简称主语言。</p>
+嵌入式 SQL 是将 SQL 语句嵌入程序设计语言中，被嵌入的程序设计语言，如 C、C++、Java，称为宿主语言，简称主语言。</p>
 </li>
 <li>
 <p>处理过程<br>
 预编译方法</p>
 </li>
 <li>
-<p>为了区分SQL语句与主语言语句，所有SQL语句必须加前缀EXEC SQL，</p>
+<p>为了区分 SQL 语句与主语言语句，所有 SQL 语句必须加前缀 EXEC SQL，</p>
 <ul>
 <li>
-<p>主语言为C语言时，语句格式：<br>
-EXEC SQL &lt;SQL语句&gt;;</p>
+<p>主语言为 C 语言时，语句格式：<br>
+EXEC SQL &lt;SQL 语句&gt;;</p>
 </li>
 <li>
-<p>主语言为Java语言时，语句格式：<br>
-# SQL &lt;SQL语句&gt;;</p>
+<p>主语言为 Java 语言时，语句格式：<br>
+# SQL &lt;SQL 语句&gt;;</p>
 </li>
 <li>
-<p>主语言为C++语言时</p>
-<p>使用ADO：</p>
+<p>主语言为 C++语言时</p>
+<p>使用 ADO：</p>
 </li>
 </ul>
 </li>
 </ul>
-<h3 id="嵌入式SQL语句与主语言之间的通信">嵌入式SQL语句与主语言之间的通信</h3>
+<h3 id="嵌入式-SQL-语句与主语言之间的通信">嵌入式 SQL 语句与主语言之间的通信</h3>
 <ul>
 <li>
-<p>将SQL嵌入到高级语言中混合编程，程序中会含有两种不同计算模型的语句</p>
+<p>将 SQL 嵌入到高级语言中混合编程，程序中会含有两种不同计算模型的语句</p>
 <ul>
-<li>SQL语句<br>
+<li>SQL 语句<br>
 描述性的面向集合的语句<br>
 负责操纵数据库</li>
 <li>高级语言语句<br>
@@ -215,37 +215,37 @@ EXEC SQL &lt;SQL语句&gt;;</p>
 </li>
 <li>
 <p>数据库工作单元与源程序工作单元之间的通信<br>
-（1）向主语言传递SQL语句的执行状态信息，使主语言能够据此控制程序流程，主要用SQL通信区实现<br>
-（2）主语言向SQL语句提供参数，主要用主变量实现<br>
-（3）将SQL语句查询数据库的结果交主语言处理，主要用主变量和游标实现</p>
+（1）向主语言传递 SQL 语句的执行状态信息，使主语言能够据此控制程序流程，主要用 SQL 通信区实现<br>
+（2）主语言向 SQL 语句提供参数，主要用主变量实现<br>
+（3）将 SQL 语句查询数据库的结果交主语言处理，主要用主变量和游标实现</p>
 </li>
 <li>
 <p>SQLCA： SQL Communication Area<br>
-SQLCA是一个数据结构</p>
+SQLCA 是一个数据结构</p>
 </li>
 <li>
-<p>SQLCA的用途</p>
+<p>SQLCA 的用途</p>
 <ul>
-<li>SQL语句执行后，系统反馈给应用程序信息<br>
+<li>SQL 语句执行后，系统反馈给应用程序信息<br>
 描述系统当前工作状态<br>
 描述运行环境</li>
-<li>这些信息将送到SQL通信区中</li>
-<li>应用程序从SQL通信区中取出这些状态信息，据此决定接下来执行的语句</li>
+<li>这些信息将送到 SQL 通信区中</li>
+<li>应用程序从 SQL 通信区中取出这些状态信息，据此决定接下来执行的语句</li>
 </ul>
 </li>
 <li>
-<p>SQLCA使用方法</p>
+<p>SQLCA 使用方法</p>
 <ul>
-<li>定义SQLCA
+<li>定义 SQLCA
 <ul>
-<li>用EXEC SQL INCLUDE SQLCA定义</li>
+<li>用 EXEC SQL INCLUDE SQLCA 定义</li>
 </ul>
 </li>
-<li>使用SQLCA
+<li>使用 SQLCA
 <ul>
-<li>SQLCA中有一个存放每次执行SQL语句后返回代码的变量SQLCODE</li>
-<li>如果SQLCODE等于预定义的常量SUCCESS，则表示SQL语句成功，否则表示出错</li>
-<li>应用程序每执行完一条SQL 语句之后都应该测试一下SQLCODE的值，以了解该SQL语句执行情况并做相应处理</li>
+<li>SQLCA 中有一个存放每次执行 SQL 语句后返回代码的变量 SQLCODE</li>
+<li>如果 SQLCODE 等于预定义的常量 SUCCESS，则表示 SQL 语句成功，否则表示出错</li>
+<li>应用程序每执行完一条 SQL 语句之后都应该测试一下 SQLCODE 的值，以了解该 SQL 语句执行情况并做相应处理</li>
 </ul>
 </li>
 </ul>
@@ -253,17 +253,17 @@ SQLCA是一个数据结构</p>
 <li>
 <p>主变量</p>
 <ul>
-<li>嵌入式SQL语句中可以使用主语言的程序变量来输入或输出数据</li>
-<li>在SQL语句中使用的主语言程序变量简称为主变量（Host Variable）</li>
+<li>嵌入式 SQL 语句中可以使用主语言的程序变量来输入或输出数据</li>
+<li>在 SQL 语句中使用的主语言程序变量简称为主变量（Host Variable）</li>
 </ul>
 </li>
 <li>
 <p>主变量的类型</p>
 <ul>
 <li>输入主变量<br>
-由应用程序对其赋值，SQL语句引用</li>
+由应用程序对其赋值，SQL 语句引用</li>
 <li>输出主变量<br>
-由SQL语句对其赋值或设置状态信息，返回给应用程序</li>
+由 SQL 语句对其赋值或设置状态信息，返回给应用程序</li>
 </ul>
 </li>
 <li>
@@ -280,57 +280,57 @@ SQLCA是一个数据结构</p>
 </ul>
 </li>
 <li>
-<p>在SQL语句中使用主变量和指示变量的方法<br>
+<p>在 SQL 语句中使用主变量和指示变量的方法<br>
 说明主变量和指示变量<br>
 BEGIN DECLARE SECTION<br>
 …<br>
-…  		（说明主变量和指示变量）<br>
+… （说明主变量和指示变量）<br>
 …<br>
 END DECLARE SECTION</p>
 </li>
 <li>
-<p>在SQL语句中使用主变量和指示变量的方法（续）</p>
+<p>在 SQL 语句中使用主变量和指示变量的方法（续）</p>
 <ul>
 <li>使用主变量<br>
-说明之后的主变量可以在SQL语句中任何一个能够使用表达式的地方出现<br>
-为了与数据库对象名（表名、视图名、列名等）区别，SQL语句中的主变量名前要加冒号（:）作为标志</li>
+说明之后的主变量可以在 SQL 语句中任何一个能够使用表达式的地方出现<br>
+为了与数据库对象名（表名、视图名、列名等）区别，SQL 语句中的主变量名前要加冒号（:）作为标志</li>
 <li>使用指示变量<br>
 指示变量前也必须加冒号标志<br>
 必须紧跟在所指主变量之后</li>
 </ul>
 </li>
 <li>
-<p>在SQL语句之外（主语言语句中）使用主变量和指示变量的方法<br>
+<p>在 SQL 语句之外（主语言语句中）使用主变量和指示变量的方法<br>
 可以直接引用，不必加冒号</p>
 </li>
 <li>
 <p>为什么要使用游标</p>
 <ul>
-<li>SQL语言与主语言具有不同数据处理方式</li>
-<li>SQL语言是面向集合的，一条SQL语句原则上可以产生或处理多条记录</li>
+<li>SQL 语言与主语言具有不同数据处理方式</li>
+<li>SQL 语言是面向集合的，一条 SQL 语句原则上可以产生或处理多条记录</li>
 <li>主语言是面向记录的，一组主变量一次只能存放一条记录</li>
-<li>仅使用主变量并不能完全满足SQL语句向应用程序输出数据的要求</li>
-<li>嵌入式SQL引入了游标的概念，用来协调这两种不同的处理方式</li>
+<li>仅使用主变量并不能完全满足 SQL 语句向应用程序输出数据的要求</li>
+<li>嵌入式 SQL 引入了游标的概念，用来协调这两种不同的处理方式</li>
 </ul>
 </li>
 <li>
 <p>游标</p>
 <ul>
-<li>游标是系统为用户开设的一个数据缓冲区，存放SQL语句的执行结果</li>
+<li>游标是系统为用户开设的一个数据缓冲区，存放 SQL 语句的执行结果</li>
 <li>每个游标区都有一个名字</li>
-<li>用户可以用SQL语句逐一从游标中获取记录，并赋给主变量，交由主语言进一步处理</li>
+<li>用户可以用 SQL 语句逐一从游标中获取记录，并赋给主变量，交由主语言进一步处理</li>
 </ul>
 </li>
 <li>
 <p>建立数据库连接<br>
 EXEC SQL CONNECT TO target[AS connection-name][USER user-name];<br>
-target是要连接的数据库服务器<br>
+target 是要连接的数据库服务器<br>
 常见的服务器标识串，如<dbname>@<hostname>:<port><br>
-包含服务器标识的SQL串常量<br>
+包含服务器标识的 SQL 串常量<br>
 DEFAULT</p>
 </li>
 <li>
-<p>connect-name是可选的连接名，连接名必须是一个有效的标识符</p>
+<p>connect-name 是可选的连接名，连接名必须是一个有效的标识符</p>
 </li>
 <li>
 <p>在整个程序内只有一个连接时可以不指定连接名</p>
@@ -345,40 +345,40 @@ EXEC SQL SET CONNECTION connection-name<br>
 EXEC SQL DISCONNECT [connection];</p>
 </li>
 </ul>
-<h3 id="不用游标的SQL语句">不用游标的SQL语句</h3>
+<h3 id="不用游标的-SQL-语句">不用游标的 SQL 语句</h3>
 <ul>
-<li>不用游标的SQL语句的种类
+<li>不用游标的 SQL 语句的种类
 <ul>
 <li>说明性语句</li>
 <li>数据定义语句</li>
 <li>数据控制语句</li>
-<li>查询结果为单记录的SELECT语句</li>
-<li>非CURRENT形式的增删改语句</li>
+<li>查询结果为单记录的 SELECT 语句</li>
+<li>非 CURRENT 形式的增删改语句</li>
 </ul>
 </li>
 </ul>
-<h3 id="使用游标的SQL语句">使用游标的SQL语句</h3>
+<h3 id="使用游标的-SQL-语句">使用游标的 SQL 语句</h3>
 <ul>
-<li>必须使用游标的SQL语句
+<li>必须使用游标的 SQL 语句
 <ul>
-<li>查询结果为多条记录的SELECT语句</li>
-<li>CURRENT形式的UPDATE语句</li>
-<li>CURRENT形式的DELETE语句</li>
+<li>查询结果为多条记录的 SELECT 语句</li>
+<li>CURRENT 形式的 UPDATE 语句</li>
+<li>CURRENT 形式的 DELETE 语句</li>
 </ul>
 </li>
 </ul>
-<h3 id="动态SQL">动态SQL</h3>
+<h3 id="动态-SQL">动态 SQL</h3>
 <ul>
-<li>静态嵌入式SQL<br>
-静态嵌入式SQL语句能够满足一般要求<br>
-无法满足要到执行时才能够确定要提交的SQL语句、查询的条件</li>
-<li>动态嵌入式SQL<br>
-允许在程序运行过程中临时“组装”SQL语句<br>
-支持动态组装SQL语句和动态参数两种形式</li>
+<li>静态嵌入式 SQL<br>
+静态嵌入式 SQL 语句能够满足一般要求<br>
+无法满足要到执行时才能够确定要提交的 SQL 语句、查询的条件</li>
+<li>动态嵌入式 SQL<br>
+允许在程序运行过程中临时“组装”SQL 语句<br>
+支持动态组装 SQL 语句和动态参数两种形式</li>
 </ul>
 <ol>
 <li>
-<p>使用SQL语句主变量</p>
+<p>使用 SQL 语句主变量</p>
 </li>
 <li>
 <p>动态参数执行准备好的语句（EXECUTE）</p>
@@ -392,61 +392,61 @@ EXEC SQL DISCONNECT [connection];</p>
 <p>主变量</p>
 </li>
 <li>
-<p>[例8.6]  创建基本表TEST。</p>
-<p>​	EXEC SQL BEGIN DECLARE SECTION;<br>
-​    		   const char *stmt=“CREATE TABLE test(a int);”;<br>
-​               /<em>SQL语句主变量，内容是创建表的SQL语句</em>/<br>
-​	EXEC SQL END DECLARE SECTION;<br>
-​    	…<br>
-​	EXEC SQL EXECUTE IMMEDIATE :stmt;		<br>
-​               /<em>执行动态SQL语句</em>/</p>
+<p>[例 8.6] 创建基本表 TEST。</p>
+<p>​ EXEC SQL BEGIN DECLARE SECTION;<br>
+​ const char *stmt=“CREATE TABLE test(a int);”;<br>
+​ /<em>SQL 语句主变量，内容是创建表的 SQL 语句</em>/<br>
+​ EXEC SQL END DECLARE SECTION;<br>
+​ …<br>
+​ EXEC SQL EXECUTE IMMEDIATE :stmt;<br>
+​ /*执行动态 SQL 语句*/</p>
 </li>
 <li>
 <p>动态参数</p>
 <ul>
-<li>SQL语句中的可变元素</li>
+<li>SQL 语句中的可变元素</li>
 <li>使用参数符号（?）表示该位置的数据在运行时设定</li>
 <li>和主变量的区别
 <ul>
 <li>动态参数的输入不是编译时完成绑定</li>
-<li>而是通过 PREPARE语句准备主变量和执行语句EXECUTE绑定数据或主变量来完成</li>
+<li>而是通过 PREPARE 语句准备主变量和执行语句 EXECUTE 绑定数据或主变量来完成</li>
 </ul>
 </li>
 </ul>
 </li>
 <li>
 <p>使用动态参数的步骤<br>
-（1）声明SQL语句主变量<br>
-（2）准备SQL语句（PREPARE）<br>
+（1）声明 SQL 语句主变量<br>
+（2）准备 SQL 语句（PREPARE）<br>
 EXEC SQL PREPARE &lt;语句名&gt;<br>
-FROM &lt;SQL语句主变量&gt;;</p>
+FROM &lt;SQL 语句主变量&gt;;</p>
 <p>EXEC SQL EXECUTE &lt;语句名&gt;<br>
 [INTO &lt;主变量表&gt;]<br>
 [USING &lt;主变量或常量&gt;];</p>
 </li>
 <li>
-<p>准备好的SQL</p>
+<p>准备好的 SQL</p>
 </li>
 <li>
-<p>[例8.7] 向TEST中插入元组。<br>
+<p>[例 8.7] 向 TEST 中插入元组。<br>
 EXEC SQL BEGIN DECLARE SECTION;<br>
 const char *stmt = “INSERT INTO test VALUES(?);”;<br>
-/*声明SQL主变量内容是INSERT语句 */<br>
+/*声明 SQL 主变量内容是 INSERT 语句 */<br>
 EXEC SQL END DECLARE SECTION;<br>
 …<br>
 EXEC SQL PREPARE mystmt FROM :stmt; /<em>准备语句</em>/<br>
 …<br>
 EXEC SQL EXECUTE mystmt USING 100;<br>
-/*执行语句，设定INSERT语句插入值100 <em>/<br>
+/*执行语句，设定 INSERT 语句插入值 100 <em>/<br>
 EXEC SQL EXECUTE mystmt USING 200;<br>
-/</em> 执行语句，设定INSERT语句插入值200 */</p>
+/</em> 执行语句，设定 INSERT 语句插入值 200 */</p>
 </li>
 </ul>
-<h2 id="过程化SQL">过程化SQL</h2>
-<h3 id="过程化SQL的块结构">过程化SQL的块结构</h3>
+<h2 id="过程化-SQL">过程化 SQL</h2>
+<h3 id="过程化-SQL-的块结构">过程化 SQL 的块结构</h3>
 <ul>
 <li>
-<p>SQL的扩展</p>
+<p>SQL 的扩展</p>
 <ul>
 <li>增加了过程化语句功能</li>
 <li>基本结构是块</li>
@@ -455,7 +455,7 @@ EXEC SQL EXECUTE mystmt USING 200;<br>
 </ul>
 </li>
 <li>
-<p>过程化SQL块的基本结构</p>
+<p>过程化 SQL 块的基本结构</p>
 <ol>
 <li>
 <p>定义部分<br>
@@ -466,11 +466,11 @@ DECLARE 变量、常量、游标、异常等<br>
 <li>
 <p>执行部分<br>
 BEGIN</p>
-<p>SQL语句、过程化SQL的流程控制语句</p>
+<p>SQL 语句、过程化 SQL 的流程控制语句</p>
 </li>
 </ol>
 <p>EXCEPTION<br>
-异常处理部分        		<br>
+异常处理部分<br>
 END；</p>
 </li>
 </ul>
@@ -481,12 +481,12 @@ END；</p>
 变量名 数据类型 [[NOT NULL] 初值表达式]</li>
 <li>常量定义<br>
 常量名 数据类型 CONSTANT :=常量表达式<br>
-常量必须要给一个值，并且该值在存在期间或常量的作用域内不能改变。如果试图修改它，过程化SQL将返回一个异常</li>
+常量必须要给一个值，并且该值在存在期间或常量的作用域内不能改变。如果试图修改它，过程化 SQL 将返回一个异常</li>
 <li>赋值语句<br>
 变量名称 :=表达式</li>
 </ol>
 <h3 id="流程控制">流程控制</h3>
-<p>过程化SQL功能</p>
+<p>过程化 SQL 功能</p>
 <ol>
 <li>
 <p>条件控制语句</p>
@@ -501,7 +501,7 @@ END；</p>
 <ul>
 <li>
 <p>条件控制语句<br>
-IF-THEN，IF-THEN-ELSE和嵌套的IF语句<br>
+IF-THEN，IF-THEN-ELSE 和嵌套的 IF 语句<br>
 （1）IF condition THEN<br>
 Sequence_of_statements;<br>
 END IF;<br>
@@ -510,17 +510,17 @@ Sequence_of_statements1;<br>
 ELSE<br>
 Sequence_of_statements2;<br>
 END IF;<br>
-（3）在THEN和ELSE子句中还可以再包含IF语句，即IF语句可以嵌套</p>
+（3）在 THEN 和 ELSE 子句中还可以再包含 IF 语句，即 IF 语句可以嵌套</p>
 </li>
 <li>
 <p>循环控制语句<br>
-LOOP，WHILE-LOOP和FOR-LOOP<br>
-（1）简单的循环语句LOOP<br>
+LOOP，WHILE-LOOP 和 FOR-LOOP<br>
+（1）简单的循环语句 LOOP<br>
 LOOP<br>
 Sequence_of_statements;<br>
 END LOOP;<br>
-多数数据库服务器的过程化SQL都提供EXIT、BREAK或<br>
-LEAVE等循环结束语句，保证LOOP语句块能够结束</p>
+多数数据库服务器的过程化 SQL 都提供 EXIT、BREAK 或<br>
+LEAVE 等循环结束语句，保证 LOOP 语句块能够结束</p>
 <p>（2）WHILE-LOOP<br>
 WHILE condition LOOP<br>
 Sequence_of_statements;<br>
@@ -538,8 +538,8 @@ END LOOP;</p>
 <li>错误处理</li>
 </ol>
 <ul>
-<li>如果过程化SQL在执行时出现异常，则应该让程序在产生异常的语句处停下来，根据异常的类型去执行异常处理语句</li>
-<li>SQL标准对数据库服务器提供什么样的异常处理做出了建议，要求过程化SQL管理器提供完善的异常处理机制</li>
+<li>如果过程化 SQL 在执行时出现异常，则应该让程序在产生异常的语句处停下来，根据异常的类型去执行异常处理语句</li>
+<li>SQL 标准对数据库服务器提供什么样的异常处理做出了建议，要求过程化 SQL 管理器提供完善的异常处理机制</li>
 </ul>
 </li>
 </ul>
@@ -547,21 +547,21 @@ END LOOP;</p>
 <h3 id="存储过程">存储过程</h3>
 <ul>
 <li>
-<p>过程化SQL块类型</p>
+<p>过程化 SQL 块类型</p>
 <ul>
 <li>命名块<br>
 编译后保存在数据库中，可以被反复调用，运行速度较快，过程和函数是命名块</li>
 <li>匿名块<br>
-每次执行时都要进行编译，它不能被存储到数据库中，也不能在其他过程化SQL块中调用</li>
+每次执行时都要进行编译，它不能被存储到数据库中，也不能在其他过程化 SQL 块中调用</li>
 </ul>
 </li>
 <li>
 <p>存储过程：</p>
-<p>由过程化SQL语句书写的过程，经编译和优化后存储在数据库服务器中，使用时只要调用即可。</p>
+<p>由过程化 SQL 语句书写的过程，经编译和优化后存储在数据库服务器中，使用时只要调用即可。</p>
 <ul>
 <li>存储过程的优点<br>
 （1）运行效率高<br>
-（2）降低了客户机和服务器之间的通信量	<br>
+（2）降低了客户机和服务器之间的通信量<br>
 （3）方便实施企业规则</li>
 </ul>
 </li>
@@ -574,62 +574,62 @@ END LOOP;</p>
 </li>
 <li>
 <p>（1）创建存储过程<br>
-CREATE OR REPLACE PROCEDURE 过程名([参数1,参数2,…]) AS &lt;过程化SQL块&gt;；<br>
+CREATE OR REPLACE PROCEDURE 过程名([参数 1,参数 2,…]) AS &lt;过程化 SQL 块&gt;；<br>
 过程名：数据库服务器合法的对象标识<br>
 参数列表：用名字来标识调用时给出的参数值，必须指定值的数据类型。参数也可以定义输入参数、输出参数或输入/输出参数，默认为输入参数<br>
-过程体：是一个&lt;过程化SQL块&gt;，包括声明部分和可执行语句部分</p>
+过程体：是一个&lt;过程化 SQL 块&gt;，包括声明部分和可执行语句部分</p>
 </li>
 <li>
-<p>[例8.8] 利用存储过程来实现下面的应用：从账户1转指定数额的款项到账户2中。</p>
-<p>​	CREATE OR REPLACE PROCEDURE TRANSFER(inAccount INT,outAccount  INT,amount FLOAT)<br>
-​       /<em>定义存储过程TRANSFER，其参数为转入账户、转出账户、转账额度</em>/<br>
-​	AS DECLARE		/<em>定义变量</em>/<br>
-​	        totalDepositOut Float;<br>
-​             totalDepositIn Float;<br>
-​		inAccountnum INT;</p>
-<p>BEGIN                         	    /*检查转出账户的余额 */	<br>
+<p>[例 8.8] 利用存储过程来实现下面的应用：从账户 1 转指定数额的款项到账户 2 中。</p>
+<p>​ CREATE OR REPLACE PROCEDURE TRANSFER(inAccount INT,outAccount INT,amount FLOAT)<br>
+​ /<em>定义存储过程 TRANSFER，其参数为转入账户、转出账户、转账额度</em>/<br>
+​ AS DECLARE /<em>定义变量</em>/<br>
+​ totalDepositOut Float;<br>
+​ totalDepositIn Float;<br>
+​ inAccountnum INT;</p>
+<p>BEGIN /_检查转出账户的余额 _/<br>
 SELECT Total INTO totalDepositOut FROM Accout<br>
 WHERE accountnum=outAccount;<br>
 IF totalDepositOut IS NULL THEN<br>
 /<em>如果转出账户不存在或账户中没有存款</em>/<br>
-ROLLBACK; 	   /<em>回滚事务</em>/<br>
+ROLLBACK; /<em>回滚事务</em>/<br>
 RETURN;<br>
 END IF;</p>
-<p>IF totalDeposit Out&lt; amount THEN    	/<em>如果账户存款不足</em>/<br>
-ROLLBACK; 				/<em>回滚事务</em>/<br>
+<p>IF totalDeposit Out&lt; amount THEN /<em>如果账户存款不足</em>/<br>
+ROLLBACK; /<em>回滚事务</em>/<br>
 RETURN;<br>
 END IF;</p>
 <p>SELECT Accountnum INTO inAccountnum FROM Account<br>
 WHERE accountnum=inAccount;</p>
-<p>IF inAccount IS NULL THEN  		/<em>如果转入账户不存在</em>/<br>
-ROLLBACK; 	         	 		/<em>回滚事务</em>/<br>
+<p>IF inAccount IS NULL THEN /<em>如果转入账户不存在</em>/<br>
+ROLLBACK; /<em>回滚事务</em>/<br>
 RETURN;<br>
 ENDIF;</p>
 <p>UPDATE Account SET total=total-amount WHERE accountnum=outAccount;<br>
-/* 修改转出账户余额，减去转出额 <em>/<br>
+/_ 修改转出账户余额，减去转出额 <em>/<br>
 UPDATE Account SET total=total + amount<br>
-WHERE   accountnum=inAccount;<br>
+WHERE accountnum=inAccount;<br>
 /</em> 修改转入账户余额，增加转入额 <em>/<br>
-COMMIT;                       	/</em> 提交转账事务 */<br>
+COMMIT; /</em> 提交转账事务 _/<br>
 END;</p>
 </li>
 <li>
 <p>（2）执行存储过程<br>
-CALL/PERFORM  PROCEDURE 过程名([参数1,参数2,…])；<br>
-使用CALL或者PERFORM等方式激活存储过程的执行<br>
-在过程化SQL中，数据库服务器支持在过程体中调用其他存储过程</p>
+CALL/PERFORM PROCEDURE 过程名([参数 1,参数 2,…])；<br>
+使用 CALL 或者 PERFORM 等方式激活存储过程的执行<br>
+在过程化 SQL 中，数据库服务器支持在过程体中调用其他存储过程</p>
 </li>
 <li>
-<p>[例8.9] 从账户01003815868转10000元到01003813828账户中。<br>
+<p>[例 8.9] 从账户 01003815868 转 10000 元到 01003813828 账户中。<br>
 CALL PROCEDURE TRANSFER(01003813828,01003815868,10000);</p>
 </li>
 <li>
 <p>（3）修改存储过程<br>
-ALTER PROCEDURE 过程名1  RENAME TO 过程名2;</p>
+ALTER PROCEDURE 过程名 1 RENAME TO 过程名 2;</p>
 </li>
 <li>
 <p>（4）删除存储过程<br>
-DROP  PROCEDURE 过程名()；</p>
+DROP PROCEDURE 过程名()；</p>
 </li>
 </ul>
 <h3 id="函数">函数</h3>
@@ -640,12 +640,12 @@ DROP  PROCEDURE 过程名()；</p>
 </ul>
 <ol>
 <li>函数的定义语句格式<br>
-CREATE OR REPLACE FUNCTION 函数名 ([参数1,参数2,…]) RETURNS &lt;类型&gt;  AS &lt;过程化SQL块&gt;;</li>
+CREATE OR REPLACE FUNCTION 函数名 ([参数 1,参数 2,…]) RETURNS &lt;类型&gt; AS &lt;过程化 SQL 块&gt;;</li>
 <li>函数的执行语句格式<br>
-CALL/SELECT 函数名 ([参数1,参数2,…]);</li>
+CALL/SELECT 函数名 ([参数 1,参数 2,…]);</li>
 <li>修改函数<br>
 重命名<br>
-ALTER FUNCTION 过程名1 RENAME TO 过程名2;<br>
+ALTER FUNCTION 过程名 1 RENAME TO 过程名 2;<br>
 重新编译<br>
 ALTER FUNCTION 过程名 COMPILE;</li>
 </ol>
@@ -653,11 +653,11 @@ ALTER FUNCTION 过程名 COMPILE;</li>
 <ul>
 <li>优点：
 <ul>
-<li>有if/else,case,while等控制语句，通过编写存储过程，可以实现一些逻辑比较复杂的功能；</li>
+<li>有 if/else,case,while 等控制语句，通过编写存储过程，可以实现一些逻辑比较复杂的功能；</li>
 <li>模块化；对一些功能进行了封装，代码的复用；</li>
 <li>响应速度快，只有在首次执行时需要经过编译和优化步骤，后被调用直接执行，省去了重新编写代码计算的步骤。</li>
 <li>减少网络传输。存储过程直接就在数据库服务器上跑，所有的数据访问都在服务器内部进行，不需要传输数据到其它终端。</li>
-<li>方便DBA优化。所有的SQL集中在一个地方</li>
+<li>方便 DBA 优化。所有的 SQL 集中在一个地方</li>
 </ul>
 </li>
 <li>缺点：<br>
@@ -677,9 +677,9 @@ ALTER FUNCTION 过程名 COMPILE;</li>
 </ul>
 </li>
 </ul>
-<h2 id="ODBC编程">ODBC编程</h2>
+<h2 id="ODBC-编程">ODBC 编程</h2>
 <ul>
-<li>ODBC优点
+<li>ODBC 优点
 <ul>
 <li>移植性好</li>
 <li>能同时访问不同的数据库</li>
@@ -687,10 +687,10 @@ ALTER FUNCTION 过程名 COMPILE;</li>
 </ul>
 </li>
 </ul>
-<h3 id="ODBC概述">ODBC概述</h3>
+<h3 id="ODBC-概述">ODBC 概述</h3>
 <ul>
 <li>
-<p>ODBC产生的原因</p>
+<p>ODBC 产生的原因</p>
 <ul>
 <li>由于不同的数据库管理系统的存在，在某个关系数据库管理系统下编写的应用程序就不能在另一个关系数据库管理系统下运行</li>
 <li>许多应用程序需要共享多个部门的数据资源，访问不同的关系数据库管理系统</li>
@@ -704,23 +704,23 @@ ALTER FUNCTION 过程名 COMPILE;</li>
 </ul>
 </li>
 <li>
-<p>ODBC约束力</p>
+<p>ODBC 约束力</p>
 <ul>
 <li>规范应用开发</li>
 <li>规范关系数据库管理系统应用接口</li>
 </ul>
 </li>
 </ul>
-<h3 id="ODBC工作原理概述">ODBC工作原理概述</h3>
+<h3 id="ODBC-工作原理概述">ODBC 工作原理概述</h3>
 <ul>
 <li>
-<p>ODBC应用系统的体系结构</p>
+<p>ODBC 应用系统的体系结构</p>
 <ol>
 <li>
 <p>用户应用程序</p>
 </li>
 <li>
-<p>ODBC驱动程序管理器</p>
+<p>ODBC 驱动程序管理器</p>
 </li>
 <li>
 <p>数据库驱动程序</p>
@@ -731,11 +731,11 @@ ALTER FUNCTION 过程名 COMPILE;</li>
 </ol>
 </li>
 <li>
-<p>ODBC应用程序包括的内容</p>
+<p>ODBC 应用程序包括的内容</p>
 <ul>
 <li>请求连接数据库</li>
-<li>向数据源发送SQL语句</li>
-<li>为SQL语句执行结果分配存储空间，定义所读取的数据格式</li>
+<li>向数据源发送 SQL 语句</li>
+<li>为 SQL 语句执行结果分配存储空间，定义所读取的数据格式</li>
 <li>获取数据库操作结果或处理错误</li>
 <li>进行数据处理并向用户提交处理结果</li>
 <li>请求事务的提交和回滚操作</li>
@@ -745,27 +745,27 @@ ALTER FUNCTION 过程名 COMPILE;</li>
 <li>
 <p>驱动程序管理器：用来管理各种驱动程序</p>
 <ul>
-<li>包含在ODBC32.DLL中</li>
+<li>包含在 ODBC32.DLL 中</li>
 <li>管理应用程序和驱动程序之间的通信</li>
-<li>建立、配置或删除数据源，并查看系统当前所安装的数据库ODBC驱动程序</li>
+<li>建立、配置或删除数据源，并查看系统当前所安装的数据库 ODBC 驱动程序</li>
 </ul>
 </li>
 <li>
 <p>主要功能：</p>
 <ul>
-<li>装载ODBC驱动程序</li>
+<li>装载 ODBC 驱动程序</li>
 <li>选择和连接正确的驱动程序</li>
 <li>管理数据源</li>
-<li>检查ODBC调用参数的合法性</li>
-<li>记录ODBC函数的调用等</li>
+<li>检查 ODBC 调用参数的合法性</li>
+<li>记录 ODBC 函数的调用等</li>
 </ul>
 </li>
 <li>
-<p>ODBC驱动程序类型</p>
+<p>ODBC 驱动程序类型</p>
 <ul>
 <li>单束<br>
 数据源和应用程序在同一台机器上<br>
-驱动程序直接完成对数据文件的I/O操作<br>
+驱动程序直接完成对数据文件的 I/O 操作<br>
 驱动程序相当于数据管理器</li>
 <li>多束<br>
 支持客户机—服务器、客户机—应用服务器/数据库服务器等网络环境下的数据访问<br>
@@ -779,27 +779,27 @@ ALTER FUNCTION 过程名 COMPILE;</li>
 <li>
 <p>数据源对最终用户是透明的</p>
 <ul>
-<li>ODBC给每个被访问的数据源指定唯一的数据源名（Data Source Name，简称DSN），并映射到所有必要的、用来存取数据的低层软件</li>
+<li>ODBC 给每个被访问的数据源指定唯一的数据源名（Data Source Name，简称 DSN），并映射到所有必要的、用来存取数据的低层软件</li>
 <li>在连接中，用数据源名来代表用户名、服务器名、所连接的数据库名等</li>
-<li>最终用户无须知道数据库管理系统或其他数据管理软件、网络以及有关ODBC驱动程序的细节</li>
+<li>最终用户无须知道数据库管理系统或其他数据管理软件、网络以及有关 ODBC 驱动程序的细节</li>
 </ul>
 </li>
 <li>
-<p>例如，假设某个学校在SQL Server和KingbaseES上创建了两个数据库：学校人事数据库和教学科研数据库。<br>
+<p>例如，假设某个学校在 SQL Server 和 KingbaseES 上创建了两个数据库：学校人事数据库和教学科研数据库。<br>
 学校的信息系统要从这两个数据库中存取数据<br>
-为了方便地与两个数据库连接，为学校人事数据库创建一个数据源名PERSON，为教学科研数据库创建一个名为EDU的数据源<br>
-当要访问每一个数据库时，只要与PERSON和EDU连接即可，不需要记住使用的驱动程序、服务器名称、数据库名</p>
+为了方便地与两个数据库连接，为学校人事数据库创建一个数据源名 PERSON，为教学科研数据库创建一个名为 EDU 的数据源<br>
+当要访问每一个数据库时，只要与 PERSON 和 EDU 连接即可，不需要记住使用的驱动程序、服务器名称、数据库名</p>
 </li>
 </ul>
-<h3 id="ODBC-API基础">ODBC API基础</h3>
+<h3 id="ODBC-API-基础">ODBC API 基础</h3>
 <ul>
 <li>
 <p>ODBC 应用程序编程接口的一致性</p>
 <ul>
-<li>API一致性<br>
-包含核心级、扩展1级、扩展2级</li>
+<li>API 一致性<br>
+包含核心级、扩展 1 级、扩展 2 级</li>
 <li>语法一致性<br>
-包含最低限度SQL语法级、核心SQL语法级、扩展SQL语法级</li>
+包含最低限度 SQL 语法级、核心 SQL 语法级、扩展 SQL 语法级</li>
 </ul>
 </li>
 <li>
@@ -816,21 +816,21 @@ ALTER FUNCTION 过程名 COMPILE;</li>
 </ol>
 </li>
 <li>
-<p>ODBC 3.0 标准提供了76个函数接口</p>
+<p>ODBC 3.0 标准提供了 76 个函数接口</p>
 <ul>
 <li>分配和释放环境句柄、连接句柄、语句句柄</li>
-<li>连接函数（SQLDriverconnect等）</li>
-<li>与信息相关的函数（SQLGetinfo、SQLGetFuction等）</li>
-<li>事务处理函数（如SQLEndTran）</li>
-<li>执行相关函数（SQLExecdirect、SQLExecute等）</li>
-<li>编目函数，ODBC 3.0提供了11个编目函数，如SQLTables、SQLColumn等。应用程序可以通过对编目函数的调用来获取数据字典的信息，如权限、表结构等</li>
+<li>连接函数（SQLDriverconnect 等）</li>
+<li>与信息相关的函数（SQLGetinfo、SQLGetFuction 等）</li>
+<li>事务处理函数（如 SQLEndTran）</li>
+<li>执行相关函数（SQLExecdirect、SQLExecute 等）</li>
+<li>编目函数，ODBC 3.0 提供了 11 个编目函数，如 SQLTables、SQLColumn 等。应用程序可以通过对编目函数的调用来获取数据字典的信息，如权限、表结构等</li>
 </ul>
 </li>
 <li>
-<p>句柄是32位整数值，代表一个指针</p>
+<p>句柄是 32 位整数值，代表一个指针</p>
 </li>
 <li>
-<p>ODBC 3.0中句柄分类</p>
+<p>ODBC 3.0 中句柄分类</p>
 <ul>
 <li>环境句柄</li>
 <li>连接句柄</li>
@@ -841,25 +841,25 @@ ALTER FUNCTION 过程名 COMPILE;</li>
 <li>
 <p>应用程序句柄之间的关系（续）</p>
 <ul>
-<li>在一个连接中可以建立多个语句句柄，它不只是一个SQL语句，还包括SQL语句产生的结果集以及相关的信息等</li>
-<li>在ODBC 3.0中又提出了描述符句柄的概念，它是描述SQL语句的参数、结果集列的元数据集合</li>
+<li>在一个连接中可以建立多个语句句柄，它不只是一个 SQL 语句，还包括 SQL 语句产生的结果集以及相关的信息等</li>
+<li>在 ODBC 3.0 中又提出了描述符句柄的概念，它是描述 SQL 语句的参数、结果集列的元数据集合</li>
 </ul>
 </li>
 <li>
-<p>ODBC数据类型</p>
+<p>ODBC 数据类型</p>
 <ul>
-<li>SQL数据类型：用于数据源</li>
-<li>C数据类型 ：用于应用程序的C代码</li>
+<li>SQL 数据类型：用于数据源</li>
+<li>C 数据类型 ：用于应用程序的 C 代码</li>
 </ul>
 </li>
 <li>
-<p>应用程序可以通过SQLGetTypeInfo来获取不同的驱动程序对于数据类型的支持情况</p>
+<p>应用程序可以通过 SQLGetTypeInfo 来获取不同的驱动程序对于数据类型的支持情况</p>
 </li>
 <li>
-<p>[例8.11] 将KingbaseES数据库中Student表的数据备份到SQL Server数据库中。</p>
+<p>[例 8.11] 将 KingbaseES 数据库中 Student 表的数据备份到 SQL Server 数据库中。</p>
 <ul>
 <li>该应用涉及两个不同的关系数据库管理系统中的数据源</li>
-<li>使用ODBC来开发应用程序，只要改变应用程序中连接函数（SQLConnect）的参数，就可以连接不同关系数据库管理系统的驱动程序，连接两个数据源</li>
+<li>使用 ODBC 来开发应用程序，只要改变应用程序中连接函数（SQLConnect）的参数，就可以连接不同关系数据库管理系统的驱动程序，连接两个数据源</li>
 </ul>
 </li>
 <li>
@@ -878,7 +878,7 @@ ALTER FUNCTION 过程名 COMPILE;</li>
 <p>分配语句句柄</p>
 </li>
 <li>
-<p>执行SQL语句</p>
+<p>执行 SQL 语句</p>
 </li>
 <li>
 <p>结果集处理</p>
@@ -894,35 +894,35 @@ ALTER FUNCTION 过程名 COMPILE;</li>
 <li>释放语句句柄</li>
 <li>释放数据库连接</li>
 <li>与数据库服务器断开</li>
-<li>释放ODBC环境</li>
+<li>释放 ODBC 环境</li>
 </ul>
 </li>
 </ul>
 <h2 id="小结">小结</h2>
 <ul>
-<li>嵌入式SQL把SQL语句嵌入到某种高级语言中</li>
-<li>SQL与主语言具有不同的数据处理方式</li>
+<li>嵌入式 SQL 把 SQL 语句嵌入到某种高级语言中</li>
+<li>SQL 与主语言具有不同的数据处理方式</li>
 <li>本章讲解了以下内容
 <ul>
-<li>嵌入式SQL</li>
-<li>过程化SQL</li>
+<li>嵌入式 SQL</li>
+<li>过程化 SQL</li>
 <li>存储过程和函数</li>
-<li>ODBC编程</li>
+<li>ODBC 编程</li>
 </ul>
 </li>
 </ul>
-<p>掘金：<a target="_blank" rel="noopener" href="https://juejin.cn/user/3913917127467805">前端LeBron</a></p>
-<p>知乎：<a target="_blank" rel="noopener" href="https://www.zhihu.com/people/lebronchao">前端LeBron</a></p>
-<p>持续分享技术博文，关注微信公众号👇🏻</p>
-<p><img src= "/img/loading.gif" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/v2-be6b9cd0588dddc0e39428cacf11f6a3_720w.png" alt="img"></p>
-</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">LeBronChao-</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://lebronchao.com/2021/01/21/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F-%E7%AC%AC%E5%85%AB%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BC%96%E7%A8%8B/">https://lebronchao.com/2021/01/21/数据库系统-第八章-数据库编程/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://lebronchao.com" target="_blank">LeBronChao's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a><a class="post-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><a class="post-meta__tags" href="/tags/SQL/">SQL</a><a class="post-meta__tags" href="/tags/%E5%90%8E%E7%AB%AF/">后端</a></div><div class="post_share"><div class="social-share" data-image="https://bloginfo.lebronchao.com/doc-image/MySql.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/01/22/TypeScript%E5%85%A5%E9%97%A8-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"><img class="prev-cover" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/TypeScript.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">TypeScript入门 | 学习笔记</div></div></a></div><div class="next-post pull-right"><a href="/2021/01/20/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F-%E7%AC%AC%E4%B8%83%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1/"><img class="next-cover" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/MySql.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">数据库系统 | 第七章 数据库设计</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/01/15/数据库系统-第二章-关系数据库/" title="数据库系统 | 第二章 关系数据库"><img class="cover" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/MySql.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-01-15</div><div class="title">数据库系统 | 第二章 关系数据库</div></div></a></div><div><a href="/2021/01/19/数据库系统-第六章-关系数据理论/" title="数据库系统 | 第六章 关系数据理论"><img class="cover" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/MySql.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-01-19</div><div class="title">数据库系统 | 第六章 关系数据理论</div></div></a></div><div><a href="/2021/01/14/数据库系统-第一章-绪论/" title="数据库系统 | 第一章 绪论"><img class="cover" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/MySql.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-01-14</div><div class="title">数据库系统 | 第一章 绪论</div></div></a></div><div><a href="/2021/01/18/数据库系统-第五章-数据库完整性/" title="数据库系统 | 第五章 数据库完整性"><img class="cover" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/MySql.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-01-18</div><div class="title">数据库系统 | 第五章 数据库完整性</div></div></a></div><div><a href="/2021/01/17/数据库系统-第四章-数据库安全性/" title="数据库系统 | 第四章 数据库安全性"><img class="cover" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/MySql.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-01-17</div><div class="title">数据库系统 | 第四章 数据库安全性</div></div></a></div><div><a href="/2021/01/20/数据库系统-第七章-数据库设计/" title="数据库系统 | 第七章 数据库设计"><img class="cover" data-lazy-src="https://bloginfo.lebronchao.com/doc-image/MySql.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-01-20</div><div class="title">数据库系统 | 第七章 数据库设计</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" data-lazy-src="https://bloginfo.lebronchao.com/personal-info/IMG_8050.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">LeBronChao-</div><div class="author-info__description">深圳大学(SZTU) 22届 物联网工程<br/>前端开发工程师一枚<br/>业余摄影师，交流/约拍可私戳。<br/>字节跳动内推码:4FCV6BV<br/>Email：LeBronChao@foxmail.com</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">88</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/LeBronChao"><i class="fab fa-github"></i><span>Follow My Github</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/LeBronChao" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:lebronchao@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://bloginfo.lebronchao.com/personal-info/IMG_8268-20210326002121490.jpg" target="_blank" title="微信"><i class="fab fa-weixin"></i></a><a class="social-icon" href="tencent://AddContact/?fromId=45&amp;fromSubId=1&amp;subcmd=all&amp;uin=1531229587&amp;website=www.oicqzone.com" target="_blank" title="QQ"><i class="fab fa-qq"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">掘金：<a target="_blank" rel="noopener" href="https://juejin.cn/user/3913917127467805">前端LeBron</a><br/>知乎：<a target="_blank" rel="noopener" href="https://www.zhihu.com/people/lebronchao">前端LeBron</a><br/>持续分享技术博文，关注wx公众号👇🏻<br/><img src="https://bloginfo.lebronchao.com/doc-image/v2-be6b9cd0588dddc0e39428cacf11f6a3_720w.png" /></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B5%8C%E5%85%A5%E5%BC%8FSQL"><span class="toc-number">1.</span> <span class="toc-text">嵌入式SQL</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B5%8C%E5%85%A5%E5%BC%8FSQL%E7%9A%84%E5%A4%84%E7%90%86%E8%BF%87%E7%A8%8B"><span class="toc-number">1.1.</span> <span class="toc-text">嵌入式SQL的处理过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B5%8C%E5%85%A5%E5%BC%8FSQL%E8%AF%AD%E5%8F%A5%E4%B8%8E%E4%B8%BB%E8%AF%AD%E8%A8%80%E4%B9%8B%E9%97%B4%E7%9A%84%E9%80%9A%E4%BF%A1"><span class="toc-number">1.2.</span> <span class="toc-text">嵌入式SQL语句与主语言之间的通信</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E7%94%A8%E6%B8%B8%E6%A0%87%E7%9A%84SQL%E8%AF%AD%E5%8F%A5"><span class="toc-number">1.3.</span> <span class="toc-text">不用游标的SQL语句</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%B8%B8%E6%A0%87%E7%9A%84SQL%E8%AF%AD%E5%8F%A5"><span class="toc-number">1.4.</span> <span class="toc-text">使用游标的SQL语句</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81SQL"><span class="toc-number">1.5.</span> <span class="toc-text">动态SQL</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%87%E7%A8%8B%E5%8C%96SQL"><span class="toc-number">2.</span> <span class="toc-text">过程化SQL</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%87%E7%A8%8B%E5%8C%96SQL%E7%9A%84%E5%9D%97%E7%BB%93%E6%9E%84"><span class="toc-number">2.1.</span> <span class="toc-text">过程化SQL的块结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%98%E9%87%8F%E5%92%8C%E5%B8%B8%E9%87%8F%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-number">2.2.</span> <span class="toc-text">变量和常量的定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6"><span class="toc-number">2.3.</span> <span class="toc-text">流程控制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E5%92%8C%E5%87%BD%E6%95%B0"><span class="toc-number">3.</span> <span class="toc-text">存储过程和函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B"><span class="toc-number">3.1.</span> <span class="toc-text">存储过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0"><span class="toc-number">3.2.</span> <span class="toc-text">函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ODBC%E7%BC%96%E7%A8%8B"><span class="toc-number">4.</span> <span class="toc-text">ODBC编程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ODBC%E6%A6%82%E8%BF%B0"><span class="toc-number">4.1.</span> <span class="toc-text">ODBC概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ODBC%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E6%A6%82%E8%BF%B0"><span class="toc-number">4.2.</span> <span class="toc-text">ODBC工作原理概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ODBC-API%E5%9F%BA%E7%A1%80"><span class="toc-number">4.3.</span> <span class="toc-text">ODBC API基础</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">5.</span> <span class="toc-text">小结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/10/12/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E6%A8%A1%E5%BC%8F/" title="JavaScript设计模式-发布订阅模式"><img data-lazy-src="https://bloginfo.lebronchao.com/doc-image/image-20221011174858741.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JavaScript设计模式-发布订阅模式"/></a><div class="content"><a class="title" href="/2022/10/12/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E6%A8%A1%E5%BC%8F/" title="JavaScript设计模式-发布订阅模式">JavaScript设计模式-发布订阅模式</a><time datetime="2022-10-12T15:59:18.000Z" title="发表于 2022-10-12 23:59:18">2022-10-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/10/10/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" title="JavaScript设计模式-代理模式"><img data-lazy-src="https://bloginfo.lebronchao.com/doc-image/banner-20220908163707243.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JavaScript设计模式-代理模式"/></a><div class="content"><a class="title" href="/2022/10/10/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" title="JavaScript设计模式-代理模式">JavaScript设计模式-代理模式</a><time datetime="2022-10-09T16:24:29.000Z" title="发表于 2022-10-10 00:24:29">2022-10-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/08/21/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/" title="JavaScript 设计模式 —— 策略模式"><img data-lazy-src="https://bloginfo.lebronchao.com/doc-image/f3248dbebc9f40769a83e9d148f3a880~tplv-k3u1fbpfcp-zoom-crop-mark:3024:3024:3024:1702.awebp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JavaScript 设计模式 —— 策略模式"/></a><div class="content"><a class="title" href="/2022/08/21/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/" title="JavaScript 设计模式 —— 策略模式">JavaScript 设计模式 —— 策略模式</a><time datetime="2022-08-21T13:11:23.000Z" title="发表于 2022-08-21 21:11:23">2022-08-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/08/21/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" title="JavaScript 设计模式 —— 单例模式"><img data-lazy-src="https://bloginfo.lebronchao.com/doc-image/63460f4ae2fe44c7beb9201528f684b7~tplv-k3u1fbpfcp-zoom-crop-mark:3024:3024:3024:1702.awebp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JavaScript 设计模式 —— 单例模式"/></a><div class="content"><a class="title" href="/2022/08/21/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" title="JavaScript 设计模式 —— 单例模式">JavaScript 设计模式 —— 单例模式</a><time datetime="2022-08-21T13:11:14.000Z" title="发表于 2022-08-21 21:11:14">2022-08-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/02/20/%E6%91%84%E5%BD%B1-%E6%A2%A7%E6%A1%90%E5%B1%B1/" title="摄影 | 梧桐山"><img data-lazy-src="https://bloginfo.lebronchao.com/doc-image/DSC00287.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="摄影 | 梧桐山"/></a><div class="content"><a class="title" href="/2022/02/20/%E6%91%84%E5%BD%B1-%E6%A2%A7%E6%A1%90%E5%B1%B1/" title="摄影 | 梧桐山">摄影 | 梧桐山</a><time datetime="2022-02-19T16:24:49.000Z" title="发表于 2022-02-20 00:24:49">2022-02-20</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By LeBronChao-</div><div class="footer_custom_text">@ 2022 LeBronChao- CopyRight | <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备2021025161号</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+<p>掘金：<a target="_blank" rel="noopener" href="https://juejin.cn/user/3913917127467805">前端 LeBron</a></p>
+<p>知乎：<a target="_blank" rel="noopener" href="https://www.zhihu.com/people/lebronchao">前端 LeBron</a></p>
+<p>持续分享技术博文，关注微信公众号 👇🏻</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/doc-image/v2-be6b9cd0588dddc0e39428cacf11f6a3_720w.png" alt="img"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">LeBronChao-</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://lebronchao.com/2021/01/21/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F-%E7%AC%AC%E5%85%AB%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BC%96%E7%A8%8B/">https://lebronchao.com/2021/01/21/数据库系统-第八章-数据库编程/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://lebronchao.com" target="_blank">LeBronChao's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a><a class="post-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><a class="post-meta__tags" href="/tags/SQL/">SQL</a><a class="post-meta__tags" href="/tags/%E5%90%8E%E7%AB%AF/">后端</a></div><div class="post_share"><div class="social-share" data-image="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/doc-image/MySql.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/01/22/TypeScript%E5%85%A5%E9%97%A8-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"><img class="prev-cover" data-lazy-src="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/doc-image/TypeScript.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">TypeScript入门 | 学习笔记</div></div></a></div><div class="next-post pull-right"><a href="/2021/01/20/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F-%E7%AC%AC%E4%B8%83%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1/"><img class="next-cover" data-lazy-src="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/doc-image/MySql.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">数据库系统 | 第七章 数据库设计</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/01/15/数据库系统-第二章-关系数据库/" title="数据库系统 | 第二章 关系数据库"><img class="cover" data-lazy-src="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/doc-image/MySql.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-01-15</div><div class="title">数据库系统 | 第二章 关系数据库</div></div></a></div><div><a href="/2021/01/19/数据库系统-第六章-关系数据理论/" title="数据库系统 | 第六章 关系数据理论"><img class="cover" data-lazy-src="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/doc-image/MySql.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-01-19</div><div class="title">数据库系统 | 第六章 关系数据理论</div></div></a></div><div><a href="/2021/01/14/数据库系统-第一章-绪论/" title="数据库系统 | 第一章 绪论"><img class="cover" data-lazy-src="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/doc-image/MySql.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-01-14</div><div class="title">数据库系统 | 第一章 绪论</div></div></a></div><div><a href="/2021/01/18/数据库系统-第五章-数据库完整性/" title="数据库系统 | 第五章 数据库完整性"><img class="cover" data-lazy-src="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/doc-image/MySql.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-01-18</div><div class="title">数据库系统 | 第五章 数据库完整性</div></div></a></div><div><a href="/2021/01/17/数据库系统-第四章-数据库安全性/" title="数据库系统 | 第四章 数据库安全性"><img class="cover" data-lazy-src="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/doc-image/MySql.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-01-17</div><div class="title">数据库系统 | 第四章 数据库安全性</div></div></a></div><div><a href="/2021/01/20/数据库系统-第七章-数据库设计/" title="数据库系统 | 第七章 数据库设计"><img class="cover" data-lazy-src="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/doc-image/MySql.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-01-20</div><div class="title">数据库系统 | 第七章 数据库设计</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" data-lazy-src="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/personal-info/IMG_8050.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">LeBronChao-</div><div class="author-info__description">深圳大学(SZTU) 22届 物联网工程<br/>前端开发工程师一枚<br/>业余摄影师，交流/约拍可私戳。<br/>字节跳动内推码:4FCV6BV<br/>Email：LeBronChao@foxmail.com</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">88</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/LeBronChao"><i class="fab fa-github"></i><span>Follow My Github</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/LeBronChao" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:lebronchao@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/personal-info/IMG_8268-20210326002121490.jpg" target="_blank" title="微信"><i class="fab fa-weixin"></i></a><a class="social-icon" href="tencent://AddContact/?fromId=45&amp;fromSubId=1&amp;subcmd=all&amp;uin=1531229587&amp;website=www.oicqzone.com" target="_blank" title="QQ"><i class="fab fa-qq"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">掘金：<a target="_blank" rel="noopener" href="https://juejin.cn/user/3913917127467805">前端LeBron</a><br/>知乎：<a target="_blank" rel="noopener" href="https://www.zhihu.com/people/lebronchao">前端LeBron</a><br/>持续分享技术博文，关注wx公众号👇🏻<br/><img src="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/doc-image/v2-be6b9cd0588dddc0e39428cacf11f6a3_720w.png" /></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B5%8C%E5%85%A5%E5%BC%8F-SQL"><span class="toc-number">1.</span> <span class="toc-text">嵌入式 SQL</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B5%8C%E5%85%A5%E5%BC%8F-SQL-%E7%9A%84%E5%A4%84%E7%90%86%E8%BF%87%E7%A8%8B"><span class="toc-number">1.1.</span> <span class="toc-text">嵌入式 SQL 的处理过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B5%8C%E5%85%A5%E5%BC%8F-SQL-%E8%AF%AD%E5%8F%A5%E4%B8%8E%E4%B8%BB%E8%AF%AD%E8%A8%80%E4%B9%8B%E9%97%B4%E7%9A%84%E9%80%9A%E4%BF%A1"><span class="toc-number">1.2.</span> <span class="toc-text">嵌入式 SQL 语句与主语言之间的通信</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E7%94%A8%E6%B8%B8%E6%A0%87%E7%9A%84-SQL-%E8%AF%AD%E5%8F%A5"><span class="toc-number">1.3.</span> <span class="toc-text">不用游标的 SQL 语句</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%B8%B8%E6%A0%87%E7%9A%84-SQL-%E8%AF%AD%E5%8F%A5"><span class="toc-number">1.4.</span> <span class="toc-text">使用游标的 SQL 语句</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81-SQL"><span class="toc-number">1.5.</span> <span class="toc-text">动态 SQL</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%87%E7%A8%8B%E5%8C%96-SQL"><span class="toc-number">2.</span> <span class="toc-text">过程化 SQL</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%87%E7%A8%8B%E5%8C%96-SQL-%E7%9A%84%E5%9D%97%E7%BB%93%E6%9E%84"><span class="toc-number">2.1.</span> <span class="toc-text">过程化 SQL 的块结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%98%E9%87%8F%E5%92%8C%E5%B8%B8%E9%87%8F%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-number">2.2.</span> <span class="toc-text">变量和常量的定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6"><span class="toc-number">2.3.</span> <span class="toc-text">流程控制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E5%92%8C%E5%87%BD%E6%95%B0"><span class="toc-number">3.</span> <span class="toc-text">存储过程和函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B"><span class="toc-number">3.1.</span> <span class="toc-text">存储过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0"><span class="toc-number">3.2.</span> <span class="toc-text">函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ODBC-%E7%BC%96%E7%A8%8B"><span class="toc-number">4.</span> <span class="toc-text">ODBC 编程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ODBC-%E6%A6%82%E8%BF%B0"><span class="toc-number">4.1.</span> <span class="toc-text">ODBC 概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ODBC-%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E6%A6%82%E8%BF%B0"><span class="toc-number">4.2.</span> <span class="toc-text">ODBC 工作原理概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ODBC-API-%E5%9F%BA%E7%A1%80"><span class="toc-number">4.3.</span> <span class="toc-text">ODBC API 基础</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">5.</span> <span class="toc-text">小结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/10/12/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E6%A8%A1%E5%BC%8F/" title="JavaScript设计模式-发布订阅模式"><img data-lazy-src="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/doc-image/image-20221011174858741.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JavaScript设计模式-发布订阅模式"/></a><div class="content"><a class="title" href="/2022/10/12/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E6%A8%A1%E5%BC%8F/" title="JavaScript设计模式-发布订阅模式">JavaScript设计模式-发布订阅模式</a><time datetime="2022-10-12T15:59:18.000Z" title="发表于 2022-10-12 23:59:18">2022-10-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/10/10/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" title="JavaScript设计模式-代理模式"><img data-lazy-src="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/doc-image/banner-20220908163707243.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JavaScript设计模式-代理模式"/></a><div class="content"><a class="title" href="/2022/10/10/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" title="JavaScript设计模式-代理模式">JavaScript设计模式-代理模式</a><time datetime="2022-10-09T16:24:29.000Z" title="发表于 2022-10-10 00:24:29">2022-10-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/08/21/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/" title="JavaScript 设计模式 —— 策略模式"><img data-lazy-src="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/doc-image/f3248dbebc9f40769a83e9d148f3a880~tplv-k3u1fbpfcp-zoom-crop-mark:3024:3024:3024:1702.awebp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JavaScript 设计模式 —— 策略模式"/></a><div class="content"><a class="title" href="/2022/08/21/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/" title="JavaScript 设计模式 —— 策略模式">JavaScript 设计模式 —— 策略模式</a><time datetime="2022-08-21T13:11:23.000Z" title="发表于 2022-08-21 21:11:23">2022-08-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/08/21/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" title="JavaScript 设计模式 —— 单例模式"><img data-lazy-src="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/doc-image/63460f4ae2fe44c7beb9201528f684b7~tplv-k3u1fbpfcp-zoom-crop-mark:3024:3024:3024:1702.awebp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JavaScript 设计模式 —— 单例模式"/></a><div class="content"><a class="title" href="/2022/08/21/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" title="JavaScript 设计模式 —— 单例模式">JavaScript 设计模式 —— 单例模式</a><time datetime="2022-08-21T13:11:14.000Z" title="发表于 2022-08-21 21:11:14">2022-08-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/02/20/%E6%91%84%E5%BD%B1-%E6%A2%A7%E6%A1%90%E5%B1%B1/" title="摄影 | 梧桐山"><img data-lazy-src="https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/doc-image/DSC00287.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="摄影 | 梧桐山"/></a><div class="content"><a class="title" href="/2022/02/20/%E6%91%84%E5%BD%B1-%E6%A2%A7%E6%A1%90%E5%B1%B1/" title="摄影 | 梧桐山">摄影 | 梧桐山</a><time datetime="2022-02-19T16:24:49.000Z" title="发表于 2022-02-20 00:24:49">2022-02-20</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By LeBronChao-</div><div class="footer_custom_text">@ 2022 LeBronChao- CopyRight | <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备2021025161号</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
   function initValine () {
     let initData = {
       el: '#vcomment',
       appId: 'TKAoSdRXJ5zxwsjdGTP0Hrfh-9Nh9j0Va',
       appKey: 'lI3CGg5rpWkxsfvsKTRkVszT',
       placeholder: '留下你的足迹吧，記得留下你的昵称和邮箱....可以快速收到回复',
-      avatar: 'https://bloginfo.lebronchao.com/doc-image/touxiang.jpeg',
+      avatar: 'https://lebronchao-1304295623.cos.ap-guangzhou.myqcloud.com/doc-image/touxiang.jpeg',
       meta: 'nick,mail,link'.split(','),
       pageSize: '10',
       lang: 'zh-cn',
